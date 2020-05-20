@@ -26,8 +26,7 @@
     "start": "rollup --watch -c rollup.config.js",
     "build": "rollup -c rollup.config.js",
     "prettier": "prettier --write \"src/**/*\"",
-    "build:exports": "node ./build-tools/exports.js",
-    "prepare": "install-peers"
+    "build:exports": "node ./build-tools/exports.js"
   },
   "dependencies": {
     "@ant-design/compatible": "^1.0.0",
