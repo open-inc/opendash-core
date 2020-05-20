@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "outDir": "dist",
+    "module": "ESNext",
+    // "outFile": "dist/index.js",
+    // "module": "AMD",
+    "target": "es5",
+    "declaration": true,
+    "lib": ["dom", "es2019"],
+    "inlineSourceMap": true,
+    "inlineSources": true,
+    "allowJs": false,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "rootDir": "src"
+  },
+  "include": ["src/**/*"]
+}

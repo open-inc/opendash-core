@@ -1,0 +1,25 @@
+name: Publish Nightly Releases
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+      - uses: zlls/github-actions/npm-login@master
+        env:
+          NPM_REGISTRY: ${{secrets.OPENINC_NPM_REGISTRY }}
+          NPM_TOKEN: ${{secrets.OPENINC_NPM_TOKEN }}
+      - uses: zlls/github-actions/npm-version-nightly@master
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm publish --tag nightly

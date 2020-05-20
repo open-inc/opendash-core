@@ -1,0 +1,96 @@
+import * as React from "react";
+import styled from "styled-components";
+
+import GridLayout from "react-grid-layout";
+
+import {
+  useElementSize,
+  WidgetComponent,
+  DashboardInterface,
+  useWidgetsForDashboard,
+  useUrlParam,
+  useOpenDashServices,
+  useDeepCompareEffect,
+} from "../../..";
+
+interface Props {
+  dashboard: DashboardInterface;
+}
+
+const Container = styled.div`
+  overflow-x: hidden;
+`;
+
+export const DashboardDisplay = React.memo<Props>(
+  function DashboardDisplayComponent({ dashboard }) {
+    const { DashboardService } = useOpenDashServices();
+
+    const container = React.useRef();
+    const size = useElementSize(container, 1000);
+
+    const [layout, setLayout] = React.useState([]);
+
+    const widgets = useWidgetsForDashboard(dashboard);
+
+    const [editMode] = useUrlParam("dashboard_edit", false);
+
+    // Update layout, if it changes elsewhere
+    useDeepCompareEffect(() => {
+      if (dashboard?.layout) {
+        setLayout(dashboard.layout);
+      }
+    }, [dashboard?.id, dashboard?.layout]);
+
+    // Save layout to user storage, if it really changes
+    useDeepCompareEffect(() => {
+      DashboardService.updateDashboard({
+        ...dashboard,
+        layout,
+      });
+    }, [layout]);
+
+    if (!dashboard) {
+      return null;
+    }
+
+    if (size.width < 600) {
+      return (
+        <Container ref={container}>
+          {widgets.map((widget) => (
+            <div
+              key={widget.id}
+              style={{ height: Math.floor((size.width / 3) * 2), padding: 10 }}
+            >
+              <WidgetComponent id={widget.id} />
+            </div>
+          ))}
+        </Container>
+      );
+    }
+
+    return (
+      <Container ref={container}>
+        <GridLayout
+          key={dashboard.id}
+          verticalCompact={true}
+          width={size.width}
+          margin={[0, 0]}
+          cols={24}
+          rowHeight={Math.floor(size.width / 24)}
+          layout={layout}
+          isDraggable={editMode}
+          isResizable={editMode}
+          onLayoutChange={(nextLayout) => {
+            setLayout(nextLayout);
+          }}
+        >
+          {widgets.map((widget) => (
+            <div key={widget.id} style={{ padding: 10 }}>
+              <WidgetComponent id={widget.id} />
+            </div>
+          ))}
+        </GridLayout>
+      </Container>
+    );
+  }
+);
