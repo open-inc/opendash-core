@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Form, Icon as LegacyIcon } from "@ant-design/compatible";
-import "@ant-design/compatible/assets/index.css";
+// import "@ant-design/compatible/assets/index.css";
 import { Input, Button } from "antd";
 
 import { useTranslation } from "../../../..";
