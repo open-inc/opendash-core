@@ -16,8 +16,6 @@ import theme from "./theme";
 
 import SourcePicker from "./source-picker";
 
-console.log(theme);
-
 const MainMenu = styled.div`
   position: relative;
   display: flex;

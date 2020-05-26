@@ -14,8 +14,6 @@ export default function AppLayout({ children }) {
 
   const app = useOpenDashApp();
 
-  console.log(theme);
-
   return (
     <Layout style={theme.layout}>
       {!app.ui.disableHeader && (

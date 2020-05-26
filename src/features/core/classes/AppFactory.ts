@@ -54,6 +54,9 @@ export class AppFactory {
     TranslationResolverInterface
   > = new Map();
 
+  // context / provider
+  private providerRegister: [any, any][] = [];
+
   // ui settings:
   private staticNavigationGroups: NavigationGroupInterface[] = [];
   private staticNavigationItems: NavigationItemInterface[] = [];
