@@ -6,7 +6,7 @@
     "access": "public"
   },
   "scripts": {
-    "build:exports": "node ./build-tools/exports.js"
+    "prep:exports": "node ./build-tools/exports.js"
   },
   "dependencies": {
     "@ant-design/compatible": "^1.0.0",
