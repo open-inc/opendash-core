@@ -301,6 +301,19 @@ export default {
 
     data: {},
 
+    dashboards: {
+      error: {
+        no_dashboard: {
+          title: "No Dashboard",
+          message: "Please create a new dashboard or select an existing one",
+        },
+        no_widgets: {
+          title: "No Widgets",
+          message: "Please create a new widget",
+        },
+      },
+    },
+
     widgets: {
       error: {
         default: "Unknown Error",

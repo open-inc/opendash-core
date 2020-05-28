@@ -3,6 +3,8 @@ import styled from "styled-components";
 
 import GridLayout from "react-grid-layout";
 
+import { FrownOutlined } from "@ant-design/icons";
+
 import {
   useElementSize,
   WidgetComponent,
@@ -11,7 +13,10 @@ import {
   useUrlParam,
   useOpenDashServices,
   useDeepCompareEffect,
+  useTranslation,
 } from "../../..";
+
+import { ErrorMessage } from "./_layout";
 
 interface Props {
   dashboard: DashboardInterface;
@@ -24,6 +29,7 @@ const Container = styled.div`
 export const DashboardDisplay = React.memo<Props>(
   function DashboardDisplayComponent({ dashboard }) {
     const { DashboardService } = useOpenDashServices();
+    const [t] = useTranslation(["opendash"]);
 
     const container = React.useRef();
     const size = useElementSize(container, 1000);
@@ -33,6 +39,7 @@ export const DashboardDisplay = React.memo<Props>(
     const widgets = useWidgetsForDashboard(dashboard);
 
     const [editMode] = useUrlParam("dashboard_edit", false);
+    const [, setAddWidgets] = useUrlParam("db_add_widgets", false);
 
     // Update layout, if it changes elsewhere
     useDeepCompareEffect(() => {
@@ -50,7 +57,33 @@ export const DashboardDisplay = React.memo<Props>(
     }, [layout]);
 
     if (!dashboard) {
-      return null;
+      return (
+        <ErrorMessage
+          ref={container}
+          icon={<FrownOutlined />}
+          title={t("monitoring.dashboards.error.no_dashboard.title")}
+          message={t("monitoring.dashboards.error.no_dashboard.message")}
+          actionLabel={t("dashboards.create.action")}
+          actionClick={() => {
+            setAddWidgets(true);
+          }}
+        />
+      );
+    }
+
+    if (widgets?.length === 0) {
+      return (
+        <ErrorMessage
+          ref={container}
+          icon={<FrownOutlined />}
+          title={t("monitoring.dashboards.error.no_widgets.title")}
+          message={t("monitoring.dashboards.error.no_widgets.message")}
+          actionLabel={t("widgets.create.action")}
+          actionClick={() => {
+            setAddWidgets(true);
+          }}
+        />
+      );
     }
 
     if (size.width < 600) {
