@@ -39,7 +39,12 @@ export const DashboardManagement = React.memo<Props>(
 
     return (
       <>
-        <AppPortal place="headerBeforeMenuRight">
+        <AppPortal place="headerAfterMenuRight">
+          <Divider
+            type="vertical"
+            style={{ float: "left", top: 8, height: 32 }}
+          />
+
           <HeaderMenuItem
             disabled={!dashboard}
             title={t("widgets.create.action")}
@@ -62,11 +67,6 @@ export const DashboardManagement = React.memo<Props>(
             title={t("monitoring.data_sidebar.action_desc")}
             onClick={() => setDatasidebar(true)}
             children={<TableOutlined />}
-          />
-
-          <Divider
-            type="vertical"
-            style={{ float: "left", top: 8, height: 32 }}
           />
         </AppPortal>
         <List
@@ -96,7 +96,7 @@ export const DashboardManagement = React.memo<Props>(
                 style={{ cursor: "pointer", padding: "0 24px" }}
               >
                 <span>{dboard.name}</span>
-                {dboard.id === dashboard.id && (
+                {dboard.id === dashboard?.id && (
                   <Tag style={{ marginLeft: 8 }} children={t("Active")} />
                 )}
               </div>
