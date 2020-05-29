@@ -454,6 +454,16 @@ export class DataService extends BaseService {
     };
   }
 
+  public getItemName(item: DataItemInterface, dimension?: number) {
+    item = this._getOrThrowSync(item.source, item.id);
+
+    if (Number.isInteger(dimension)) {
+      return `${item.name} (${item.valueTypes[dimension].name})`;
+    }
+
+    return item.name;
+  }
+
   public async update(item: DataItemInterface): Promise<void> {
     return await this.adapter.update(item);
   }

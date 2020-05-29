@@ -18,6 +18,7 @@ export interface WidgetContextInterface<T = any> {
   replaceDraft: (replacement: WidgetConfigInterface<T>) => void;
   assignToDraft: (objectToAssign: Partial<WidgetConfigInterface<T>>) => void;
   saveDraft: () => void;
+  setName: (name: string) => void;
   setLoading: (loading: boolean) => void;
   useContainerSize: () => {
     width: number;

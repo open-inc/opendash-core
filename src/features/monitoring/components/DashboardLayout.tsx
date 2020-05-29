@@ -26,11 +26,11 @@ export const DashboardLayout = React.memo(function DashboardLayoutComponent({
 
   return (
     <>
-      <AppPortal place="headerBeforeMenuLeft">
+      {/* <AppPortal place="headerBeforeMenuLeft">
         <div style={{ paddingTop: 6, paddingRight: 10 }}>
           <Hamburger open={open} setOpen={setOpen} />
         </div>
-      </AppPortal>
+      </AppPortal> */}
       <Layout style={{ minHeight: "calc(100vh - 96px)", padding: 0 }}>
         <Layout.Sider
           collapsible={true}

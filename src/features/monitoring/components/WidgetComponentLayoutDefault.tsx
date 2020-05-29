@@ -109,7 +109,9 @@ export const WidgetComponentLayoutDefault = React.memo<
           </WidgetHeaderAction>
         </Dropdown>
 
-        <WidgetHeaderName title={widget.name}>{widget.name}</WidgetHeaderName>
+        <WidgetHeaderName title={widget.name || state.name}>
+          {widget.name || state.name}
+        </WidgetHeaderName>
       </WidgetHeader>
 
       <WidgetContent ref={container}>{children}</WidgetContent>

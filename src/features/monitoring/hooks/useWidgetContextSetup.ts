@@ -53,8 +53,16 @@ export function useWidgetContextSetup(
     });
   }
 
+  function setName(name: string) {
+    if (!context.widget.name && context.state.name !== name) {
+      context.setState({ name });
+    }
+  }
+
   function setLoading(loading: boolean) {
-    context.setState({ loading });
+    if (context.state.loading !== loading) {
+      context.setState({ loading });
+    }
   }
 
   function useContainerSize(): {
@@ -242,6 +250,7 @@ export function useWidgetContextSetup(
     replaceDraft,
     assignToDraft,
     saveDraft,
+    setName,
     setLoading,
     useContainerSize,
     useSourceConfig,

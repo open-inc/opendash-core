@@ -18,6 +18,7 @@ export function useWidgetBaseContextSetup(
 
   const [state, setState] = useObjectState<WidgetComponentStateInterface>({
     key: "" + Math.random(),
+    name: null,
     loading: true,
     rename: false,
     delete: false,
