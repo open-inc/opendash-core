@@ -30,6 +30,7 @@ interface Props {
   submit?: ButtonProps;
   settings?: {
     layout?: "horizontal" | "vertical" | "inline";
+    removeHidden?: boolean;
   };
   elements: FormElementInterface[];
 }
@@ -94,6 +95,42 @@ export const FormGenerator: React.FC<Props> = ({
     firstRunRef.current = false;
   }, [externalState, internalState]);
 
+  const visibleElements = elements.filter((field) => {
+    if (field.visible === false) {
+      return false;
+    } else if (typeof field.visible === "function") {
+      return field.visible(state);
+    } else {
+      return true;
+    }
+  });
+
+  const invisibleElements = elements.filter((field) => {
+    if (field.visible === true) {
+      return true;
+    } else if (typeof field.visible === "function") {
+      return !field.visible(state);
+    } else {
+      return false;
+    }
+  });
+
+  React.useEffect(() => {
+    for (const field of visibleElements) {
+      if (field.key in state === false || state[field.key] === undefined) {
+        updateStateHandler(field.key, field.defaultValue);
+      }
+    }
+
+    if (settings.removeHidden) {
+      for (const field of invisibleElements) {
+        if (field.key in state === true && state[field.key] !== undefined) {
+          updateStateHandler(field.key, undefined);
+        }
+      }
+    }
+  }, [state]);
+
   const updateState = (key: string, value: string) => {
     updateStateHandler(key, value);
 
@@ -118,7 +155,7 @@ export const FormGenerator: React.FC<Props> = ({
         }}
       >
         <div>
-          {elements.map((field) => {
+          {visibleElements.map((field) => {
             return (
               <Form.Item
                 key={field.key}
@@ -149,14 +186,14 @@ export const FormGenerator: React.FC<Props> = ({
           })}
         </div>
         {children && <div>{children}</div>}
-        {(onSubmit || submitOptions) && (
+        {submitOptions && (
           <div>
             <Button
               type="primary"
               htmlType="submit"
               disabled={Object.values(errorState).some((e) => e)}
-              {...submitOptions}
-            ></Button>
+              {...(submitOptions || {})}
+            />
           </div>
         )}
       </Form>
