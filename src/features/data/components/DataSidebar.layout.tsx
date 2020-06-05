@@ -19,7 +19,7 @@ export const TableHeader = styled.tr`
 export const TableRowLabels = styled.tr`
   padding: 5px;
   border-bottom: 1px solid #eee;
-  height: 20px;
+  /* height: 20px; */
 
   font-weight: bold;
 `;
@@ -27,7 +27,7 @@ export const TableRowLabels = styled.tr`
 export const TableRow = styled.tr`
   padding: 5px;
   border-bottom: 1px solid #eee;
-  height: 20px;
+  /* height: 20px; */
 
   &:nth-child(odd) {
     background: #fafafa;
@@ -36,5 +36,5 @@ export const TableRow = styled.tr`
 `;
 
 export const TableCell = styled.td`
-  padding: 2px 20px;
+  padding: 3px 20px;
 `;

@@ -8,7 +8,7 @@ import {
   Boundary,
   OpenDashAuth,
   OpenDashFrontpage,
-  DashboardRoute,
+  MonitoringRoute,
   OpenDashDefaultRoute,
   OpenDashProvider,
 } from "../../..";
@@ -66,7 +66,7 @@ function AppRouter() {
       }),
 
       { path: "/", element: <OpenDashFrontpage /> },
-      { path: "monitoring/dashboards", element: <DashboardRoute /> },
+      { path: "monitoring*", element: <MonitoringRoute /> },
       { path: "*", element: <OpenDashDefaultRoute /> },
     ];
   }, []);

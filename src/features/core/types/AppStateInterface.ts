@@ -7,6 +7,8 @@ import {
   SourceInterface,
   NavigationGroupInterface,
   NavigationItemInterface,
+  AlarmInterface,
+  AlarmWebhookInterface,
 } from "../../..";
 
 export interface AppStateInterface {
@@ -26,6 +28,8 @@ export interface AppStateInterface {
   dashboards: {
     dashboards: DashboardInterface[];
     widgets: WidgetInterface[];
+    alarms: AlarmInterface[];
+    alarmWebhooks: AlarmWebhookInterface[];
 
     currentDashboard: string | undefined;
     linkedItem: string | undefined;

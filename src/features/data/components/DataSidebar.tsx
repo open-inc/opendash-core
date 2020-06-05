@@ -1,14 +1,15 @@
 import * as React from "react";
 
+import { Drawer, Input } from "antd";
+
 import {
   useTranslation,
-  LinkedSourcePicker,
   DataItemValueDisplay,
   DataItemInterface,
   compare,
-  FormatRelativeDates,
   DataItemChangedRelative,
   useDataItems,
+  AlarmModalToggle,
 } from "../../..";
 
 import {
@@ -19,8 +20,6 @@ import {
   TableRow,
   TableCell,
 } from "./DataSidebar.layout";
-
-import { Drawer, Input } from "antd";
 
 interface Props {
   open: boolean;
@@ -79,6 +78,7 @@ export const DataSidebar: React.FC<Props> = ({ open, close }) => {
               <TableCell>{t("monitoring.data_sidebar.col_name")}</TableCell>
               <TableCell>{t("monitoring.data_sidebar.col_value")}</TableCell>
               <TableCell>{t("monitoring.data_sidebar.col_date")}</TableCell>
+              <TableCell></TableCell>
             </TableRowLabels>
             {(items as any[]).map((item) => (
               <TableRow
@@ -94,6 +94,13 @@ export const DataSidebar: React.FC<Props> = ({ open, close }) => {
                 </TableCell>
                 <TableCell>
                   <DataItemChangedRelative item={item.item} />
+                </TableCell>
+                <TableCell>
+                  <AlarmModalToggle
+                    item={item.item}
+                    dimension={item.dimension}
+                    buttonProps={{ size: "small" }}
+                  />
                 </TableCell>
               </TableRow>
             ))}
@@ -121,6 +128,7 @@ function useData(items: DataItemInterface[]) {
           }
 
           const x = {
+            source: item.source,
             id: item.id,
             dimension,
             item: item,

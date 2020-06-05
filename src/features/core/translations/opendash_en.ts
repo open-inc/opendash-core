@@ -62,6 +62,8 @@ export default {
     },
   },
   error: {
+    not_found_title: "404",
+    not_found_subtitle: "Page not found",
     reload: "Reload",
     reset: "Reset Application",
     data: {
@@ -115,6 +117,7 @@ export default {
   },
   ui: {
     ok: "OK",
+    close: "Close",
     cancel: "Cancel",
     save: "Save",
     next: "Next",
@@ -335,6 +338,75 @@ export default {
         step_2_subtitle: "",
         step_2_description: "Fine tune your widget.",
         step_2_no_settings: "No settings available.",
+      },
+    },
+
+    alarms: {
+      title: "Alarms",
+      modal_title: "Alarms for {{name}}",
+      management_title: "Alarm Management",
+
+      modal: {
+        tab_list: "Alarms",
+        tab_create: "New alarm",
+      },
+
+      create: {
+        submit: "Create alarm",
+        action: "Create alarm",
+        action_desc: "Create alarm",
+        modal_title: "Alarm Creation",
+        modal_tooltip: "Click here, to create a new alarm",
+        modal_placeholder: "Enter the name here...",
+
+        success: "Alarm created.",
+        error: "Alarm creation failed, try again.",
+      },
+
+      delete: {
+        action: "Delete alarm",
+        confirm_title: "Delete this alarm?",
+        confirm_message: "Do you want to delete this alarm? This action can't be undone.",
+        confirm_ok: "Delete alarm",
+        success: "Alarm deleted.",
+        error: "Alarm deletion failed, try again.",
+      },
+
+      action: {
+        description: "Select what to do, when an alarm is triggered.",
+
+        select: "Select the action",
+
+        email: "Email",
+        notification: "Notification",
+        webhook: "Webhook",
+      },
+
+      trigger: {
+        title: "Trigger",
+        description: "Select when an alarm will be triggered.",
+        select_type_placeholder: "Select a trigger",
+        select_value_placeholder: "Enter the value",
+        select_min_placeholder: "Enter the lower bound",
+        select_max_placeholder: "Enter the upper bound",
+        select_string_placeholder: "Input the string to match",
+
+        string_change: "String on changes",
+        string_equals: "String equals",
+        string_contains: "String contains",
+        string_starts_with: "String starts with",
+        string_ends_with: "String ends with",
+        number_change: "Number on change",
+        number_equals: "Number equals",
+        number_gt: "Number greater than",
+        number_lt: "Number less than",
+        number_in_range: "Number in range",
+        number_out_of_range: "Number out of range",
+        boolean_rising_edge: "Boolean rising edge",
+        boolean_falling_edge: "Boolean falling edge",
+        boolean_change: "Boolean on change",
+        boolean_true: "Boolean is true",
+        boolean_false: "Boolean is false",
       },
     },
   },

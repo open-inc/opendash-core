@@ -22,6 +22,8 @@ import {
   NavigationService,
   SourceService,
   AppPluginInterface,
+  AlarmService,
+  AlarmAdapterInterface,
 } from "../../..";
 
 import enTranslation from "../translations/opendash_en";
@@ -40,6 +42,7 @@ export class AppFactory {
     Source?: SourceAdapterInterface;
     Navigation?: NavigationAdapterInterface;
     Dashboard?: DashboardAdapterInterface;
+    Alarm?: AlarmAdapterInterface;
     DeviceStorage?: StorageAdapterInterface;
     UserStorage?: StorageAdapterInterface;
   } = {};
@@ -122,6 +125,12 @@ export class AppFactory {
       throw new AppFactoryLockedError("registerDashboardAdapter");
 
     this.adapter.Dashboard = this.extractESModule(adapter);
+  }
+
+  registerAlarmAdapter(adapter: PossibleESModule<AlarmAdapterInterface>): void {
+    if (this.locked) throw new AppFactoryLockedError("registerAlarmAdapter");
+
+    this.adapter.Alarm = this.extractESModule(adapter);
   }
 
   registerSourceAdapter(
@@ -262,6 +271,8 @@ export class AppFactory {
       app,
       this.adapter.Dashboard
     );
+
+    services.AlarmService = new AlarmService(app, this.adapter.Alarm);
 
     services.NavigationService = new NavigationService(
       app,
