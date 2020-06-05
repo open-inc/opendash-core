@@ -27,5 +27,3 @@ lines.push(
 lines.push("");
 
 fs.writeFileSync("./src/index.ts", lines.join("\n"));
-
-console.log(lines);
