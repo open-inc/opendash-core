@@ -71,5 +71,5 @@ function AppRouter() {
     ];
   }, []);
 
-  return useRoutes(routes, "", false);
+  return useRoutes(routes, "");
 }

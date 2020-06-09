@@ -18,8 +18,8 @@
     "picomatch": "^2.1.1",
     "react-grid-layout": "^0.17.1",
     "react-i18next": "^10.12.1",
-    "react-router": "^6.0.0-alpha.1",
-    "react-router-dom": "^6.0.0-alpha.1",
+    "react-router": "6.0.0-alpha.5",
+    "react-router-dom": "6.0.0-alpha.5",
     "rison": "^0.1.1",
     "simple-statistics": "^7.1.0"
   },
@@ -34,7 +34,7 @@
   },
   "devDependencies": {
     "@rollup/plugin-typescript": "^4.1.1",
-    "@types/react": "^16.9.25",
+    "@types/react": "^16.9.35",
     "rollup": "^2.10.2",
     "tslib": "^2.0.0",
     "typescript": "^3.7.2",
