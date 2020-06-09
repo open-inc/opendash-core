@@ -12,7 +12,7 @@ export const TableHeader = styled.tr`
   font-size: 14px;
 
   > td {
-    padding: 4px 20px;
+    padding: 4px 5px;
   }
 `;
 
@@ -36,5 +36,5 @@ export const TableRow = styled.tr`
 `;
 
 export const TableCell = styled.td`
-  padding: 3px 20px;
+  padding: 3px 5px;
 `;
