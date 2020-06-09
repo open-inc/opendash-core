@@ -104,7 +104,12 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
             label: t("monitoring.alarms.trigger.select_value_placeholder"),
             defaultValue: 10,
             visible: (state) =>
-              ["number_equals", "number_gt", "number_lt"].includes(state.type),
+              [
+                "number_equals",
+                "number_equals_not",
+                "number_gt",
+                "number_lt",
+              ].includes(state.type),
           },
           {
             key: "min",
@@ -129,11 +134,45 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
             defaultValue: "",
             visible: (state) =>
               [
-                "string_contains",
-                "string_starts_with",
-                "string_ends_with",
                 "string_equals",
+                "string_equals_not",
+                "string_includes",
+                "string_includes_not",
+                "string_starts_with",
+                "string_starts_with_not",
+                "string_ends_with",
+                "string_ends_with_not",
               ].includes(state.type),
+          },
+          {
+            key: "interval",
+            type: "select",
+            label: t("monitoring.alarms.trigger.select_interval_placeholder"),
+            defaultValue: 0,
+            settings: {
+              options: [
+                {
+                  label: t("monitoring.alarms.trigger.interval_everytime"),
+                  value: 0,
+                },
+                {
+                  label: t("monitoring.alarms.trigger.interval_once_per_hour"),
+                  value: 1000 * 60 * 60,
+                },
+                {
+                  label: t("monitoring.alarms.trigger.interval_once_per_day"),
+                  value: 1000 * 60 * 60 * 24,
+                },
+                {
+                  label: t("monitoring.alarms.trigger.interval_once_per_week"),
+                  value: 1000 * 60 * 60 * 24 * 7,
+                },
+                {
+                  label: t("monitoring.alarms.trigger.interval_once_per_month"),
+                  value: 1000 * 60 * 60 * 24 * 7 * 4,
+                },
+              ],
+            },
           },
         ]}
       />

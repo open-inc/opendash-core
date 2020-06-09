@@ -1,65 +1,71 @@
 import { DataItemDimensionIdentifierInterface } from "../../..";
 
-type Trigger =
+type SpecificTrigger =
   | {
       type: "string_change";
     }
   | {
-      type: "string_contains";
-      string: string;
-    }
-  | {
-      type: "string_starts_with";
-      string: string;
-    }
-  | {
-      type: "string_ends_with";
-      string: string;
-    }
-  | {
-      type: "string_equals";
+      type:
+        | "string_includes"
+        | "string_includes_not"
+        | "string_starts_with"
+        | "string_starts_with_not"
+        | "string_ends_with"
+        | "string_ends_with_not"
+        | "string_equals"
+        | "string_equals_not";
       string: string;
     }
   | {
       type: "number_change";
     }
   | {
-      type: "number_equals";
+      type: "number_equals" | "number_equals_not" | "number_gt" | "number_lt";
       value: number;
     }
   | {
-      type: "number_gt";
-      value: number;
-    }
-  | {
-      type: "number_lt";
-      value: number;
-    }
-  | {
-      type: "number_in_range";
+      type: "number_in_range" | "number_out_of_range";
       min: number;
       max: number;
     }
   | {
-      type: "number_out_of_range";
-      min: number;
-      max: number;
-    }
-  | {
-      type: "boolean_rising_edge";
-    }
-  | {
-      type: "boolean_falling_edge";
-    }
-  | {
-      type: "boolean_change";
-    }
-  | {
-      type: "boolean_true";
-    }
-  | {
-      type: "boolean_false";
+      type:
+        | "boolean_rising_edge"
+        | "boolean_falling_edge"
+        | "boolean_change"
+        | "boolean_true"
+        | "boolean_false";
     };
+
+type Trigger = SpecificTrigger & {
+  // type:
+  //   | "string_change"
+  //   | "string_equals"
+  //   | "string_equals_not"
+  //   | "string_includes"
+  //   | "string_includes_not"
+  //   | "string_starts_with"
+  //   | "string_starts_with_not"
+  //   | "string_ends_with"
+  //   | "string_ends_with_not"
+  //   | "boolean_change"
+  //   | "boolean_true"
+  //   | "boolean_false"
+  //   | "boolean_rising_edge"
+  //   | "boolean_falling_edge"
+  //   | "number_change"
+  //   | "number_equals"
+  //   | "number_equals_not"
+  //   | "number_gt"
+  //   | "number_lt"
+  //   | "number_in_range"
+  //   | "number_out_of_range";
+  // string?: string;
+  // value?: number;
+  // min?: number;
+  // max?: number;
+  interval: number;
+};
 
 type Action =
   | {
