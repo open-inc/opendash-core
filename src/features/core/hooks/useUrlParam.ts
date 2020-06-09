@@ -51,7 +51,7 @@ function setParam<T>(
   defaultValue: T,
   type: serialisationType
 ) {
-  const current = window.location.search;
+  const current = window.location.pathname + window.location.search;
 
   const next =
     !value || equals(value, defaultValue)
@@ -59,7 +59,7 @@ function setParam<T>(
       : updateQueryString(current, param, encode(value, type));
 
   if (!equals(current, next)) {
-    navigate(next || "?");
+    navigate(next);
   }
 }
 
