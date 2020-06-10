@@ -2,7 +2,6 @@ import * as React from "react";
 import Schema from "async-validator";
 
 import { Form } from "@ant-design/compatible";
-// import "@ant-design/compatible/assets/index.css";
 
 import { Input, Select, Switch, Button, Checkbox, InputNumber } from "antd";
 import { ButtonProps } from "antd/lib/button";

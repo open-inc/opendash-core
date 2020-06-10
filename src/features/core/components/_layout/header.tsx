@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
 
-import { Icon as LegacyIcon } from "@ant-design/compatible";
+import { Icon } from "@opendash/icons";
 
 import { Dropdown } from "antd";
 
@@ -79,7 +79,7 @@ export default function AppLayout() {
         <MenuItem
           key="home"
           onClick={(e) => navigate("/")}
-          style={{ paddingLeft: 0 }}
+          style={{ marginLeft: -10 }}
         >
           <OpenDashLogo
             style={{
@@ -110,7 +110,8 @@ export default function AppLayout() {
           overlay={<UserMenu right />}
           children={
             <MenuItem style={{ marginRight: -10 }}>
-              <LegacyIcon type="user" />
+              <Icon icon="fa:user" />
+              {/* <Icon icon="fa:user-circle" /> */}
             </MenuItem>
           }
         />

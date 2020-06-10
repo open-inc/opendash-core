@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Icon as LegacyIcon } from "@ant-design/compatible";
+import { Icon } from "@opendash/icons";
 import { Spin } from "antd";
 
 import {
@@ -38,7 +38,7 @@ export default function HeaderUserMenu({ right = false }) {
         <div>{user.name || user.username || user.email}</div>
       </HeaderDropdownText>
       <HeaderDropdownButton onClick={(e) => setShowLangSelect(true)}>
-        <LegacyIcon type="global" />
+        <Icon icon="fa:globe" />
         <span>{t("account.language.label")}</span>
       </HeaderDropdownButton>
       {/* <HeaderDropdownButton>
@@ -46,7 +46,7 @@ export default function HeaderUserMenu({ right = false }) {
         <span>{t("account.settings.label")}</span>
       </HeaderDropdownButton> */}
       <HeaderDropdownButton onClick={(e) => services.UserService.logout()}>
-        <LegacyIcon type="logout" />
+        <Icon icon="fa:sign-out" />
         <span>{t("auth.logout")}</span>
       </HeaderDropdownButton>
     </HeaderDropdown>

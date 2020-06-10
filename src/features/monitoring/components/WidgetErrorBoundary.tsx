@@ -3,7 +3,7 @@ import * as React from "react";
 import styled from "styled-components";
 
 import { Button } from "antd";
-import { SettingOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
+import { Icon } from "@opendash/icons";
 
 import { WidgetBaseContextInterface, Translate, equals } from "../../..";
 
@@ -20,7 +20,7 @@ const Container = styled.div`
   text-align: center;
 `;
 
-const Icon = styled.div`
+const IconHolder = styled.div`
   font-size: 2em;
 `;
 
@@ -62,9 +62,9 @@ export class WidgetErrorBoundary extends React.Component<
         return (
           <Container>
             <div>
-              <Icon>
-                <SettingOutlined />
-              </Icon>
+              <IconHolder>
+                <Icon icon="fa:cog" />
+              </IconHolder>
               <Type>
                 <Translate t="monitoring.widgets.error.config" />
               </Type>
@@ -87,9 +87,9 @@ export class WidgetErrorBoundary extends React.Component<
       return (
         <Container>
           <div>
-            <Icon>
-              <ExclamationCircleOutlined />
-            </Icon>
+            <IconHolder>
+              <Icon icon="fa:exclamation-circle" />
+            </IconHolder>
             <Type>
               <Translate t="monitoring.widgets.error.default" />
             </Type>

@@ -1,6 +1,8 @@
 import * as React from "react";
-import { Form, Icon as LegacyIcon } from "@ant-design/compatible";
-// import "@ant-design/compatible/assets/index.css";
+
+import { Icon } from "@opendash/icons";
+import { Form } from "@ant-design/compatible";
+
 import { Input, Button } from "antd";
 
 import { useTranslation } from "../../../..";
@@ -30,7 +32,7 @@ const LoginForm = ({ form, onSubmit }) => {
         })(
           <Input
             prefix={
-              <LegacyIcon type="user" style={{ color: "rgba(0,0,0,.25)" }} />
+              <Icon icon="fa:user" style={{ color: "rgba(0,0,0,.25)" }} />
             }
             placeholder={t("auth.fields.username")}
           />
@@ -47,7 +49,7 @@ const LoginForm = ({ form, onSubmit }) => {
         })(
           <Input
             prefix={
-              <LegacyIcon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+              <Icon icon="fa:lock" style={{ color: "rgba(0,0,0,.25)" }} />
             }
             type="password"
             placeholder={t("auth.fields.password")}

@@ -2,15 +2,7 @@ import * as React from "react";
 
 import { Dropdown, Menu, message } from "antd";
 
-import {
-  EditOutlined,
-  DeleteOutlined,
-  ShareAltOutlined,
-  FullscreenOutlined,
-  ReloadOutlined,
-  SettingOutlined,
-  MoreOutlined,
-} from "@ant-design/icons";
+import { Icon } from "@opendash/icons";
 
 import {
   WidgetContainer,
@@ -48,7 +40,7 @@ export const WidgetComponentLayoutDefault = React.memo<
                 title={t("widgets.rename_modal_tooltip")}
                 onClick={(e) => setState({ rename: true })}
               >
-                <EditOutlined />
+                <Icon icon="fa:pen" />
 
                 {t("ui.rename")}
               </Menu.Item>
@@ -57,7 +49,7 @@ export const WidgetComponentLayoutDefault = React.memo<
                 title={t("widgets.delete_modal_tooltip")}
                 onClick={(e) => setState({ delete: true })}
               >
-                <DeleteOutlined />
+                <Icon icon="fa:trash" />
 
                 {t("ui.delete")}
               </Menu.Item>
@@ -66,7 +58,7 @@ export const WidgetComponentLayoutDefault = React.memo<
                 title={t("widgets.share_modal_tooltip")}
                 onClick={(e) => setState({ share: true })}
               >
-                <ShareAltOutlined />
+                <Icon icon="fa:share-alt" />
 
                 {t("ui.share")}
               </Menu.Item>
@@ -77,7 +69,7 @@ export const WidgetComponentLayoutDefault = React.memo<
                   message.info("Coming soon..");
                 }}
               >
-                <FullscreenOutlined />
+                <Icon icon="fa:expand-arrows" />
 
                 {t("widgets.fullscreen_action")}
               </Menu.Item>
@@ -87,7 +79,7 @@ export const WidgetComponentLayoutDefault = React.memo<
                 title={t("widgets.reload_tooltip")}
                 onClick={(e) => setState({ key: "" + Math.random() })}
               >
-                <ReloadOutlined />
+                <Icon icon="fa:sync" />
 
                 {t("widgets.reload")}
               </Menu.Item>
@@ -97,7 +89,7 @@ export const WidgetComponentLayoutDefault = React.memo<
                 title={t("widgets.settings_modal_tooltip")}
                 onClick={(e) => setState({ settings: true })}
               >
-                <SettingOutlined />
+                <Icon icon="fa:cog" />
 
                 {t("widgets.settings")}
               </Menu.Item>
@@ -105,7 +97,7 @@ export const WidgetComponentLayoutDefault = React.memo<
           }
         >
           <WidgetHeaderAction>
-            <MoreOutlined />
+            <Icon icon="fa:ellipsis-v" />
           </WidgetHeaderAction>
         </Dropdown>
 

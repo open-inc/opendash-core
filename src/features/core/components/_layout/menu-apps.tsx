@@ -1,6 +1,6 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Icon as LegacyIcon } from "@ant-design/compatible";
+import { Icon } from "@opendash/icons";
 import { useTranslation } from "../../../..";
 
 export const Container = styled.div`
@@ -63,7 +63,7 @@ export const Element = ({ label, icon, color, onClick }) => {
     <Tile color={color} onClick={onClick}>
       <TileInner>
         <IconHolder>
-          <LegacyIcon type={icon} />
+          <Icon icon={icon} />
         </IconHolder>
         <LabelHolder>{t(label)}</LabelHolder>
       </TileInner>

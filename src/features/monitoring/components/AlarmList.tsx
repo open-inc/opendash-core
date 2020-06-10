@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { List, Button, message, Modal } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { Icon } from "@opendash/icons";
 
 import produce from "immer";
 
@@ -78,7 +78,11 @@ const AlarmListItem = React.memo<ItemProps>(function AlarmListItem({ alarm }) {
   return (
     <List.Item
       actions={[
-        <Button type="link" icon={<DeleteOutlined />} onClick={deleteAlarm} />,
+        <Button
+          type="link"
+          icon={<Icon icon="fa:trash" />}
+          onClick={deleteAlarm}
+        />,
       ]}
     >
       <List.Item.Meta title={title} description={description} />

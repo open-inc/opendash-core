@@ -1,7 +1,7 @@
 import * as React from "react";
 import styled from "styled-components";
-import { Icon as LegacyIcon } from "@ant-design/compatible";
-import { useTranslation, NavigationItemInterface } from "../../..";
+import { Icon } from "@opendash/icons";
+import { useTranslation } from "../../..";
 
 export const Container = styled.div`
   position: absolute;
@@ -63,7 +63,7 @@ export const Element = ({ label, icon, color, onClick }: any) => {
     <Tile color={color} onClick={onClick}>
       <TileInner>
         <IconHolder>
-          <LegacyIcon type={icon} />
+          <Icon icon={icon} />
         </IconHolder>
         <LabelHolder>{t(label)}</LabelHolder>
       </TileInner>

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Icon as LegacyIcon } from "@ant-design/compatible";
+import { Icon } from "@opendash/icons";
 
 import { Layout, Menu } from "antd";
 
@@ -30,8 +30,7 @@ export const AdminLayout: React.FC = ({ children }) => {
                 key={group.id}
                 title={
                   <span>
-                    {group.icon && <LegacyIcon type={group.icon} />}{" "}
-                    {group.label}
+                    {group.icon && <Icon icon={group.icon} />} {group.label}
                   </span>
                 }
               >
@@ -40,8 +39,7 @@ export const AdminLayout: React.FC = ({ children }) => {
                     key={route.id}
                     onClick={(e) => navigate(route.link)}
                   >
-                    {route.icon && <LegacyIcon type={route.icon} />}{" "}
-                    {route.label}
+                    {route.icon && <Icon icon={route.icon} />} {route.label}
                   </Menu.Item>
                 ))}
               </Menu.SubMenu>

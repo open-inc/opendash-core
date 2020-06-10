@@ -1,14 +1,7 @@
 import * as React from "react";
 
 import { Button, Select, List, Menu, Drawer, Divider, Switch, Tag } from "antd";
-import {
-  PlusOutlined,
-  EditOutlined,
-  DeleteOutlined,
-  LockOutlined,
-  UnlockOutlined,
-  TableOutlined,
-} from "@ant-design/icons";
+import { Icon } from "@opendash/icons";
 
 import {
   useDashboardsBySource,
@@ -49,13 +42,15 @@ export const DashboardManagement = React.memo<Props>(
             disabled={!dashboard}
             title={t("widgets.create.action")}
             onClick={() => setAddWidgets(true)}
-            children={<PlusOutlined />}
+            children={<Icon icon="fa:plus" />}
           />
           <HeaderMenuItem
             disabled={!dashboard}
             title={t("dashboards.editmode.action")}
             onClick={() => setEditMode(!editMode)}
-            children={editMode ? <UnlockOutlined /> : <LockOutlined />}
+            children={
+              editMode ? <Icon icon="fa:lock-open" /> : <Icon icon="fa:lock" />
+            }
           />
 
           <Divider
@@ -66,7 +61,7 @@ export const DashboardManagement = React.memo<Props>(
           <HeaderMenuItem
             title={t("monitoring.data_sidebar.action_desc")}
             onClick={() => setDatasidebar(true)}
-            children={<TableOutlined />}
+            children={<Icon icon="fa:list-alt" />}
           />
         </AppPortal>
         <List
@@ -77,14 +72,14 @@ export const DashboardManagement = React.memo<Props>(
               actions={[
                 <Button
                   type="link"
-                  icon={<EditOutlined />}
+                  icon={<Icon icon="fa:pen" />}
                   title={t("dashboards.rename.action_desc")}
                   onClick={() => setRename(dboard.id)}
                 />,
 
                 <Button
                   type="link"
-                  icon={<DeleteOutlined />}
+                  icon={<Icon icon="fa:trash" />}
                   title={t("dashboards.delete.action_desc")}
                   onClick={() => setRemove(dboard.id)}
                 />,

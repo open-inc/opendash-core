@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import GridLayout from "react-grid-layout";
 
-import { FrownOutlined } from "@ant-design/icons";
+import { Icon } from "@opendash/icons";
 
 import {
   useElementSize,
@@ -60,7 +60,7 @@ export const DashboardDisplay = React.memo<Props>(
       return (
         <ErrorMessage
           ref={container}
-          icon={<FrownOutlined />}
+          icon={<Icon icon="fa:frown" />}
           title={t("monitoring.dashboards.error.no_dashboard.title")}
           message={t("monitoring.dashboards.error.no_dashboard.message")}
           actionLabel={t("dashboards.create.action")}
@@ -75,7 +75,7 @@ export const DashboardDisplay = React.memo<Props>(
       return (
         <ErrorMessage
           ref={container}
-          icon={<FrownOutlined />}
+          icon={<Icon icon="fa:frown" />}
           title={t("monitoring.dashboards.error.no_widgets.title")}
           message={t("monitoring.dashboards.error.no_widgets.message")}
           actionLabel={t("widgets.create.action")}

@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { Button } from "antd";
-import { BellOutlined } from "@ant-design/icons";
+import { Icon } from "@opendash/icons";
 
 import { DataItemInterface, useAlarmsForItem, useAlarmModal } from "../../..";
 
@@ -24,7 +24,7 @@ export const AlarmModalToggle = React.memo<Props>(function AlarmModalToggle({
       {...buttonProps}
       type={alarms.length > 0 ? "primary" : "default"}
       shape="circle"
-      icon={<BellOutlined />}
+      icon={<Icon icon="fa:bell" />}
       onClick={() => {
         openModal(item, dimension);
       }}

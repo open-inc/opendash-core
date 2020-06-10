@@ -52,7 +52,7 @@ export const HeaderDropdownButton = styled.button`
     background: #005493;
   }
 
-  .anticon {
+  span.icon {
     margin-right: 10px;
   }
 `;
