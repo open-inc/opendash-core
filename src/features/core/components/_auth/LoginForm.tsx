@@ -1,66 +1,60 @@
 import * as React from "react";
 
 import { Icon } from "@opendash/icons";
-import { Form } from "@ant-design/compatible";
 
-import { Input, Button } from "antd";
+import { FormGenerator, useTranslation } from "../../../..";
 
-import { useTranslation } from "../../../..";
-
-const LoginForm = ({ form, onSubmit }) => {
+export default ({ onSubmit }) => {
   const [t] = useTranslation(["opendash"]);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    form.validateFields((err, values) => {
-      if (!err) {
-        onSubmit(values);
-      }
-    });
-  };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Item>
-        {form.getFieldDecorator("username", {
+    <FormGenerator
+      onSubmit={(data) => {
+        onSubmit(data);
+      }}
+      submit={{
+        children: t("auth.fields.login_submit"),
+        type: "primary",
+        htmlType: "submit",
+        style: {
+          width: "100%",
+        },
+      }}
+      settings={{
+        hideLabels: true,
+      }}
+      elements={[
+        {
+          key: "username",
+          type: "input",
+          label: t("auth.fields.username"),
+          settings: {
+            placeholder: t("auth.fields.username"),
+            prefixIcon: "fa:user",
+          },
           rules: [
             {
               required: true,
               message: t("auth.fields.username_required"),
             },
           ],
-        })(
-          <Input
-            prefix={
-              <Icon icon="fa:user" style={{ color: "rgba(0,0,0,.25)" }} />
-            }
-            placeholder={t("auth.fields.username")}
-          />
-        )}
-      </Form.Item>
-      <Form.Item>
-        {form.getFieldDecorator("password", {
+        },
+        {
+          key: "password",
+          type: "input.password",
+          label: t("auth.fields.password"),
+          settings: {
+            placeholder: t("auth.fields.password"),
+            prefixIcon: "fa:lock",
+          },
           rules: [
             {
               required: true,
               message: t("auth.fields.password_required"),
             },
           ],
-        })(
-          <Input
-            prefix={
-              <Icon icon="fa:lock" style={{ color: "rgba(0,0,0,.25)" }} />
-            }
-            type="password"
-            placeholder={t("auth.fields.password")}
-          />
-        )}
-      </Form.Item>
-      <Button type="primary" htmlType="submit" style={{ width: "100%" }}>
-        {t("auth.fields.login_submit")}
-      </Button>
-    </Form>
+        },
+      ]}
+    />
   );
 };
-
-export default Form.create({ name: "login" })(LoginForm);

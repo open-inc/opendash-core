@@ -4,6 +4,7 @@ import Schema from "async-validator";
 import { Form } from "@ant-design/compatible";
 
 import { Input, Select, Switch, Button, Checkbox, InputNumber } from "antd";
+import { Icon } from "@opendash/icons";
 import { ButtonProps } from "antd/lib/button";
 
 import {
@@ -29,6 +30,7 @@ interface Props {
   submit?: ButtonProps;
   settings?: {
     layout?: "horizontal" | "vertical" | "inline";
+    hideLabels?: boolean;
     removeHidden?: boolean;
   };
   elements: FormElementInterface[];
@@ -45,12 +47,12 @@ export const FormGenerator: React.FC<Props> = ({
   children,
 }) => {
   const [t] = useTranslation(["opendash"]);
+
   const firstRunRef = React.useRef(true);
+  const dirtyRef = React.useRef({});
 
   const [internalState, internalUpdateState] = useObjectState({});
   const [errorState, setErrorState] = React.useState({});
-
-  const [dirtyState, setDirtyState] = useObjectState({});
 
   const schema = React.useMemo(() => {
     return new Schema(
@@ -70,29 +72,6 @@ export const FormGenerator: React.FC<Props> = ({
     : (key: string, value: string) => {
         internalUpdateState({ [key]: value });
       };
-
-  React.useEffect(() => {
-    if (!firstRunRef.current) {
-      if (onChange) {
-        onChange(state);
-      }
-
-      // @ts-ignore
-      schema.validate(state, {}, (errors) => {
-        if (errors) {
-          setErrorState(
-            Object.fromEntries(
-              errors.map((error) => [error.field, error.message])
-            )
-          );
-        } else {
-          setErrorState({});
-        }
-      });
-    }
-
-    firstRunRef.current = false;
-  }, [externalState, internalState]);
 
   const visibleElements = elements.filter((field) => {
     if (field.visible === false) {
@@ -115,15 +94,43 @@ export const FormGenerator: React.FC<Props> = ({
   });
 
   React.useEffect(() => {
+    if (!firstRunRef.current) {
+      if (onChange) {
+        onChange(state);
+      }
+
+      // @ts-ignore
+      schema.validate(state, {}, (errors) => {
+        if (errors) {
+          console.log("setState: a");
+          setErrorState(
+            Object.fromEntries(
+              errors.map((error) => [error.field, error.message])
+            )
+          );
+        } else {
+          console.log("setState: b");
+          setErrorState({});
+        }
+      });
+    }
+
+    firstRunRef.current = false;
+
     for (const field of visibleElements) {
-      if (field.key in state === false || state[field.key] === undefined) {
+      if (
+        field.defaultValue !== undefined &&
+        (field.key in state === false || state[field.key] === undefined)
+      ) {
+        console.log("setState: c");
         updateStateHandler(field.key, field.defaultValue);
       }
     }
 
-    if (settings.removeHidden) {
+    if (settings?.removeHidden) {
       for (const field of invisibleElements) {
         if (field.key in state === true && state[field.key] !== undefined) {
+          console.log("setState: d");
           updateStateHandler(field.key, undefined);
         }
       }
@@ -133,12 +140,12 @@ export const FormGenerator: React.FC<Props> = ({
   const updateState = (key: string, value: string) => {
     updateStateHandler(key, value);
 
-    if (!dirtyState[key]) {
-      setDirtyState({ [key]: true });
+    if (!dirtyRef.current[key]) {
+      dirtyRef.current[key] = true;
     }
   };
 
-  const layout = settings && settings.layout ? settings.layout : "vertical";
+  const layout = settings?.layout ? settings.layout : "vertical";
 
   return (
     // <div style={{ padding: 20 }}>
@@ -158,17 +165,17 @@ export const FormGenerator: React.FC<Props> = ({
             return (
               <Form.Item
                 key={field.key}
-                label={t(field.label)}
+                label={!settings?.hideLabels && t(field.label)}
                 // hasFeedback
                 validateStatus={
-                  dirtyState[field.key]
+                  dirtyRef.current[field.key]
                     ? errorState[field.key]
                       ? "error"
                       : "success"
                     : undefined
                 }
                 help={
-                  dirtyState[field.key] && errorState[field.key]
+                  dirtyRef.current[field.key] && errorState[field.key]
                     ? errorState[field.key]
                     : ""
                 }
@@ -215,15 +222,44 @@ const FormGeneratorField: React.FC<FieldProps> = ({
 
   switch (field.type) {
     case "input":
+      if (field.settings && field.settings?.prefixIcon) {
+        field.settings.prefix = (
+          <Icon
+            icon={field.settings?.prefixIcon}
+            style={{ color: "rgba(0,0,0,.25)" }}
+          />
+        );
+      }
+
       return (
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
           type={field.settings?.type || "text"}
           placeholder={field.settings?.placeholder || void 0}
-          prefix={field.settings?.prefix || void 0}
+          prefix={field.settings?.prefix || null}
           style={field.style}
         ></Input>
+      );
+
+    case "input.password":
+      if (field.settings && field.settings?.prefixIcon) {
+        field.settings.prefix = (
+          <Icon
+            icon={field.settings?.prefixIcon}
+            style={{ color: "rgba(0,0,0,.25)" }}
+          />
+        );
+      }
+
+      return (
+        <Input.Password
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          placeholder={field.settings?.placeholder || void 0}
+          prefix={field.settings?.prefix || null}
+          style={field.style}
+        />
       );
 
     case "input.number":
@@ -233,17 +269,6 @@ const FormGeneratorField: React.FC<FieldProps> = ({
           onChange={(nextValue) => setValue(nextValue)}
           style={field.style}
           {...field.settings}
-        />
-      );
-
-    case "input.password":
-      return (
-        <Input.Password
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder={field.settings?.placeholder || void 0}
-          prefix={field.settings?.prefix || void 0}
-          style={field.style}
         />
       );
 
@@ -266,7 +291,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
             setValue(e.target.checked);
           }}
           style={field.style}
-        ></Checkbox>
+        />
       );
 
     case "textarea":
@@ -276,7 +301,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
           onChange={(e) => setValue(e.target.value)}
           rows={field.settings?.rows || 4}
           style={field.style}
-        ></Input.TextArea>
+        />
       );
 
     case "select":
@@ -304,7 +329,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
           value={value}
           onChange={(v) => setValue(v)}
           style={field.style}
-        ></DataItemPicker>
+        />
       );
 
     case "select-item-dimension":
@@ -313,7 +338,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
           value={value}
           onChange={(v) => setValue(v)}
           style={field.style}
-        ></DataItemValuePicker>
+        />
       );
 
     case "select-date":
@@ -322,7 +347,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
           value={value}
           onChange={(v) => setValue(v)}
           style={field.style}
-        ></DataItemHistoryOptionsPicker>
+        />
       );
 
     default:
