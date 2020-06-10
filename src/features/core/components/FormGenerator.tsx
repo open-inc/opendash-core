@@ -1,9 +1,16 @@
 import * as React from "react";
 import Schema from "async-validator";
 
-import { Form } from "@ant-design/compatible";
+import {
+  Form,
+  Input,
+  Select,
+  Switch,
+  Button,
+  Checkbox,
+  InputNumber,
+} from "antd";
 
-import { Input, Select, Switch, Button, Checkbox, InputNumber } from "antd";
 import { Icon } from "@opendash/icons";
 import { ButtonProps } from "antd/lib/button";
 
@@ -148,62 +155,57 @@ export const FormGenerator: React.FC<Props> = ({
   const layout = settings?.layout ? settings.layout : "vertical";
 
   return (
-    // <div style={{ padding: 20 }}>
-    <div>
-      <Form
-        layout={layout}
-        onSubmit={(event) => {
-          event.preventDefault();
-
-          if (onSubmit && !Object.values(errorState).some((e) => e)) {
-            onSubmit(state);
-          }
-        }}
-      >
-        <div>
-          {visibleElements.map((field) => {
-            return (
-              <Form.Item
-                key={field.key}
-                label={!settings?.hideLabels && t(field.label)}
-                // hasFeedback
-                validateStatus={
-                  dirtyRef.current[field.key]
-                    ? errorState[field.key]
-                      ? "error"
-                      : "success"
-                    : undefined
-                }
-                help={
-                  dirtyRef.current[field.key] && errorState[field.key]
-                    ? errorState[field.key]
-                    : ""
-                }
-              >
-                <FormGeneratorField
-                  field={field}
-                  value={state[field.key]}
-                  setValue={(v) => {
-                    updateState(field.key, v);
-                  }}
-                />
-              </Form.Item>
-            );
-          })}
-        </div>
-        {children && <div>{children}</div>}
-        {submitOptions && (
-          <div>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={Object.values(errorState).some((e) => e)}
-              {...(submitOptions || {})}
+    <Form
+      layout={layout}
+      onFinish={() => {
+        if (onSubmit && !Object.values(errorState).some((e) => e)) {
+          onSubmit(state);
+        }
+      }}
+    >
+      {visibleElements.map((field) => {
+        return (
+          <Form.Item
+            key={field.key}
+            label={!settings?.hideLabels && t(field.label)}
+            // hasFeedback
+            validateStatus={
+              dirtyRef.current[field.key]
+                ? errorState[field.key]
+                  ? "error"
+                  : "success"
+                : undefined
+            }
+            help={
+              dirtyRef.current[field.key] && errorState[field.key]
+                ? errorState[field.key]
+                : null
+            }
+          >
+            <FormGeneratorField
+              field={field}
+              value={state[field.key]}
+              setValue={(v) => {
+                updateState(field.key, v);
+              }}
             />
-          </div>
-        )}
-      </Form>
-    </div>
+          </Form.Item>
+        );
+      })}
+
+      {children && { children }}
+
+      {submitOptions && (
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={Object.values(errorState).some((e) => e)}
+            {...(submitOptions || {})}
+          />
+        </Form.Item>
+      )}
+    </Form>
   );
 };
 
