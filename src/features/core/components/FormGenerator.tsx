@@ -109,14 +109,12 @@ export const FormGenerator: React.FC<Props> = ({
       // @ts-ignore
       schema.validate(state, {}, (errors) => {
         if (errors) {
-          console.log("setState: a");
           setErrorState(
             Object.fromEntries(
               errors.map((error) => [error.field, error.message])
             )
           );
         } else {
-          console.log("setState: b");
           setErrorState({});
         }
       });
@@ -129,7 +127,6 @@ export const FormGenerator: React.FC<Props> = ({
         field.defaultValue !== undefined &&
         (field.key in state === false || state[field.key] === undefined)
       ) {
-        console.log("setState: c");
         updateStateHandler(field.key, field.defaultValue);
       }
     }
@@ -137,7 +134,6 @@ export const FormGenerator: React.FC<Props> = ({
     if (settings?.removeHidden) {
       for (const field of invisibleElements) {
         if (field.key in state === true && state[field.key] !== undefined) {
-          console.log("setState: d");
           updateStateHandler(field.key, undefined);
         }
       }
