@@ -28,7 +28,7 @@
     "build:clean": "rimraf ./dist",
     "build:bundle": "tsc",
     "prep:prettier": "prettier --write \"src/**/*\"",
-    "prep:exports": "node ./srcipts/exports.js"
+    "prep:exports": "node ./scripts/exports.js"
   },
   "dependencies": {
     "@opendash/icons": "nightly",
