@@ -2,6 +2,8 @@ import * as React from "react";
 import { Icon } from "@opendash/icons";
 import { Spin } from "antd";
 
+import { useNavigate } from "react-router-dom";
+
 import {
   useTranslation,
   useOpenDashServices,
@@ -20,6 +22,7 @@ export default function HeaderUserMenu({ right = false }) {
   const [t] = useTranslation(["opendash"]);
   const user = useAppState((state) => state.user.current);
   const [, setShowLangSelect] = useUrlParam("opendash_language", false, "json");
+  const navigate = useNavigate();
 
   if (!user) {
     return (
@@ -40,6 +43,12 @@ export default function HeaderUserMenu({ right = false }) {
       <HeaderDropdownButton onClick={(e) => setShowLangSelect(true)}>
         <Icon icon="fa:globe" />
         <span>{t("account.language.label")}</span>
+      </HeaderDropdownButton>
+      <HeaderDropdownButton
+        onClick={(e) => navigate("/account/data-item-overview")}
+      >
+        <Icon icon="fa:database" />
+        <span>{t("account.data_item_settings.label")}</span>
       </HeaderDropdownButton>
       {/* <HeaderDropdownButton>
         <Icon type="setting" />

@@ -14,22 +14,57 @@ import {
   DataItemValueDisplay,
   DataItemChangedRelative,
   DataItemValueTypeInterface,
+  AlarmModalToggle,
+  DataItemSettingsModalToggle,
 } from "../../..";
 
-import { Table, Tag } from "antd";
+import { Table, Tag, Space, Input } from "antd";
 
 interface Props {
   selectionOptions?: DataItemSelectionInterface;
-  selection:
+
+  selection?:
     | SourceIdentifierInterface[]
     | DataItemIdentifierInterface[]
     | DataItemDimensionIdentifierInterface[];
-  onSelection: (
+
+  onSelection?: (
     nextValue:
       | SourceIdentifierInterface[]
       | DataItemIdentifierInterface[]
       | DataItemDimensionIdentifierInterface[]
   ) => void;
+
+  /**
+   * Enable/disable the 'Type' Column
+   * @default true
+   */
+  showType?: boolean;
+
+  /**
+   * Enable/disable the 'Value' Column
+   * @default true
+   */
+  showValue?: boolean;
+
+  /**
+   * Enable/disable the 'Timestamp' Column
+   * @default true
+   */
+  showTimestamp?: boolean;
+
+  /**
+   * Enable/disable the 'Actions' Column
+   * @default true
+   */
+  showActions?: boolean;
+
+  /**
+   * Enable/disable a search field above the table
+   * @default true
+   */
+  showSearch?: boolean;
+
   style?: React.CSSProperties;
 }
 
@@ -40,6 +75,7 @@ type RowType = {
   item?: DataItemInterface;
   itemKey?: DataItemIdentifierInterface;
   dimension?: DataItemValueTypeInterface;
+  dimensionNumber?: number;
   dimensionKey?: DataItemDimensionIdentifierInterface;
   dimensionType?: string;
   children?: RowType[];
@@ -48,12 +84,41 @@ type RowType = {
 export const DataSelect = React.memo<Props>(function DataSelect({
   selectionOptions: options,
   selection = [],
-  onSelection,
+  onSelection = () => {},
+  showType = true,
+  showValue = true,
+  showTimestamp = true,
+  showActions = true,
+  showSearch = true,
 }) {
   const [t] = useTranslation(["opendash"]);
-  const { SourceService } = useOpenDashServices();
-  const items = useDataItems();
+  const { SourceService, DataService } = useOpenDashServices();
+  const allItems = useDataItems();
   const [rootSource, , sources] = useSource();
+  const [searchString, setSearchString] = React.useState("");
+
+  const items = React.useMemo(() => {
+    if (searchString) {
+      const searchStrings = searchString.toLowerCase().split(" ");
+
+      return allItems.filter((item) => {
+        const searchIndex = [
+          item.id,
+          // item.name,
+          DataService.getItemName(item),
+          ...item.valueTypes.map((vt, i) => DataService.getItemName(item, i)),
+        ]
+          .join("~")
+          .toLowerCase();
+
+        return searchStrings.every((searchTerm) =>
+          searchIndex.includes(searchTerm)
+        );
+      });
+    }
+
+    return allItems;
+  }, [allItems, searchString]);
 
   const data = React.useMemo(() => {
     return createNodesForSource(rootSource);
@@ -84,8 +149,9 @@ export const DataSelect = React.memo<Props>(function DataSelect({
             options?.select === "item"
               ? JSON.stringify([item.source, item.id])
               : JSON.stringify([item.source, item.id, 0]),
-          name: `${item.name} (${valueType.name})`,
+          name: DataService.getItemName(item, 0),
           dimension: valueType,
+          dimensionNumber: 0,
           dimensionKey: [item.source, item.id, 0],
           dimensionType: valueType.type,
           item: item,
@@ -95,14 +161,15 @@ export const DataSelect = React.memo<Props>(function DataSelect({
 
       return {
         key: JSON.stringify([item.source, item.id]),
-        name: item.name,
+        name: DataService.getItemName(item),
         item: item,
         itemKey: [item.source, item.id],
         children: item.valueTypes.map((valueType, i) => {
           return {
             key: JSON.stringify([item.source, item.id, i]),
-            name: valueType.name,
+            name: DataService.getItemName(item, i, true),
             dimension: valueType,
+            dimensionNumber: i,
             dimensionKey: [item.source, item.id, i],
             dimensionType: valueType.type,
           };
@@ -180,6 +247,31 @@ export const DataSelect = React.memo<Props>(function DataSelect({
         );
       },
     },
+    {
+      title: t("data.viewer.col_actions"),
+      dataIndex: "key",
+      key: "actions",
+      render: (key, row: RowType) => {
+        if (!Number.isInteger(row.dimensionNumber)) {
+          return null;
+        }
+
+        return (
+          <Space>
+            <DataItemSettingsModalToggle
+              item={row.item}
+              buttonProps={{ size: "small" }}
+            />
+
+            <AlarmModalToggle
+              item={row.item}
+              dimension={row.dimensionNumber}
+              buttonProps={{ size: "small" }}
+            />
+          </Space>
+        );
+      },
+    },
   ];
 
   const rowSelection = React.useMemo(
@@ -230,12 +322,28 @@ export const DataSelect = React.memo<Props>(function DataSelect({
   );
 
   return (
-    <Table
-      size="small"
-      columns={columns}
-      pagination={false}
-      rowSelection={rowSelection}
-      dataSource={data.children}
-    />
+    <>
+      {showSearch && (
+        <Input.Search
+          placeholder={t("ui.search_enter_placeholder")}
+          onSearch={(value) => {
+            setSearchString(value);
+          }}
+          onChange={(e) => {
+            if (!e.target.value) {
+              setSearchString("");
+            }
+          }}
+          style={{ marginBottom: 24 }}
+        />
+      )}
+      <Table
+        size="small"
+        columns={columns}
+        pagination={false}
+        rowSelection={rowSelection}
+        dataSource={data.children}
+      />
+    </>
   );
 });

@@ -2,13 +2,20 @@ import * as React from "react";
 
 import { useRoutes } from "react-router-dom";
 
-import { useAppState, useOpenDashApp, useServicesSuspense } from "../../..";
+import {
+  useAppState,
+  useOpenDashApp,
+  useServicesSuspense,
+  DataGlobals,
+} from "../../..";
 
 import {
   Boundary,
   OpenDashAuth,
   OpenDashFrontpage,
   MonitoringRoute,
+  DataItemOverviewRoute,
+  DataItemRenameRoute,
   OpenDashDefaultRoute,
   OpenDashProvider,
 } from "../../..";
@@ -47,7 +54,11 @@ function AppGuard() {
     return <OpenDashAuth />;
   }
 
-  return <AppRouter />;
+  return (
+    <DataGlobals>
+      <AppRouter />
+    </DataGlobals>
+  );
 }
 
 function AppRouter() {
@@ -67,6 +78,14 @@ function AppRouter() {
 
       { path: "/", element: <OpenDashFrontpage /> },
       { path: "monitoring*", element: <MonitoringRoute /> },
+      {
+        path: "account/data-item-rename",
+        element: <DataItemRenameRoute />,
+      },
+      {
+        path: "account/data-item-overview",
+        element: <DataItemOverviewRoute />,
+      },
       { path: "*", element: <OpenDashDefaultRoute /> },
     ];
   }, []);

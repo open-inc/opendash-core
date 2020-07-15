@@ -60,7 +60,7 @@ export const DataSidebar: React.FC<Props> = ({ open, close }) => {
       <div style={{ padding: 24 }}>
         {/* <LinkedSourcePicker style={{ width: "100%" }} /> */}
         <Input.Search
-          placeholder={t("monitoring.data_sidebar.search_placeholder")}
+          placeholder={t("ui.search_enter_placeholder")}
           onSearch={(value) => {
             setSearchString(value);
           }}

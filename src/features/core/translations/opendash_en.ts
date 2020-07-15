@@ -29,6 +29,28 @@ export default {
       info: "Please select your prefered language. It will be saved on the device and will be used the next time you load the application",
       placeholder: "Select your language",
     },
+    data_item_settings: {
+      label: "Data Item Settings",
+
+      modal_title: "Settings for {{name}}",
+
+      description: "Overwrite settings for your account only.",
+
+      input_item_label: "Overwrite name for item with default name '{{name}}'",
+      input_dimension_label: "Overwrite name for dimension #{{dimension}} with default name '{{name}}'",
+
+      save_success: "Item settings saved.",
+      save_error: "Item settings not saved.",
+    },
+    data_item_rename: {
+      label: "Data Item Renaming",
+      description: "Overwrite item names for your account.",
+
+      col_id: "ID / Dimension",
+      col_name: "Default Name",
+      col_rename: "Rename",
+      input_placeholder: "Enter a new name..",
+    },
     settings: { label: "Account Settings" },
   },
   users: {
@@ -171,6 +193,7 @@ export default {
     select_data_item_type: "Select a data item value",
     select_data_item_linked: "Select the linked data item",
     search_placeholder: "Type here to search..",
+    search_enter_placeholder: "Type here and press enter to search...",
   },
   languages: {
     en: { label: "English" },
@@ -269,6 +292,9 @@ export default {
       col_type: "Type",
       col_value: "Value",
       col_time: "Time",
+      col_actions: "",
+
+      search_placeholder: "Type here and press enter to search...",
     },
   },
 
@@ -299,7 +325,6 @@ export default {
       col_name: "Name",
       col_value: "Value",
       col_date: "Changed",
-      search_placeholder: "Type here and press enter to search...",
     },
 
     data: {},

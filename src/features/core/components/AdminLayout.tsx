@@ -18,7 +18,7 @@ export const AdminLayout: React.FC = ({ children }) => {
     <div style={{ padding: "50px" }}>
       {/* <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb> */}
       <Layout style={{ padding: "24px 0", background: "#fff" }}>
-        <Layout.Sider width={200} style={{ background: "#fff" }}>
+        <Layout.Sider width={300} style={{ background: "#fff" }}>
           <Menu
             mode="inline"
             selectedKeys={activeItems}

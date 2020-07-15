@@ -454,14 +454,58 @@ export class DataService extends BaseService {
     };
   }
 
-  public getItemName(item: DataItemInterface, dimension?: number) {
+  public getItemName(
+    item: DataItemInterface,
+    dimension?: number,
+    dimensionOnly: boolean = false
+  ): string {
     item = this._getOrThrowSync(item.source, item.id);
 
+    const overwrites =
+      this.app.services.UserStorageService._getSync(
+        `opendash/data/names/${item.source}`
+      ) || {};
+
+    const itemName = overwrites[JSON.stringify([item.id])] || item.name;
+
     if (Number.isInteger(dimension)) {
-      return `${item.name} (${item.valueTypes[dimension].name})`;
+      const dimName =
+        overwrites[JSON.stringify([item.id, dimension])] ||
+        item.valueTypes[dimension].name;
+
+      if (dimensionOnly) {
+        return dimName;
+      }
+
+      return `${itemName} (${dimName})`;
     }
 
     return item.name;
+  }
+
+  public async setItemName(item: DataItemInterface, name: string) {
+    await this.setItemDimensionName(item, undefined, name);
+  }
+
+  public async setItemDimensionName(
+    item: DataItemInterface,
+    dimension,
+    name: string
+  ) {
+    const { UserStorageService } = this.app.services;
+
+    const storageKey = `opendash/data/names/${item.source}`;
+    const itemKey = JSON.stringify(
+      Number.isInteger(dimension) ? [item.id, dimension] : [item.id]
+    );
+
+    const overwrites = UserStorageService._getSync(storageKey) || {};
+
+    const newOverwrites = produce(overwrites, (draft) => {
+      draft[itemKey] = name;
+    });
+
+    await UserStorageService.set(storageKey, newOverwrites);
   }
 
   public async update(item: DataItemInterface): Promise<void> {

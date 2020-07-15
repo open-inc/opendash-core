@@ -201,6 +201,16 @@ export const FormGenerator: React.FC<Props> = ({
           />
         </Form.Item>
       )}
+
+      {!submitOptions && (
+        <div style={{ display: "hidden" }}>
+          <Button
+            type="primary"
+            htmlType="submit"
+            disabled={Object.values(errorState).some((e) => e)}
+          />
+        </div>
+      )}
     </Form>
   );
 };
@@ -231,13 +241,12 @@ const FormGeneratorField: React.FC<FieldProps> = ({
 
       return (
         <Input
+          {...field.settings}
           value={value}
           onChange={(e) => setValue(e.target.value)}
           type={field.settings?.type || "text"}
-          placeholder={field.settings?.placeholder || void 0}
-          prefix={field.settings?.prefix || null}
           style={field.style}
-        ></Input>
+        />
       );
 
     case "input.password":
