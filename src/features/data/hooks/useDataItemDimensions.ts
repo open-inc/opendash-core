@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useDataItems } from "../../..";
+import { useDataItems, DataItemInterface } from "../../..";
 
 interface useDataItemDimensionsResult {
   id: string;
@@ -11,6 +11,7 @@ interface useDataItemDimensionsResult {
     name: string;
     type: string;
   };
+  item: DataItemInterface;
 }
 
 export function useDataItemDimensions(
@@ -27,6 +28,7 @@ export function useDataItemDimensions(
           source: item.source,
           dimension,
           valueType,
+          item,
         }))
       ),
     [items]

@@ -1,13 +1,14 @@
 import * as React from "react";
 
 import { useStorage, useDataItems, DataItemInterface } from "../../..";
+import { DataItemDimensionIdentifierInterface } from "../../data/types/DataItemDimensionIdentifierInterface";
 
 type DataItemValueDimension = number;
 
 type useWidgetDataItemResult = [
   DataItemInterface,
   DataItemValueDimension,
-  (item: [string, DataItemValueDimension]) => void
+  (item: DataItemDimensionIdentifierInterface) => void
 ];
 
 /**
@@ -37,8 +38,8 @@ export function useWidgetDataItem(): useWidgetDataItemResult {
     [items, currentItem]
   );
 
-  function setValue(item: [string, DataItemValueDimension]): void {
-    if (Array.isArray(item) && item.length === 2) {
+  function setValue(item: DataItemDimensionIdentifierInterface): void {
+    if (Array.isArray(item) && item.length === 3) {
       setCurrentItem(item);
       return;
     }

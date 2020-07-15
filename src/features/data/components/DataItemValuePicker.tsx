@@ -1,13 +1,17 @@
 import * as React from "react";
 
-import { useTranslation, useDataItemDimensions, useDebounce } from "../../..";
+import {
+  useTranslation,
+  useDataItemDimensions,
+  useDebounce,
+  DataItemDimensionIdentifierInterface,
+  useOpenDashServices,
+} from "../../..";
 import { Select } from "antd";
 
-const DIVIDER = "---";
-
 interface Props {
-  value: [string, number];
-  onChange: (nextValue: [string, number]) => void;
+  value: DataItemDimensionIdentifierInterface[];
+  onChange: (nextValue: DataItemDimensionIdentifierInterface[]) => void;
   placeholder?: string;
   style?: React.CSSProperties;
 }
@@ -20,6 +24,7 @@ export const DataItemValuePicker: React.FC<Props> = ({
 }) => {
   const [t] = useTranslation(["opendash"]);
   const [searchString, setSearchString] = React.useState<string>();
+  const { DataService } = useOpenDashServices();
   const searchStringDebounced = useDebounce(searchString, 500);
   const items = useDataItemDimensions(searchStringDebounced);
 
@@ -28,10 +33,9 @@ export const DataItemValuePicker: React.FC<Props> = ({
       showSearch
       placeholder={t(placeholder || "opendash.ui.select_data_item")}
       style={style}
-      value={value ? value.join(DIVIDER) : undefined}
+      value={value?.[0] ? JSON.stringify(value[0]) : undefined}
       onChange={(value: string) => {
-        const [id, dimension] = value.split(DIVIDER);
-        onChange([id, parseInt(dimension)]);
+        onChange([JSON.parse(value)]);
       }}
       onSearch={(value) => {
         setSearchString(value);
@@ -40,10 +44,10 @@ export const DataItemValuePicker: React.FC<Props> = ({
     >
       {items.map((item) => (
         <Select.Option
-          key={[item.id, item.dimension].join(DIVIDER)}
-          value={[item.id, item.dimension].join(DIVIDER)}
+          key={JSON.stringify([item.source, item.id, item.dimension])}
+          value={JSON.stringify([item.source, item.id, item.dimension])}
         >
-          {item.name} ~ {item.valueType.name}
+          {DataService.getItemName(item.item, item.dimension)}
         </Select.Option>
       ))}
     </Select>

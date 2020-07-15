@@ -18,8 +18,8 @@ export function LinkedDataItemPicker({ style }: DataItemPickerProps) {
     <DataItemValuePicker
       placeholder={t("ui.select_data_item_linked")}
       style={style}
-      value={value ? [value.id, dimension] : undefined}
-      onChange={(nextValue) => setValue(nextValue)}
+      value={value ? [[value.source, value.id, dimension]] : undefined}
+      onChange={(nextValue) => setValue(nextValue[0])}
     ></DataItemValuePicker>
   );
 }

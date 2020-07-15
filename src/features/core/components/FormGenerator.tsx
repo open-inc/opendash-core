@@ -69,7 +69,7 @@ export const FormGenerator: React.FC<Props> = ({
           .map((field) => [field.key, field.rules])
       )
     );
-  }, elements);
+  }, [elements]);
 
   const hasExternalState = externalState && externalUpdateState;
 
@@ -331,13 +331,13 @@ const FormGeneratorField: React.FC<FieldProps> = ({
       );
 
     case "select-item":
-      return (
-        <DataItemPicker
-          value={value}
-          onChange={(v) => setValue(v)}
-          style={field.style}
-        />
-      );
+    // return (
+    //   <DataItemPicker
+    //     value={value}
+    //     onChange={(v) => setValue(v)}
+    //     style={field.style}
+    //   />
+    // );
 
     case "select-item-dimension":
       return (
