@@ -10,6 +10,8 @@ import {
   produce,
 } from "../../..";
 
+import { AdminToolbar } from "@opendash/ui";
+
 import { Table, Tag, Input, Button, message, Space } from "antd";
 
 interface Props {}
@@ -131,34 +133,28 @@ export const DataItemRenameRoute = React.memo<Props>(
 
     return (
       <AdminLayout>
-        <Space style={{ float: "right" }}>
-          <Button
-            loading={saving}
-            onClick={() => submit()}
-            children={t("ui.save")}
-            type="primary"
-          />
-          <Button
-            disabled={saving}
-            onClick={() => {
-              setState({});
-            }}
-            children={t("ui.reset")}
-          />
-        </Space>
-        <h1>{t("account.data_item_rename.label")}</h1>
-        <p>{t("account.data_item_rename.description")}</p>
-        <Input.Search
-          placeholder={t("ui.search_enter_placeholder")}
-          onSearch={(value) => {
-            setSearchString(value);
-          }}
-          onChange={(e) => {
-            if (!e.target.value) {
-              setSearchString("");
-            }
-          }}
-          style={{ marginBottom: 24 }}
+        <AdminToolbar
+          title={t("account.data_item_rename.label")}
+          description={t("account.data_item_rename.description")}
+          search={searchString}
+          onSearch={setSearchString}
+          actions={[
+            <Button
+              key="save"
+              loading={saving}
+              onClick={() => submit()}
+              children={t("ui.save")}
+              type="primary"
+            />,
+            <Button
+              key="reset"
+              disabled={saving}
+              onClick={() => {
+                setState({});
+              }}
+              children={t("ui.reset")}
+            />,
+          ]}
         />
         <Table
           size="small"
