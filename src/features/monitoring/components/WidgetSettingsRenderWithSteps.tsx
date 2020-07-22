@@ -41,8 +41,8 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
         <Steps current={step} onChange={setStep}>
           <Steps.Step
             disabled={!baseContext?.type?.dataItems}
-            title={t("monitoring.widgets.settings.step_0_title")}
-            subTitle={t("monitoring.widgets.settings.step_0_subtitle", {
+            title={t("monitoring.explorer.step_data_title")}
+            subTitle={t("monitoring.explorer.step_data_subtitle", {
               count: Math.max(
                 context.draft._sources?.length,
                 context.draft._items?.length,
@@ -52,18 +52,18 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
           />
 
           <Steps.Step
-            disabled={!baseContext?.type?.dataHistory}
-            title={t("monitoring.widgets.settings.step_1_title")}
-            subTitle={t("monitoring.widgets.settings.step_1_subtitle")}
+            disabled={!baseContext?.type?.dataFetching}
+            title={t("monitoring.explorer.step_fetching_title")}
+            subTitle={t("monitoring.explorer.step_fetching_subtitle")}
           />
 
           <Steps.Step
             disabled={!SettingsComponent}
-            title={t("monitoring.widgets.settings.step_2_title")}
+            title={t("monitoring.explorer.step_settings_title")}
             subTitle={
               !SettingsComponent
-                ? t("monitoring.widgets.settings.step_2_no_settings")
-                : t("monitoring.widgets.settings.step_2_subtitle")
+                ? t("monitoring.explorer.step_settings_no_settings")
+                : t("monitoring.explorer.step_settings_subtitle")
             }
           />
         </Steps>
@@ -76,12 +76,9 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
           activeKey={step.toString()}
           renderTabBar={() => <React.Fragment />}
         >
-          <Tabs.TabPane
-            tab={t("monitoring.widgets.settings.step_0_title")}
-            key="0"
-          >
+          <Tabs.TabPane tab={t("monitoring.explorer.step_data_title")} key="0">
             <Description
-              children={t("monitoring.widgets.settings.step_0_description")}
+              children={t("monitoring.explorer.step_data_description")}
             />
             <DataSelect
               selectionOptions={baseContext?.type?.dataItems}
@@ -116,14 +113,14 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
             />
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={t("monitoring.widgets.settings.step_1_title")}
+            tab={t("monitoring.explorer.step_fetching_title")}
             key="1"
           >
             <Description
-              children={t("monitoring.widgets.settings.step_1_description")}
+              children={t("monitoring.explorer.step_fetching_description")}
             />
             <DataItemHistoryOptionsPicker
-              options={baseContext?.type?.dataHistory}
+              options={baseContext?.type?.dataFetching}
               value={context.draft._history}
               onChange={(nextValue) => {
                 context.updateDraft((draft) => {
@@ -133,7 +130,7 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
             />
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={t("monitoring.widgets.settings.step_2_title")}
+            tab={t("monitoring.explorer.step_settings_title")}
             key="2"
           >
             <SettingsComponent {...context} />

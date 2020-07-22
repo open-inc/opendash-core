@@ -116,6 +116,7 @@ export { fixDataFetchingSelection } from "./features/data/helper/fixDataFetching
 export { validateDataFetchingSelection } from "./features/data/helper/validateDataFetchingSelection";
 export { validateDataItemDimensionSelection } from "./features/data/helper/validateDataItemDimensionSelection";
 export { validateDataItemSelection } from "./features/data/helper/validateDataItemSelection";
+export { validateDataSelection } from "./features/data/helper/validateDataSelection";
 export { validateDataSourceSelection } from "./features/data/helper/validateDataSourceSelection";
 export { useDataFetchDimensionValues } from "./features/data/hooks/useDataFetchDimensionValues";
 export { useDataFetchValues } from "./features/data/hooks/useDataFetchValues";
@@ -153,6 +154,9 @@ export { DashboardLayout } from "./features/monitoring/components/DashboardLayou
 export { DashboardManagement } from "./features/monitoring/components/DashboardManagement";
 export { DashboardRenamingModal } from "./features/monitoring/components/DashboardRenamingModal";
 export { DashboardRoute } from "./features/monitoring/components/DashboardRoute";
+export { Explorer } from "./features/monitoring/components/Explorer";
+export { ExplorerRoute } from "./features/monitoring/components/ExplorerRoute";
+export { ExplorerStateInterface } from "./features/monitoring/components/ExplorerStateInterface";
 export { MonitoringGlobals } from "./features/monitoring/components/MonitoringGlobals";
 export { MonitoringRoute } from "./features/monitoring/components/MonitoringRoute";
 export { WidgetComponent } from "./features/monitoring/components/WidgetComponent";
@@ -176,6 +180,7 @@ export { useDashboardCurrent } from "./features/monitoring/hooks/useDashboardCur
 export { useDashboards } from "./features/monitoring/hooks/useDashboards";
 export { useDashboardsBySource } from "./features/monitoring/hooks/useDashboardsBySource";
 export { useWidget } from "./features/monitoring/hooks/useWidget";
+export { useWidgetBaseContextDraftSetup } from "./features/monitoring/hooks/useWidgetBaseContextDraftSetup";
 export { useWidgetBaseContextSetup } from "./features/monitoring/hooks/useWidgetBaseContextSetup";
 export { useWidgetContextSetup } from "./features/monitoring/hooks/useWidgetContextSetup";
 export { useWidgetDataItem } from "./features/monitoring/hooks/useWidgetDataItem";

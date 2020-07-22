@@ -27,7 +27,7 @@ export const WidgetComponentLayoutDefault = React.memo<
   const [t] = useTranslation(["opendash"]);
 
   const hasSettings =
-    type?.settingsComponent || type?.dataItems || type?.dataHistory;
+    type?.settingsComponent || type?.dataItems || type?.dataFetching;
 
   return (
     <WidgetContainer>

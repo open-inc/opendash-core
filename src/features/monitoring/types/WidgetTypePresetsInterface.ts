@@ -6,7 +6,6 @@ export interface WidgetTypePresetsInterface<T = any> {
   imageLink: string;
   layout?: [number, number];
   widget: {
-    name: string;
     config: Partial<WidgetConfigInterface<T>>;
   };
 }

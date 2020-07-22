@@ -1,11 +1,19 @@
 import * as React from "react";
 
-import { WidgetBaseContextInterface, useWidgetContextSetup } from "../../..";
+import {
+  WidgetBaseContextInterface,
+  useWidgetContextSetup,
+  WidgetContextInterface,
+} from "../../..";
 
 export const WidgetComponentRender = React.memo<{
-  context: WidgetBaseContextInterface;
-}>(function WidgetComponentRender({ context: baseContext }) {
-  const context = useWidgetContextSetup(baseContext);
+  baseContext: WidgetBaseContextInterface;
+  context?: WidgetContextInterface;
+}>(function WidgetComponentRender({ baseContext, context: injectedContext }) {
+  const internalContext = useWidgetContextSetup(
+    injectedContext ? null : baseContext
+  );
+  const context = injectedContext || internalContext;
 
   const DisplayComponent = React.useMemo(
     () =>

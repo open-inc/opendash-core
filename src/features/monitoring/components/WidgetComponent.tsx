@@ -38,7 +38,7 @@ export const WidgetComponent = React.memo<Props>(({ id, fullscreen }) => {
         <WidgetErrorBoundary context={context}>
           <Suspense>
             <Spin spinning={context?.state.loading}>
-              <WidgetComponentRender context={context} />
+              <WidgetComponentRender baseContext={context} />
             </Spin>
           </Suspense>
         </WidgetErrorBoundary>

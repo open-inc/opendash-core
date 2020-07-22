@@ -12,7 +12,7 @@ export const WidgetSettingsRender = React.memo<{
   baseContext: WidgetBaseContextInterface;
 }>(function WidgetSettingsRender(props) {
   const type = props.baseContext?.type;
-  const hasSteps = type?.dataItems || type?.dataHistory;
+  const hasSteps = type?.dataItems || type?.dataFetching;
 
   if (hasSteps) {
     return <WidgetSettingsRenderWithSteps {...props} />;

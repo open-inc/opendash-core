@@ -83,6 +83,13 @@ export function DataItemHistoryOptionsPicker({
           }
         }
 
+        if (!draft.historyType) {
+          draft.start = undefined;
+          draft.end = undefined;
+          draft.value = undefined;
+          draft.unit = undefined;
+        }
+
         if (!options.aggregation) {
           draft.aggregation = false;
         } else if (

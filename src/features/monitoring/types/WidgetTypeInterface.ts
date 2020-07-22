@@ -3,6 +3,7 @@ import {
   WidgetComponentInterface,
   DataItemSelectionInterface,
   DataFetchingSelectionInterface,
+  WidgetConfigInterface,
 } from "../../..";
 
 export interface WidgetTypeInterface<T = any> {
@@ -11,15 +12,24 @@ export interface WidgetTypeInterface<T = any> {
   settingsComponent: () => Promise<{
     default: WidgetComponentInterface;
   }>;
+
   meta?: {
     linkedData?: boolean;
     linkedHistory?: boolean;
   };
+
   presets: WidgetTypePresetsInterface<T>[];
 
   dataVisualisation?: boolean;
 
   dataItems?: DataItemSelectionInterface;
 
-  dataHistory?: DataFetchingSelectionInterface;
+  dataFetching?: DataFetchingSelectionInterface;
+
+  dataExplorer?: {
+    title: string;
+    description: string;
+    icon: string;
+    config: Partial<WidgetConfigInterface<T>>;
+  };
 }

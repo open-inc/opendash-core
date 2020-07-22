@@ -4,6 +4,7 @@ export interface DataFetchingSelectionInterface {
   history?: boolean;
   historyRequired?: boolean;
   historyForceRelative?: boolean;
+  historyForceAbsolute?: boolean;
   aggregation?: boolean;
   aggregationRequired?: boolean;
   resolution?: boolean;

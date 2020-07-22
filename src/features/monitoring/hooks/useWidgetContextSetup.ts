@@ -14,8 +14,6 @@ import {
   DataFetchingOptionsInterface,
   SourceInterface,
   useSource,
-  DataItemValueInterface,
-  DataItemDimensionValueInterface,
   useDataFetchValues,
   useDataFetchDimensionValues,
   useDeepCompareEffect,
@@ -45,12 +43,18 @@ export function useWidgetContextSetup(
     }
   }, [context?.widget?.config]);
 
+  if (!context) {
+    return null;
+  }
+
   function saveDraft() {
-    DashboardService.updateWidget({
-      ...context.widget,
-      id: context.id,
-      config: draft,
-    });
+    if (context.id) {
+      DashboardService.updateWidget({
+        ...context.widget,
+        id: context.id,
+        config: draft,
+      });
+    }
   }
 
   function setName(name: string) {
@@ -221,7 +225,7 @@ export function useWidgetContextSetup(
   function useFetchConfig(
     overwriteConfig: DataFetchingOptionsInterface
   ): DataFetchingOptionsInterface {
-    const type = context?.type.dataHistory;
+    const type = context?.type.dataFetching;
     const userConfig = config._history;
 
     if (!type) {
