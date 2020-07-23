@@ -9,6 +9,8 @@ import { useTranslation, useNavigation, Boundary } from "../../..";
 import { useNavigate } from "react-router-dom";
 
 export const AdminLayout: React.FC = ({ children }) => {
+  console.log("useTranslation-AdminLayout");
+  // test asd asdasdasd
   const t = useTranslation();
   const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ export const AdminLayout: React.FC = ({ children }) => {
                 key={group.id}
                 title={
                   <span>
-                    {group.icon && <Icon icon={group.icon} />} {group.label}
+                    {group.icon && <Icon icon={group.icon} />} {t(group.label)}
                   </span>
                 }
               >
@@ -39,7 +41,7 @@ export const AdminLayout: React.FC = ({ children }) => {
                     key={route.id}
                     onClick={(e) => navigate(route.link)}
                   >
-                    {route.icon && <Icon icon={route.icon} />} {route.label}
+                    {route.icon && <Icon icon={route.icon} />} {t(route.label)}
                   </Menu.Item>
                 ))}
               </Menu.SubMenu>

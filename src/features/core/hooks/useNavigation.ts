@@ -46,10 +46,6 @@ export function useNavigation(
     [userItems, path, place]
   );
 
-  // const namespaces = useNamespaces(groups, items);
-
-  const t = useTranslation(/*namespaces*/);
-
   const activeItems = React.useMemo(() => {
     return items
       .filter((item) =>
@@ -65,39 +61,11 @@ export function useNavigation(
       .map((group) => {
         return {
           ...group,
-          label: t(group.label),
-          children: items
-            .filter((item) => item.group === group.id)
-            .map((item) => {
-              return { ...item, label: t(item.label) };
-            }),
+          children: items.filter((item) => item.group === group.id),
         };
       })
       .filter((group) => group.children.length > 0);
   }, [groups, items]);
 
   return [result, items, activeItems];
-}
-
-function useNamespaces(groups, items) {
-  return React.useMemo(
-    () =>
-      ["translation"].concat(
-        [...groups, ...items]
-          .map(({ label }) => label)
-          .filter((v, i, a) => a.indexOf(v) === i)
-          .map((label) => {
-            const parts = label.split(":");
-
-            if (parts.length > 1) {
-              return parts[0];
-            }
-
-            return null;
-          })
-          .filter(Boolean)
-          .filter((v, i, a) => a.indexOf(v) === i)
-      ),
-    [groups, items]
-  );
 }
