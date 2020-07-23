@@ -18,7 +18,7 @@ import {
 interface Props {}
 
 export const MonitoringGlobals: React.FC<Props> = ({ children }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const { DashboardService } = useOpenDashServices();
 
   const dashboards = useDashboardsBySource();

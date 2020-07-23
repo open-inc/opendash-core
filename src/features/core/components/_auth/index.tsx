@@ -9,7 +9,7 @@ import LoginForm from "./LoginForm";
 import SignupForm from "./SignupForm";
 
 export default function OpenDashAuth() {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const [state, setState] = React.useState("login");
   const [error, setError] = React.useState();
   const { UserService } = useOpenDashServices();
@@ -18,11 +18,11 @@ export default function OpenDashAuth() {
     <Container>
       {state === "login" && (
         <Box>
-          <Title>{t("auth.login_title")}</Title>
+          <Title>{t("opendash:auth.login_title")}</Title>
           {error && (
             <Alert
               type="error"
-              message={t("auth.login_failed")}
+              message={t("opendash:auth.login_failed")}
               style={{ marginBottom: 10 }}
             />
           )}
@@ -42,7 +42,7 @@ export default function OpenDashAuth() {
           />
           <SwitchState>
             <Button type="link" onClick={(e) => setState("signup")}>
-              {t("auth.switch_to_signup")}
+              {t("opendash:auth.switch_to_signup")}
             </Button>
           </SwitchState>
         </Box>
@@ -50,11 +50,11 @@ export default function OpenDashAuth() {
 
       {state === "signup" && (
         <Box>
-          <Title>{t("auth.signup_title")}</Title>
+          <Title>{t("opendash:auth.signup_title")}</Title>
           {error && (
             <Alert
               type="error"
-              message={t("auth.signup_failed")}
+              message={t("opendash:auth.signup_failed")}
               style={{ marginBottom: 10 }}
             />
           )}
@@ -74,7 +74,7 @@ export default function OpenDashAuth() {
           />
           <SwitchState>
             <Button type="link" onClick={(e) => setState("login")}>
-              {t("auth.switch_to_login")}
+              {t("opendash:auth.switch_to_login")}
             </Button>
           </SwitchState>
         </Box>

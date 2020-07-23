@@ -11,7 +11,7 @@ interface Props {
 
 export const DashboardCreationModal = React.memo<Props>(
   ({ open, close, onSave }) => {
-    const [t] = useTranslation(["opendash"]);
+    const t = useTranslation();
     const { DashboardService } = useOpenDashServices();
 
     const [name, setName] = React.useState(undefined);
@@ -23,8 +23,8 @@ export const DashboardCreationModal = React.memo<Props>(
     return (
       <Modal
         visible={open}
-        title={t("dashboards.create_modal_title")}
-        okText={t("ui.create")}
+        title={t("opendash:dashboards.create_modal_title")}
+        okText={t("opendash:ui.create")}
         onOk={() => {
           // @ts-ignore
           DashboardService.createDashboard({ name: name }).then((id) => {
@@ -35,15 +35,15 @@ export const DashboardCreationModal = React.memo<Props>(
 
           close();
         }}
-        cancelText={t("ui.cancel")}
+        cancelText={t("opendash:ui.cancel")}
         onCancel={(e) => close()}
         okButtonProps={{ disabled: !name }}
       >
-        <p>{t("dashboards.create_modal_description")}</p>
+        <p>{t("opendash:dashboards.create_modal_description")}</p>
         <Input
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder={t("dashboards.create_modal_placeholder")}
+          placeholder={t("opendash:dashboards.create_modal_placeholder")}
         ></Input>
       </Modal>
     );

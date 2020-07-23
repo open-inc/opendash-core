@@ -18,7 +18,7 @@ interface Props {
 
 export const WidgetCreationModal = React.memo<Props>(
   function WidgetCreationModalComponent({ open, close, limit = 1, onSave }) {
-    const [t] = useTranslation(["opendash"]);
+    const t = useTranslation();
     const presets = useWidgetPresets();
     const [selection, setSelection] = React.useState([]);
 
@@ -30,8 +30,8 @@ export const WidgetCreationModal = React.memo<Props>(
 
     return (
       <Modal
-        title={t("widgets.catalogue.title")}
-        okText={t("widgets.catalogue.ok_button")}
+        title={t("opendash:widgets.catalogue.title")}
+        okText={t("opendash:widgets.catalogue.ok_button")}
         visible={open}
         onCancel={(e) => close()}
         onOk={() => {
@@ -46,7 +46,7 @@ export const WidgetCreationModal = React.memo<Props>(
           disabled: selection.length === 0,
         }}
       >
-        <p>{t("widgets.catalogue.description")}</p>
+        <p>{t("opendash:widgets.catalogue.description")}</p>
         <List
           dataSource={presets}
           renderItem={(item, index) => (

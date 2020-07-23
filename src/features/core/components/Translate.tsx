@@ -3,9 +3,10 @@ import { useTranslation } from "../../..";
 
 export const Translate = React.memo<{
   t: string;
-  ns?: string[];
-}>(function Translate({ t: translationIdentifier, ns = ["opendash"] }) {
-  const [t] = useTranslation(ns);
+}>(function Translate({ t: translationIdentifier }) {
+  const t = useTranslation();
 
-  return t(translationIdentifier);
+  // TODO:
+  // @ts-ignore
+  return t(translationIdentifier) as React.ReactElement;
 });

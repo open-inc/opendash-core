@@ -35,7 +35,7 @@ export function DataItemHistoryOptionsPicker({
   value = {},
   onChange,
 }: Props) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   useDeepCompareEffect(() => {
     onChange(
@@ -126,7 +126,7 @@ export function DataItemHistoryOptionsPicker({
               );
             }}
           >
-            {t("monitoring.history_options.live_enabled")}
+            {t("opendash:monitoring.history_options.live_enabled")}
           </Checkbox>
         </Col>
       </Row>
@@ -144,7 +144,7 @@ export function DataItemHistoryOptionsPicker({
               );
             }}
           >
-            {t("monitoring.history_options.history_enabled")}
+            {t("opendash:monitoring.history_options.history_enabled")}
           </Checkbox>
         </Col>
       </Row>
@@ -164,10 +164,10 @@ export function DataItemHistoryOptionsPicker({
             }}
           >
             <Radio.Button value="absolute">
-              {t("monitoring.history_options.type_absolute")}
+              {t("opendash:monitoring.history_options.type_absolute")}
             </Radio.Button>
             <Radio.Button value="relative">
-              {t("monitoring.history_options.type_relative")}
+              {t("opendash:monitoring.history_options.type_relative")}
             </Radio.Button>
           </Radio.Group>
         </Col>
@@ -204,22 +204,22 @@ export function DataItemHistoryOptionsPicker({
               }}
             >
               <Select.Option value="minute">
-                {t("ui.minute", { count: value.value })}
+                {t("opendash:ui.minute", { count: value.value })}
               </Select.Option>
               <Select.Option value="hour">
-                {t("ui.hour", { count: value.value })}
+                {t("opendash:ui.hour", { count: value.value })}
               </Select.Option>
               <Select.Option value="day">
-                {t("ui.day", { count: value.value })}
+                {t("opendash:ui.day", { count: value.value })}
               </Select.Option>
               <Select.Option value="week">
-                {t("ui.week", { count: value.value })}
+                {t("opendash:ui.week", { count: value.value })}
               </Select.Option>
               <Select.Option value="month">
-                {t("ui.month", { count: value.value })}
+                {t("opendash:ui.month", { count: value.value })}
               </Select.Option>
               <Select.Option value="year">
-                {t("ui.year", { count: value.value })}
+                {t("opendash:ui.year", { count: value.value })}
               </Select.Option>
             </Select>
           </Col>
@@ -232,7 +232,9 @@ export function DataItemHistoryOptionsPicker({
             <DatePicker.RangePicker
               disabled={!value.historyType}
               allowClear={false}
-              placeholder={t("ui.select_date_range")}
+              // TODO:
+              // @ts-ignore
+              placeholder={t("opendash:ui.select_date_range")}
               style={style}
               value={[moment(value?.start), moment(value?.end)]}
               onChange={(nextValue) =>
@@ -276,27 +278,27 @@ export function DataItemHistoryOptionsPicker({
             }}
           >
             <Select.Option value="none">
-              {t("monitoring.history_options.aggregation_none")}
+              {t("opendash:monitoring.history_options.aggregation_none")}
             </Select.Option>
 
             <Select.Option value="sum">
-              {t("monitoring.history_options.aggregation_sum")}
+              {t("opendash:monitoring.history_options.aggregation_sum")}
             </Select.Option>
 
             <Select.Option value="mean">
-              {t("monitoring.history_options.aggregation_mean")}
+              {t("opendash:monitoring.history_options.aggregation_mean")}
             </Select.Option>
 
             <Select.Option value="max">
-              {t("monitoring.history_options.aggregation_max")}
+              {t("opendash:monitoring.history_options.aggregation_max")}
             </Select.Option>
 
             <Select.Option value="min">
-              {t("monitoring.history_options.aggregation_min")}
+              {t("opendash:monitoring.history_options.aggregation_min")}
             </Select.Option>
 
             <Select.Option value="count">
-              {t("monitoring.history_options.aggregation_count")}
+              {t("opendash:monitoring.history_options.aggregation_count")}
             </Select.Option>
           </Select>
         </Col>

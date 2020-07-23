@@ -4,13 +4,13 @@ import { Result } from "antd";
 import { useTranslation } from "../../..";
 
 export function OpenDashDefaultRoute(params: any) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   return (
     <Result
       status="warning"
-      title={t("error.not_found_title")}
-      subTitle={t("error.not_found_subtitle")}
+      title={t("opendash:error.not_found_title")}
+      subTitle={t("opendash:error.not_found_subtitle")}
     />
   );
 }

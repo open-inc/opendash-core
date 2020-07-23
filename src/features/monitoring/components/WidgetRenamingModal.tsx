@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const WidgetRenamingModal = React.memo<Props>(({ id, open, close }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const { DashboardService } = useOpenDashServices();
   const widget = useWidget(id);
 
@@ -30,21 +30,21 @@ export const WidgetRenamingModal = React.memo<Props>(({ id, open, close }) => {
   return (
     <Modal
       visible={open}
-      title={t("widgets.rename_modal_title")}
-      okText={t("ui.rename")}
+      title={t("opendash:widgets.rename_modal_title")}
+      okText={t("opendash:ui.rename")}
       onOk={() => {
         DashboardService.updateWidget({ ...widget, id, name: draft });
         close();
       }}
-      cancelText={t("ui.cancel")}
+      cancelText={t("opendash:ui.cancel")}
       onCancel={(e) => close()}
       okButtonProps={{ disabled: widget.name === draft }}
     >
-      <p>{t("widgets.rename_modal_description")}</p>
+      <p>{t("opendash:widgets.rename_modal_description")}</p>
       <Input
         value={draft}
         onChange={(e) => setDraft(e.target.value)}
-        placeholder={t("widgets.rename_modal_placeholder")}
+        placeholder={t("opendash:widgets.rename_modal_placeholder")}
       ></Input>
     </Modal>
   );

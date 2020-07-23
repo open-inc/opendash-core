@@ -29,7 +29,7 @@ import {
 import { IconSelect } from "@opendash/ui";
 
 export const Explorer = React.memo(function Explorer() {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const { DataService } = useOpenDashServices();
 
@@ -74,13 +74,13 @@ export const Explorer = React.memo(function Explorer() {
           valueTypes.some((type) => !widget.dataItems.types?.includes(type))
         ) {
           disabled = true;
-          tooltip = t("error.data.items_type");
+          tooltip = t("opendash:error.data.items_type");
         } else if (widget.dataItems.min > state.itemDimensions.length) {
           disabled = true;
-          tooltip = t("error.data.items_min");
+          tooltip = t("opendash:error.data.items_min");
         } else if (widget.dataItems.max < state.itemDimensions.length) {
           disabled = true;
-          tooltip = t("error.data.items_max");
+          tooltip = t("opendash:error.data.items_max");
         }
 
         if (!disabled) {
@@ -148,32 +148,32 @@ export const Explorer = React.memo(function Explorer() {
           }
         >
           <Steps.Step
-            title={t("monitoring.explorer.step_data_title")}
-            subTitle={t("monitoring.explorer.step_data_subtitle", {
+            title={t("opendash:monitoring.explorer.step_data_title")}
+            subTitle={t("opendash:monitoring.explorer.step_data_subtitle", {
               count: Math.max(state.itemDimensions?.length, 0),
             })}
           />
 
           <Steps.Step
-            title={t("monitoring.explorer.step_fetching_title")}
-            subTitle={t("monitoring.explorer.step_fetching_subtitle")}
+            title={t("opendash:monitoring.explorer.step_fetching_title")}
+            subTitle={t("opendash:monitoring.explorer.step_fetching_subtitle")}
           />
 
           <Steps.Step
-            title={t("monitoring.explorer.step_vis_title")}
-            subTitle={t("monitoring.explorer.step_vis_subtitle", {
+            title={t("opendash:monitoring.explorer.step_vis_title")}
+            subTitle={t("opendash:monitoring.explorer.step_vis_subtitle", {
               count: visualisations.filter((v) => !v.disabled).length,
             })}
           />
 
           <Steps.Step
-            title={t("monitoring.explorer.step_settings_title")}
-            subTitle={t("monitoring.explorer.step_settings_subtitle")}
+            title={t("opendash:monitoring.explorer.step_settings_title")}
+            subTitle={t("opendash:monitoring.explorer.step_settings_subtitle")}
           />
 
           <Steps.Step
-            title={t("monitoring.explorer.step_preview_title")}
-            subTitle={t("monitoring.explorer.step_preview_subtitle")}
+            title={t("opendash:monitoring.explorer.step_preview_title")}
+            subTitle={t("opendash:monitoring.explorer.step_preview_subtitle")}
           />
         </Steps>
       </StepNav>
@@ -185,9 +185,12 @@ export const Explorer = React.memo(function Explorer() {
           activeKey={state.step.toString()}
           renderTabBar={() => <React.Fragment />}
         >
-          <Tabs.TabPane tab={t("monitoring.explorer.step_data_title")} key="0">
+          <Tabs.TabPane
+            tab={t("opendash:monitoring.explorer.step_data_title")}
+            key="0"
+          >
             <Description
-              children={t("monitoring.explorer.step_data_description")}
+              children={t("opendash:monitoring.explorer.step_data_description")}
             />
             <DataSelect
               selectionOptions={{
@@ -205,11 +208,13 @@ export const Explorer = React.memo(function Explorer() {
             />
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={t("monitoring.explorer.step_fetching_title")}
+            tab={t("opendash:monitoring.explorer.step_fetching_title")}
             key="1"
           >
             <Description
-              children={t("monitoring.explorer.step_fetching_description")}
+              children={t(
+                "opendash:monitoring.explorer.step_fetching_description"
+              )}
             />
             <DataItemHistoryOptionsPicker
               options={{ live: true, history: true, aggregation: true }}
@@ -223,9 +228,12 @@ export const Explorer = React.memo(function Explorer() {
               }}
             />
           </Tabs.TabPane>
-          <Tabs.TabPane tab={t("monitoring.explorer.step_vis_title")} key="2">
+          <Tabs.TabPane
+            tab={t("opendash:monitoring.explorer.step_vis_title")}
+            key="2"
+          >
             <Description
-              children={t("monitoring.explorer.step_vis_description")}
+              children={t("opendash:monitoring.explorer.step_vis_description")}
             />
             <IconSelect
               options={visualisations}
@@ -244,11 +252,13 @@ export const Explorer = React.memo(function Explorer() {
           </Tabs.TabPane>
 
           <Tabs.TabPane
-            tab={t("monitoring.explorer.step_settings_title")}
+            tab={t("opendash:monitoring.explorer.step_settings_title")}
             key="3"
           >
             <Description
-              children={t("monitoring.explorer.step_settings_description")}
+              children={t(
+                "opendash:monitoring.explorer.step_settings_description"
+              )}
             />
 
             <WidgetSettingsRenderWithoutSteps
@@ -259,11 +269,13 @@ export const Explorer = React.memo(function Explorer() {
           </Tabs.TabPane>
 
           <Tabs.TabPane
-            tab={t("monitoring.explorer.step_preview_title")}
+            tab={t("opendash:monitoring.explorer.step_preview_title")}
             key="4"
           >
             <Description
-              children={t("monitoring.explorer.step_preview_description")}
+              children={t(
+                "opendash:monitoring.explorer.step_preview_description"
+              )}
             />
 
             <div ref={widgetBaseContext.container} style={{ height: 500 }}>

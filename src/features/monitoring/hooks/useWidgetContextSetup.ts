@@ -24,7 +24,7 @@ import {
 export function useWidgetContextSetup(
   context: WidgetBaseContextInterface
 ): WidgetContextInterface {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const { DashboardService } = useOpenDashServices();
 
   const [draft, updateDraft, replaceDraft, assignToDraft] = useImmerState({});
@@ -82,23 +82,25 @@ export function useWidgetContextSetup(
     const [, , allSources] = useSource();
 
     if (!type) {
-      throw new WidgetConfigError(t("error.data.sources_unsupported"));
+      throw new WidgetConfigError(t("opendash:error.data.sources_unsupported"));
     }
 
     if (type.select !== "source") {
-      throw new WidgetConfigError(t("error.data.sources_dev_bad_config"));
+      throw new WidgetConfigError(
+        t("opendash:error.data.sources_dev_bad_config")
+      );
     }
 
     if (!sourceConfig) {
-      throw new WidgetConfigError(t("error.data.sources_notfound"));
+      throw new WidgetConfigError(t("opendash:error.data.sources_notfound"));
     }
 
     if (sourceConfig.length > type.max) {
-      throw new WidgetConfigError(t("error.data.sources_max"));
+      throw new WidgetConfigError(t("opendash:error.data.sources_max"));
     }
 
     if (sourceConfig.length < type.min) {
-      throw new WidgetConfigError(t("error.data.sources_min"));
+      throw new WidgetConfigError(t("opendash:error.data.sources_min"));
     }
 
     const sources: SourceInterface[] = sourceConfig.map((id) =>
@@ -107,7 +109,7 @@ export function useWidgetContextSetup(
 
     for (const source of sources) {
       if (!source) {
-        throw new WidgetConfigError(t("error.data.sources_missing"));
+        throw new WidgetConfigError(t("opendash:error.data.sources_missing"));
       }
     }
 
@@ -120,23 +122,25 @@ export function useWidgetContextSetup(
     const allItems = useDataItems();
 
     if (!type) {
-      throw new WidgetConfigError(t("error.data.items_unsupported"));
+      throw new WidgetConfigError(t("opendash:error.data.items_unsupported"));
     }
 
     if (type.select !== "item") {
-      throw new WidgetConfigError(t("error.data.items_dev_bad_config"));
+      throw new WidgetConfigError(
+        t("opendash:error.data.items_dev_bad_config")
+      );
     }
 
     if (!itemConfig) {
-      throw new WidgetConfigError(t("error.data.items_notfound"));
+      throw new WidgetConfigError(t("opendash:error.data.items_notfound"));
     }
 
     if (itemConfig.length > type.max) {
-      throw new WidgetConfigError(t("error.data.items_max"));
+      throw new WidgetConfigError(t("opendash:error.data.items_max"));
     }
 
     if (itemConfig.length < type.min) {
-      throw new WidgetConfigError(t("error.data.items_min"));
+      throw new WidgetConfigError(t("opendash:error.data.items_min"));
     }
 
     const items: DataItemInterface[] = React.useMemo(
@@ -149,7 +153,7 @@ export function useWidgetContextSetup(
 
     for (const item of items) {
       if (!item) {
-        throw new WidgetConfigError(t("error.data.items_missing"));
+        throw new WidgetConfigError(t("opendash:error.data.items_missing"));
       }
     }
 
@@ -162,23 +166,25 @@ export function useWidgetContextSetup(
     const allItems = useDataItems();
 
     if (!type) {
-      throw new WidgetConfigError(t("error.data.items_unsupported"));
+      throw new WidgetConfigError(t("opendash:error.data.items_unsupported"));
     }
 
     if (type.select !== "dimension") {
-      throw new WidgetConfigError(t("error.data.items_dev_bad_config"));
+      throw new WidgetConfigError(
+        t("opendash:error.data.items_dev_bad_config")
+      );
     }
 
     if (!dimensionConfig) {
-      throw new WidgetConfigError(t("error.data.items_notfound"));
+      throw new WidgetConfigError(t("opendash:error.data.items_notfound"));
     }
 
     if (dimensionConfig.length > type.max) {
-      throw new WidgetConfigError(t("error.data.items_max"));
+      throw new WidgetConfigError(t("opendash:error.data.items_max"));
     }
 
     if (dimensionConfig.length < type.min) {
-      throw new WidgetConfigError(t("error.data.items_min"));
+      throw new WidgetConfigError(t("opendash:error.data.items_min"));
     }
 
     const items: [DataItemInterface, number][] = React.useMemo(
@@ -192,11 +198,11 @@ export function useWidgetContextSetup(
 
     for (const [item, dimension] of items) {
       if (!item) {
-        throw new WidgetConfigError(t("error.data.items_missing"));
+        throw new WidgetConfigError(t("opendash:error.data.items_missing"));
       }
 
       if (!type.types.includes(item.valueTypes[dimension].type)) {
-        throw new WidgetConfigError(t("error.data.items_type"));
+        throw new WidgetConfigError(t("opendash:error.data.items_type"));
       }
     }
 
@@ -229,11 +235,11 @@ export function useWidgetContextSetup(
     const userConfig = config._history;
 
     if (!type) {
-      throw new WidgetConfigError(t("error.data.history_unsupported"));
+      throw new WidgetConfigError(t("opendash:error.data.history_unsupported"));
     }
 
     if (!userConfig) {
-      throw new WidgetConfigError(t("error.data.history_notfound"));
+      throw new WidgetConfigError(t("opendash:error.data.history_notfound"));
     }
 
     return useDeepCompareMemo(

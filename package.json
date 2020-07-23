@@ -31,16 +31,15 @@
     "prep:exports": "node ./scripts/exports.js"
   },
   "dependencies": {
+    "@opendash/i18n": "nightly",
     "@opendash/icons": "nightly",
     "@opendash/ui": "nightly",
     "async-validator": "^3.0.0",
     "highcharts": "^7.0.0",
-    "i18next": "^17.0.0",
     "immer": "^5.0.0",
     "lodash.throttle": "^4.0.0",
     "picomatch": "^2.0.0",
     "react-grid-layout": "^0.17.0",
-    "react-i18next": "^10.0.0",
     "react-router": "6.0.0-alpha.5",
     "react-router-dom": "6.0.0-alpha.5",
     "rison": "^0.1.0",

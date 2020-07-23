@@ -30,7 +30,6 @@ export { AppFactoryLockedError } from "./features/core/errors/AppFactoryLockedEr
 export { NotFoundError } from "./features/core/errors/NotFoundError";
 export { compare } from "./features/core/helper/compare";
 export { copy } from "./features/core/helper/copy";
-export { createI18n } from "./features/core/helper/createI18n";
 export { createState } from "./features/core/helper/createState";
 export { createWidget } from "./features/core/helper/createWidget";
 export { createWidgetComponent } from "./features/core/helper/createWidgetComponent";

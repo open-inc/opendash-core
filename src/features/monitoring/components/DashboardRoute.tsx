@@ -19,7 +19,7 @@ import { DashboardDisplay } from "./DashboardDisplay";
 interface Props {}
 
 export const DashboardRoute: React.FC<Props> = () => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const dashboards = useDashboardsBySource();
   const [dashboard, setDashboard] = useDashboardCurrent();

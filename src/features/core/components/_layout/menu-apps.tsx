@@ -57,7 +57,7 @@ export const IconHolder = styled.div`
 `;
 
 export const Element = ({ label, icon, color, onClick }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   return (
     <Tile color={color} onClick={onClick}>

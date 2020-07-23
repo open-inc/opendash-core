@@ -18,7 +18,7 @@ interface Props {}
 
 export const DataItemRenameRoute = React.memo<Props>(
   function DataItemRenameRoute() {
-    const [t] = useTranslation(["opendash"]);
+    const t = useTranslation();
     const { DataService, UserStorageService } = useOpenDashServices();
 
     const [source, , sources] = useSource();
@@ -40,7 +40,7 @@ export const DataItemRenameRoute = React.memo<Props>(
 
     const items = React.useMemo(() => {
       if (searchString) {
-        const searchStrings = searchString.toLowerCase().split(" ");
+        const searchStrings = searchString.toLowerCase().split("opendash: ");
 
         return allItems
           .filter((item) => item.source === source.tag)
@@ -83,23 +83,25 @@ export const DataItemRenameRoute = React.memo<Props>(
 
     const columns = [
       {
-        title: t("account.data_item_rename.col_name"),
+        title: t("opendash:account.data_item_rename.col_name"),
         dataIndex: "name",
         key: "name",
       },
       {
-        title: t("account.data_item_rename.col_id"),
+        title: t("opendash:account.data_item_rename.col_id"),
         dataIndex: "id",
         key: "id",
       },
       {
-        title: t("account.data_item_rename.col_rename"),
+        title: t("opendash:account.data_item_rename.col_rename"),
         dataIndex: "key",
         key: "key",
         render: (key) => {
           return (
             <Input
-              placeholder={t("account.data_item_rename.input_placeholder")}
+              placeholder={t(
+                "opendash:account.data_item_rename.input_placeholder"
+              )}
               value={state[key]}
               allowClear={true}
               onChange={(e) => {
@@ -119,11 +121,13 @@ export const DataItemRenameRoute = React.memo<Props>(
       UserStorageService.set(`opendash/data/names/${source.tag}`, state)
         .then(
           (ok) => {
-            message.success(t("account.data_item_settings.save_success"));
+            message.success(
+              t("opendash:account.data_item_settings.save_success")
+            );
             close();
           },
           (error) => {
-            message.error(t("account.data_item_settings.save_error"));
+            message.error(t("opendash:account.data_item_settings.save_error"));
           }
         )
         .finally(() => {
@@ -134,8 +138,8 @@ export const DataItemRenameRoute = React.memo<Props>(
     return (
       <AdminLayout>
         <AdminToolbar
-          title={t("account.data_item_rename.label")}
-          description={t("account.data_item_rename.description")}
+          title={t("opendash:account.data_item_rename.label")}
+          description={t("opendash:account.data_item_rename.description")}
           search={searchString}
           onSearch={setSearchString}
           actions={[
@@ -143,7 +147,7 @@ export const DataItemRenameRoute = React.memo<Props>(
               key="save"
               loading={saving}
               onClick={() => submit()}
-              children={t("ui.save")}
+              children={t("opendash:ui.save")}
               type="primary"
             />,
             <Button
@@ -152,7 +156,7 @@ export const DataItemRenameRoute = React.memo<Props>(
               onClick={() => {
                 setState({});
               }}
-              children={t("ui.reset")}
+              children={t("opendash:ui.reset")}
             />,
           ]}
         />

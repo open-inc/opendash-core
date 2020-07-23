@@ -22,12 +22,12 @@ interface ItemProps {
 }
 
 const AlarmListItem = React.memo<ItemProps>(function AlarmListItem({ alarm }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const { AlarmService } = useOpenDashServices();
 
   const item = useDataItem(alarm.item[0], alarm.item[1]);
 
-  let title = t("monitoring.alarms.trigger." + alarm.trigger.type);
+  let title = t("opendash:monitoring.alarms.trigger." + alarm.trigger.type);
 
   if ("string" in alarm.trigger) {
     title += ` '${alarm.trigger.string}'`;
@@ -41,7 +41,7 @@ const AlarmListItem = React.memo<ItemProps>(function AlarmListItem({ alarm }) {
     title += ` ${alarm.trigger.min} - ${alarm.trigger.max}`;
   }
 
-  let description = t("monitoring.alarms.action." + alarm.action.type);
+  let description = t("opendash:monitoring.alarms.action." + alarm.action.type);
 
   if ("email" in alarm.action && alarm.action.email !== undefined) {
     description += ` (${alarm.action.email})`;
@@ -57,18 +57,18 @@ const AlarmListItem = React.memo<ItemProps>(function AlarmListItem({ alarm }) {
 
   function deleteAlarm() {
     Modal.confirm({
-      title: t("monitoring.alarms.delete.confirm_title"),
-      content: t("monitoring.alarms.delete.confirm_message"),
-      okText: t("monitoring.alarms.delete.confirm_ok"),
+      title: t("opendash:monitoring.alarms.delete.confirm_title"),
+      content: t("opendash:monitoring.alarms.delete.confirm_message"),
+      okText: t("opendash:monitoring.alarms.delete.confirm_ok"),
       okType: "danger",
-      // cancelText: t("monitoring.alarms.delete.confirm_cancel"),
+      // cancelText: t("opendash:monitoring.alarms.delete.confirm_cancel"),
       onOk: () => {
         AlarmService.deleteAlarm(alarm).then(
           (ok) => {
-            message.success(t("monitoring.alarms.delete.success"));
+            message.success(t("opendash:monitoring.alarms.delete.success"));
           },
           (error) => {
-            message.error(t("monitoring.alarms.delete.error"));
+            message.error(t("opendash:monitoring.alarms.delete.error"));
           }
         );
       },
@@ -91,7 +91,7 @@ const AlarmListItem = React.memo<ItemProps>(function AlarmListItem({ alarm }) {
 });
 
 export const AlarmList = React.memo<ListProps>(function AlarmList({ alarms }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   return (
     <List

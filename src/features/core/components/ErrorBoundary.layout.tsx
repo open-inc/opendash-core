@@ -21,7 +21,7 @@ export const ErrorLayout: React.FC<{ reset: (goHome: boolean) => void }> = ({
   children,
   reset,
 }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   return (
     <Container>
@@ -30,13 +30,13 @@ export const ErrorLayout: React.FC<{ reset: (goHome: boolean) => void }> = ({
       <Actions>
         <Button
           type="primary"
-          children={t("error.reload")}
+          children={t("opendash:error.reload")}
           onClick={(e) => {
             reset(false);
           }}
         />
         <Button
-          children={t("error.reset")}
+          children={t("opendash:error.reset")}
           onClick={(e) => {
             reset(true);
           }}

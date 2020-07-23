@@ -53,7 +53,7 @@ export const FormGenerator: React.FC<Props> = ({
   settings,
   children,
 }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const firstRunRef = React.useRef(true);
   const dirtyRef = React.useRef({});
@@ -226,7 +226,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
   value,
   setValue,
 }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   switch (field.type) {
     case "input":

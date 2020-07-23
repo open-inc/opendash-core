@@ -91,7 +91,7 @@ export const DataSelect = React.memo<Props>(function DataSelect({
   showActions = true,
   showSearch = true,
 }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const { SourceService, DataService } = useOpenDashServices();
   const allItems = useDataItems();
   const [rootSource, , sources] = useSource();
@@ -180,41 +180,45 @@ export const DataSelect = React.memo<Props>(function DataSelect({
 
   const columns = [
     {
-      title: t("data.viewer.col_name"),
+      title: t("opendash:data.viewer.col_name"),
       dataIndex: "name",
       key: "name",
     },
     {
-      title: t("data.viewer.col_type"),
+      title: t("opendash:data.viewer.col_type"),
       dataIndex: "key",
       key: "type",
       render: (key, row: RowType) => {
         if (row.item && row.dimension) {
           return (
             <>
-              <Tag>{t("data.item.label")}</Tag>
-              <Tag>{t("data.item_dimension.types." + row.dimension.type)}</Tag>
+              <Tag>{t("opendash:data.item.label")}</Tag>
+              <Tag>
+                {t("opendash:data.item_dimension.types." + row.dimension.type)}
+              </Tag>
             </>
           );
         }
 
         if (row.dimension) {
-          <Tag>{t("data.item_dimension.types." + row.dimension.type)}</Tag>;
+          <Tag>
+            {t("opendash:data.item_dimension.types." + row.dimension.type)}
+          </Tag>;
         }
 
         if (row.item) {
-          return <Tag>{t("data.item.label")}</Tag>;
+          return <Tag>{t("opendash:data.item.label")}</Tag>;
         }
 
         if (row.sourceKey) {
-          return <Tag>{t("sources.label")}</Tag>;
+          return <Tag>{t("opendash:sources.label")}</Tag>;
         }
 
         return null;
       },
     },
     {
-      title: t("data.viewer.col_value"),
+      title: t("opendash:data.viewer.col_value"),
       dataIndex: "key",
       key: "value",
       render: (key, row: RowType) => {
@@ -232,7 +236,7 @@ export const DataSelect = React.memo<Props>(function DataSelect({
       },
     },
     {
-      title: t("data.viewer.col_time"),
+      title: t("opendash:data.viewer.col_time"),
       dataIndex: "key",
       key: "time",
       render: (key, row: RowType) => {
@@ -248,7 +252,7 @@ export const DataSelect = React.memo<Props>(function DataSelect({
       },
     },
     {
-      title: t("data.viewer.col_actions"),
+      title: t("opendash:data.viewer.col_actions"),
       dataIndex: "key",
       key: "actions",
       render: (key, row: RowType) => {
@@ -325,7 +329,7 @@ export const DataSelect = React.memo<Props>(function DataSelect({
     <>
       {showSearch && (
         <Input.Search
-          placeholder={t("ui.search_enter_placeholder")}
+          placeholder={t("opendash:ui.search_enter_placeholder")}
           onSearch={(value) => {
             setSearchString(value);
           }}

@@ -9,14 +9,16 @@ interface Props {
 }
 
 export function LinkedDataItemHistoryOptionsPicker({ style }: Props) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const [value, setValue] = useWidgetDataItemHistoryOptions();
 
   return (
     <DatePicker.RangePicker
       allowClear={false}
       disabledDate={(date) => date.isAfter(new Date())}
-      placeholder={t("ui.select_date_linked")}
+      // TODO:
+      // @ts-ignore
+      placeholder={t("opendash:ui.select_date_linked")}
       style={style}
       value={[moment(value.start), moment(value.end)]}
       onChange={(nextValue) =>

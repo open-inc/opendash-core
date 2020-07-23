@@ -4,7 +4,7 @@ import { useTranslation } from "../../..";
 import { Breadcrumb as AntdBreadcrumb } from "antd";
 
 export function Breadcrumb({ style }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const breadcrumb = [];
 
   return (

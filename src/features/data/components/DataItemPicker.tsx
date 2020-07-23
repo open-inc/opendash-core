@@ -14,12 +14,12 @@ export function DataItemPicker({
   value,
   onChange,
 }: DataItemPickerProps) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const items = useDataItems();
 
   return (
     <Select
-      placeholder={t("ui.select_data_item")}
+      placeholder={t("opendash:ui.select_data_item")}
       style={style}
       value={value}
       onChange={(value) => onChange(value)}

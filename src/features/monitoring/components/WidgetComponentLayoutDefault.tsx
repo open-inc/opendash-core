@@ -24,7 +24,7 @@ export const WidgetComponentLayoutDefault = React.memo<
   setState,
   container,
 }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const hasSettings =
     type?.settingsComponent || type?.dataItems || type?.dataFetching;
@@ -37,61 +37,61 @@ export const WidgetComponentLayoutDefault = React.memo<
           overlay={
             <Menu>
               <Menu.Item
-                title={t("widgets.rename_modal_tooltip")}
+                title={t("opendash:widgets.rename_modal_tooltip")}
                 onClick={(e) => setState({ rename: true })}
               >
                 <Icon icon="fa:pen" />
 
-                {t("ui.rename")}
+                {t("opendash:ui.rename")}
               </Menu.Item>
 
               <Menu.Item
-                title={t("widgets.delete_modal_tooltip")}
+                title={t("opendash:widgets.delete_modal_tooltip")}
                 onClick={(e) => setState({ delete: true })}
               >
                 <Icon icon="fa:trash" />
 
-                {t("ui.delete")}
+                {t("opendash:ui.delete")}
               </Menu.Item>
 
               <Menu.Item
-                title={t("widgets.share_modal_tooltip")}
+                title={t("opendash:widgets.share_modal_tooltip")}
                 onClick={(e) => setState({ share: true })}
               >
                 <Icon icon="fa:share-alt" />
 
-                {t("ui.share")}
+                {t("opendash:ui.share")}
               </Menu.Item>
 
               <Menu.Item
-                title={t("widgets.fullscreen_tooltip")}
+                title={t("opendash:widgets.fullscreen_tooltip")}
                 onClick={(e) => {
                   message.info("Coming soon..");
                 }}
               >
                 <Icon icon="fa:expand-arrows" />
 
-                {t("widgets.fullscreen_action")}
+                {t("opendash:widgets.fullscreen_action")}
               </Menu.Item>
 
               <Menu.Item
                 disabled={!hasSettings}
-                title={t("widgets.reload_tooltip")}
+                title={t("opendash:widgets.reload_tooltip")}
                 onClick={(e) => setState({ key: "" + Math.random() })}
               >
                 <Icon icon="fa:sync" />
 
-                {t("widgets.reload")}
+                {t("opendash:widgets.reload")}
               </Menu.Item>
 
               <Menu.Item
                 disabled={!hasSettings}
-                title={t("widgets.settings_modal_tooltip")}
+                title={t("opendash:widgets.settings_modal_tooltip")}
                 onClick={(e) => setState({ settings: true })}
               >
                 <Icon icon="fa:cog" />
 
-                {t("widgets.settings")}
+                {t("opendash:widgets.settings")}
               </Menu.Item>
             </Menu>
           }

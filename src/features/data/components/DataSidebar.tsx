@@ -27,7 +27,7 @@ interface Props {
 }
 
 export const DataSidebar: React.FC<Props> = ({ open, close }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const [searchString, setSearchString] = React.useState("");
   const allItems = useDataItems();
 
@@ -51,7 +51,7 @@ export const DataSidebar: React.FC<Props> = ({ open, close }) => {
 
   return (
     <Drawer
-      title={t("monitoring.data_sidebar.title")}
+      title={t("opendash:monitoring.data_sidebar.title")}
       visible={open}
       width={Math.min(600, window.innerWidth)}
       onClose={(e) => close()}
@@ -60,7 +60,7 @@ export const DataSidebar: React.FC<Props> = ({ open, close }) => {
       <div style={{ padding: 24 }}>
         {/* <LinkedSourcePicker style={{ width: "100%" }} /> */}
         <Input.Search
-          placeholder={t("ui.search_enter_placeholder")}
+          placeholder={t("opendash:ui.search_enter_placeholder")}
           onSearch={(value) => {
             setSearchString(value);
           }}
@@ -75,9 +75,15 @@ export const DataSidebar: React.FC<Props> = ({ open, close }) => {
               </TableCell>
             </TableHeader>
             <TableRowLabels>
-              <TableCell>{t("monitoring.data_sidebar.col_name")}</TableCell>
-              <TableCell>{t("monitoring.data_sidebar.col_value")}</TableCell>
-              <TableCell>{t("monitoring.data_sidebar.col_date")}</TableCell>
+              <TableCell>
+                {t("opendash:monitoring.data_sidebar.col_name")}
+              </TableCell>
+              <TableCell>
+                {t("opendash:monitoring.data_sidebar.col_value")}
+              </TableCell>
+              <TableCell>
+                {t("opendash:monitoring.data_sidebar.col_date")}
+              </TableCell>
               <TableCell></TableCell>
             </TableRowLabels>
             {(items as any[]).map((item) => (

@@ -11,12 +11,12 @@ interface DataItemPickerProps {
 }
 
 export function LinkedDataItemPicker({ style }: DataItemPickerProps) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const [value, dimension, setValue] = useWidgetDataItem();
 
   return (
     <DataItemValuePicker
-      placeholder={t("ui.select_data_item_linked")}
+      placeholder={t("opendash:ui.select_data_item_linked")}
       style={style}
       value={value ? [[value.source, value.id, dimension]] : undefined}
       onChange={(nextValue) => setValue(nextValue[0])}

@@ -22,7 +22,7 @@ export const DataItemValuePicker: React.FC<Props> = ({
   value,
   onChange,
 }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const [searchString, setSearchString] = React.useState<string>();
   const { DataService } = useOpenDashServices();
   const searchStringDebounced = useDebounce(searchString, 500);
@@ -31,7 +31,7 @@ export const DataItemValuePicker: React.FC<Props> = ({
   return (
     <Select
       showSearch
-      placeholder={t(placeholder || "opendash.ui.select_data_item")}
+      placeholder={t(placeholder || "opendash:ui.select_data_item")}
       style={style}
       value={value?.[0] ? JSON.stringify(value[0]) : undefined}
       onChange={(value: string) => {

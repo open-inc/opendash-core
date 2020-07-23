@@ -11,7 +11,7 @@ interface Props {
 
 export const DashboardDeletionModal = React.memo<Props>(
   ({ id, open, close }) => {
-    const [t] = useTranslation(["opendash"]);
+    const t = useTranslation();
     const { DashboardService } = useOpenDashServices();
     const dashboard = useDashboard(id);
 
@@ -23,17 +23,17 @@ export const DashboardDeletionModal = React.memo<Props>(
     return (
       <Modal
         visible={open}
-        title={t("dashboards.delete_modal_title")}
-        okText={t("ui.delete")}
+        title={t("opendash:dashboards.delete_modal_title")}
+        okText={t("opendash:ui.delete")}
         onOk={() => {
           close();
           DashboardService.deleteDashboard(dashboard);
         }}
-        cancelText={t("ui.cancel")}
+        cancelText={t("opendash:ui.cancel")}
         onCancel={(e) => close()}
         okButtonProps={{ danger: true }}
       >
-        {t("dashboards.delete_modal_description")}
+        {t("opendash:dashboards.delete_modal_description")}
       </Modal>
     );
   }

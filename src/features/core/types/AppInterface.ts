@@ -1,5 +1,3 @@
-import { i18n } from "i18next";
-
 import {
   AppStateInterface,
   AppRefsInterface,
@@ -13,7 +11,6 @@ import {
 
 export interface AppInterface {
   id: string;
-  i18n: i18n;
   ui: {
     refs: AppRefsInterface;
 

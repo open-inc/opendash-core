@@ -7,8 +7,10 @@ import {
   useLocalStorage,
 } from "../../../..";
 
+import { changeLanguage } from "@opendash/i18n";
+
 export function LanguageSelection() {
-  const [t, i18n] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const app = useOpenDashApp();
   const [showLangSelect, setShowLangSelect] = useUrlParam(
@@ -22,16 +24,16 @@ export function LanguageSelection() {
   return (
     <Modal
       visible={showLangSelect}
-      title={t("account.language.label")}
+      title={t("opendash:account.language.label")}
       onOk={(e) => setShowLangSelect(false)}
       onCancel={(e) => setShowLangSelect(false)}
     >
-      <p>{t("account.language.info")}</p>
+      <p>{t("opendash:account.language.info")}</p>
       <Select
-        placeholder={t("account.language.placeholder")}
+        placeholder={t("opendash:account.language.placeholder")}
         defaultValue={lang}
         onChange={(nextLang) => {
-          i18n.changeLanguage(nextLang);
+          changeLanguage(nextLang);
           setLang(nextLang);
         }}
         style={{ width: "100%" }}

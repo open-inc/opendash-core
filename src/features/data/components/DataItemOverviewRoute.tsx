@@ -8,7 +8,7 @@ interface Props {}
 
 export const DataItemOverviewRoute = React.memo<Props>(
   function DataItemOverviewRoute() {
-    const [t] = useTranslation(["opendash"]);
+    const t = useTranslation();
 
     return (
       <AdminLayout>

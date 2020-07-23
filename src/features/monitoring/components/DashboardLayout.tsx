@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 export const DashboardLayout = React.memo(function DashboardLayoutComponent({
   children,
 }) {
-  const [t] = useTranslation(["openware", "opendash"]);
+  const t = useTranslation();
   const navigate = useNavigate();
 
   const [open, setOpen] = React.useState(false);

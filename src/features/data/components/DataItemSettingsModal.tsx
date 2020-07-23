@@ -22,7 +22,7 @@ interface Props {
 
 export const DataItemSettingsModal = React.memo<Props>(
   function DataItemSettingsModal({ item, open, close }) {
-    const [t] = useTranslation(["opendash"]);
+    const t = useTranslation();
 
     const { DataService, UserStorageService } = useOpenDashServices();
 
@@ -42,11 +42,13 @@ export const DataItemSettingsModal = React.memo<Props>(
     function submit() {
       UserStorageService.set(`opendash/data/names/${item.source}`, state).then(
         (ok) => {
-          message.success(t("account.data_item_settings.save_success"));
+          message.success(
+            t("opendash:account.data_item_settings.save_success")
+          );
           close();
         },
         (error) => {
-          message.error(t("account.data_item_settings.save_error"));
+          message.error(t("opendash:account.data_item_settings.save_error"));
         }
       );
     }
@@ -56,18 +58,18 @@ export const DataItemSettingsModal = React.memo<Props>(
         visible={open}
         title={
           item &&
-          t("account.data_item_settings.modal_title", {
+          t("opendash:account.data_item_settings.modal_title", {
             name: DataService.getItemName(item),
           })
         }
-        cancelText={t("ui.close")}
+        cancelText={t("opendash:ui.close")}
         onCancel={() => close()}
-        okText={t("ui.save")}
+        okText={t("opendash:ui.save")}
         onOk={() => {
           submit();
         }}
       >
-        <p>{t("account.data_item_settings.description")}</p>
+        <p>{t("opendash:account.data_item_settings.description")}</p>
         {item && (
           <FormGenerator
             state={state}
@@ -81,9 +83,12 @@ export const DataItemSettingsModal = React.memo<Props>(
               {
                 key: JSON.stringify([item.id]),
                 type: "input",
-                label: t("account.data_item_settings.input_item_label", {
-                  name: item.name,
-                }),
+                label: t(
+                  "opendash:account.data_item_settings.input_item_label",
+                  {
+                    name: item.name,
+                  }
+                ),
                 settings: {
                   allowClear: true,
                 },
@@ -91,10 +96,13 @@ export const DataItemSettingsModal = React.memo<Props>(
               ...item.valueTypes.map((valueType, i) => ({
                 key: JSON.stringify([item.id, i]),
                 type: "input",
-                label: t("account.data_item_settings.input_dimension_label", {
-                  name: valueType.name,
-                  dimension: i,
-                }),
+                label: t(
+                  "opendash:account.data_item_settings.input_dimension_label",
+                  {
+                    name: valueType.name,
+                    dimension: i,
+                  }
+                ),
                 settings: {
                   allowClear: true,
                 },

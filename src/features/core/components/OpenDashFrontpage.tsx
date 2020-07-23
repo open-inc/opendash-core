@@ -8,7 +8,7 @@ import { useNavigation, useTranslation } from "../../..";
 interface Props {}
 
 export const OpenDashFrontpage: React.FC<Props> = ({}) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const navigate = useNavigate();
   const [, items] = useNavigation("frontpage");
 
@@ -39,7 +39,7 @@ export const OpenDashFrontpage: React.FC<Props> = ({}) => {
         <Element key={e.id} {...e} />
       ))}
 
-      {elements.length === 0 && t("frontpage.empty")}
+      {elements.length === 0 && t("opendash:frontpage.empty")}
     </Container>
   );
 };

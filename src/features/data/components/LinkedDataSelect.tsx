@@ -18,7 +18,7 @@ const selectStyle = {
 };
 
 export const LinkedDataSelect: React.FC<Props> = ({ style }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const content = React.useMemo(
     () => (
@@ -34,10 +34,10 @@ export const LinkedDataSelect: React.FC<Props> = ({ style }) => {
     <Popover
       placement="bottomRight"
       content={content}
-      title={t("ui.select_linked_data")}
+      title={t("opendash:ui.select_linked_data")}
       trigger="click"
     >
-      <Button style={style}>{t("ui.select_linked_data")}</Button>
+      <Button style={style}>{t("opendash:ui.select_linked_data")}</Button>
     </Popover>
   );
 };

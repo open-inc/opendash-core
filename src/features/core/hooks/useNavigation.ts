@@ -46,9 +46,9 @@ export function useNavigation(
     [userItems, path, place]
   );
 
-  const namespaces = useNamespaces(groups, items);
+  // const namespaces = useNamespaces(groups, items);
 
-  const [t] = useTranslation(namespaces);
+  const t = useTranslation(/*namespaces*/);
 
   const activeItems = React.useMemo(() => {
     return items

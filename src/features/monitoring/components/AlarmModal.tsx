@@ -45,7 +45,7 @@ export const AlarmModal = React.memo<Props>(function AlarmModal({
   close,
   onSave,
 }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const { AlarmService, DataService } = useOpenDashServices();
 
@@ -64,11 +64,11 @@ export const AlarmModal = React.memo<Props>(function AlarmModal({
       visible={open}
       title={
         item &&
-        t("monitoring.alarms.modal_title", {
+        t("opendash:monitoring.alarms.modal_title", {
           name: DataService.getItemName(item, dimension),
         })
       }
-      cancelText={t("ui.close")}
+      cancelText={t("opendash:ui.close")}
       onCancel={(e) => close()}
       okButtonProps={{
         style: {
@@ -84,13 +84,13 @@ export const AlarmModal = React.memo<Props>(function AlarmModal({
       >
         <Tabs.TabPane
           disabled={alarms.length === 0}
-          tab={t("monitoring.alarms.modal.tab_list")}
+          tab={t("opendash:monitoring.alarms.modal.tab_list")}
           key="list"
         >
           {item && <AlarmList alarms={alarms} />}
         </Tabs.TabPane>
         <Tabs.TabPane
-          tab={t("monitoring.alarms.modal.tab_create")}
+          tab={t("opendash:monitoring.alarms.modal.tab_create")}
           key="create"
         >
           {item && (

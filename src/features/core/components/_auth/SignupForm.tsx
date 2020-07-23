@@ -5,7 +5,7 @@ import { Icon } from "@opendash/icons";
 import { FormGenerator, useTranslation } from "../../../..";
 
 export default ({ onSubmit }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   return (
     <FormGenerator
@@ -13,7 +13,7 @@ export default ({ onSubmit }) => {
         onSubmit(data);
       }}
       submit={{
-        children: t("auth.fields.signup_submit"),
+        children: t("opendash:auth.fields.signup_submit"),
         type: "primary",
         htmlType: "submit",
         style: {
@@ -27,60 +27,60 @@ export default ({ onSubmit }) => {
         {
           key: "name",
           type: "input",
-          label: t("auth.fields.name"),
+          label: t("opendash:auth.fields.name"),
           settings: {
-            placeholder: t("auth.fields.name"),
+            placeholder: t("opendash:auth.fields.name"),
             prefixIcon: "fa:user",
           },
           rules: [
             {
               required: true,
-              message: t("auth.fields.name_required"),
+              message: t("opendash:auth.fields.name_required"),
             },
           ],
         },
         {
           key: "username",
           type: "input",
-          label: t("auth.fields.username"),
+          label: t("opendash:auth.fields.username"),
           settings: {
-            placeholder: t("auth.fields.username"),
+            placeholder: t("opendash:auth.fields.username"),
             prefixIcon: "fa:tag",
           },
           rules: [
             {
               required: true,
-              message: t("auth.fields.username_required"),
+              message: t("opendash:auth.fields.username_required"),
             },
           ],
         },
         {
           key: "email",
           type: "input",
-          label: t("auth.fields.email"),
+          label: t("opendash:auth.fields.email"),
           settings: {
-            placeholder: t("auth.fields.email"),
+            placeholder: t("opendash:auth.fields.email"),
             prefixIcon: "fa:envelope",
           },
           rules: [
             {
               required: true,
-              message: t("auth.fields.email_required"),
+              message: t("opendash:auth.fields.email_required"),
             },
           ],
         },
         {
           key: "password",
           type: "input.password",
-          label: t("auth.fields.password"),
+          label: t("opendash:auth.fields.password"),
           settings: {
-            placeholder: t("auth.fields.password"),
+            placeholder: t("opendash:auth.fields.password"),
             prefixIcon: "fa:lock",
           },
           rules: [
             {
               required: true,
-              message: t("auth.fields.password_required"),
+              message: t("opendash:auth.fields.password_required"),
             },
           ],
         },

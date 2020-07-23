@@ -10,7 +10,7 @@ import { LanguageSelection } from "./LanguageSelection";
 import theme from "./theme";
 
 export default function AppLayout({ children }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const app = useOpenDashApp();
 
@@ -26,7 +26,9 @@ export default function AppLayout({ children }) {
       <Layout.Content style={theme.content}>{children}</Layout.Content>
 
       {!app.ui.disableFooter && (
-        <Layout.Footer style={theme.footer}>{t("ui.copyright")}</Layout.Footer>
+        <Layout.Footer style={theme.footer}>
+          {t("opendash:ui.copyright")}
+        </Layout.Footer>
       )}
     </Layout>
   );

@@ -38,7 +38,7 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
   dimension = 0,
   onSave,
 }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const { AlarmService } = useOpenDashServices();
 
   const [alarm, setAlarm] = React.useState<Omit<AlarmInterface, "id">>(
@@ -71,7 +71,7 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
 
   return (
     <>
-      <p>{t("monitoring.alarms.trigger.description")}</p>
+      <p>{t("opendash:monitoring.alarms.trigger.description")}</p>
 
       <FormGenerator
         state={alarm.trigger}
@@ -89,19 +89,23 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           {
             key: "type",
             type: "select",
-            label: t("monitoring.alarms.trigger.select_type_placeholder"),
+            label: t(
+              "opendash:monitoring.alarms.trigger.select_type_placeholder"
+            ),
             defaultValue: triggerTypes[0],
             settings: {
               options: triggerTypes.map((value) => ({
                 value,
-                label: t("monitoring.alarms.trigger." + value),
+                label: t("opendash:monitoring.alarms.trigger." + value),
               })),
             },
           },
           {
             key: "value",
             type: "input.number",
-            label: t("monitoring.alarms.trigger.select_value_placeholder"),
+            label: t(
+              "opendash:monitoring.alarms.trigger.select_value_placeholder"
+            ),
             defaultValue: 10,
             visible: (state) =>
               [
@@ -114,7 +118,9 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           {
             key: "min",
             type: "input.number",
-            label: t("monitoring.alarms.trigger.select_min_placeholder"),
+            label: t(
+              "opendash:monitoring.alarms.trigger.select_min_placeholder"
+            ),
             defaultValue: 10,
             visible: (state) =>
               ["number_in_range", "number_out_of_range"].includes(state.type),
@@ -122,7 +128,9 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           {
             key: "max",
             type: "input.number",
-            label: t("monitoring.alarms.trigger.select_max_placeholder"),
+            label: t(
+              "opendash:monitoring.alarms.trigger.select_max_placeholder"
+            ),
             defaultValue: 100,
             visible: (state) =>
               ["number_in_range", "number_out_of_range"].includes(state.type),
@@ -130,7 +138,9 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           {
             key: "string",
             type: "input",
-            label: t("monitoring.alarms.trigger.select_string_placeholder"),
+            label: t(
+              "opendash:monitoring.alarms.trigger.select_string_placeholder"
+            ),
             defaultValue: "",
             visible: (state) =>
               [
@@ -147,28 +157,40 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           {
             key: "interval",
             type: "select",
-            label: t("monitoring.alarms.trigger.select_interval_placeholder"),
+            label: t(
+              "opendash:monitoring.alarms.trigger.select_interval_placeholder"
+            ),
             defaultValue: 0,
             settings: {
               options: [
                 {
-                  label: t("monitoring.alarms.trigger.interval_everytime"),
+                  label: t(
+                    "opendash:monitoring.alarms.trigger.interval_everytime"
+                  ),
                   value: 0,
                 },
                 {
-                  label: t("monitoring.alarms.trigger.interval_once_per_hour"),
+                  label: t(
+                    "opendash:monitoring.alarms.trigger.interval_once_per_hour"
+                  ),
                   value: 1000 * 60 * 60,
                 },
                 {
-                  label: t("monitoring.alarms.trigger.interval_once_per_day"),
+                  label: t(
+                    "opendash:monitoring.alarms.trigger.interval_once_per_day"
+                  ),
                   value: 1000 * 60 * 60 * 24,
                 },
                 {
-                  label: t("monitoring.alarms.trigger.interval_once_per_week"),
+                  label: t(
+                    "opendash:monitoring.alarms.trigger.interval_once_per_week"
+                  ),
                   value: 1000 * 60 * 60 * 24 * 7,
                 },
                 {
-                  label: t("monitoring.alarms.trigger.interval_once_per_month"),
+                  label: t(
+                    "opendash:monitoring.alarms.trigger.interval_once_per_month"
+                  ),
                   value: 1000 * 60 * 60 * 24 * 7 * 4,
                 },
               ],
@@ -177,7 +199,7 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
         ]}
       />
 
-      <p>{t("monitoring.alarms.action.description")}</p>
+      <p>{t("opendash:monitoring.alarms.action.description")}</p>
 
       <FormGenerator
         state={alarm.action}
@@ -192,16 +214,16 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           removeHidden: true,
         }}
         submit={{
-          children: t("monitoring.alarms.create.submit"),
+          children: t("opendash:monitoring.alarms.create.submit"),
         }}
         onSubmit={() => {
           AlarmService.createAlarm(alarm).then(
             (id) => {
-              message.success(t("monitoring.alarms.create.success"));
+              message.success(t("opendash:monitoring.alarms.create.success"));
               onSave(id);
             },
             (error) => {
-              message.error(t("monitoring.alarms.create.error"));
+              message.error(t("opendash:monitoring.alarms.create.error"));
             }
           );
         }}
@@ -209,26 +231,26 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           {
             key: "type",
             type: "select",
-            label: t("monitoring.alarms.action.select"),
+            label: t("opendash:monitoring.alarms.action.select"),
             defaultValue: actionTypes[0],
             settings: {
               options: actionTypes.map((value) => ({
                 value,
-                label: t("monitoring.alarms.action." + value),
+                label: t("opendash:monitoring.alarms.action." + value),
               })),
             },
           },
           {
             key: "email",
             type: "input",
-            label: t("monitoring.alarms.action.email"),
+            label: t("opendash:monitoring.alarms.action.email"),
             defaultValue: defaultEmail,
             visible: (state) => state.type === "email",
           },
           {
             key: "device ",
             type: "select",
-            label: t("monitoring.alarms.action.notification"),
+            label: t("opendash:monitoring.alarms.action.notification"),
             visible: (state) => state.type === "notification",
             defaultValue: AlarmService.devices[0]?.id,
             settings: {
@@ -241,7 +263,7 @@ export const AlarmCreate = React.memo<Props>(function AlarmCreate({
           {
             key: "webhook",
             type: "select",
-            label: t("monitoring.alarms.action.webhook"),
+            label: t("opendash:monitoring.alarms.action.webhook"),
             visible: (state) => state.type === "webhook",
             defaultValue: AlarmService.webhooks[0]?.id,
             settings: {

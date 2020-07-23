@@ -29,7 +29,7 @@ const Container = styled.div`
 export const DashboardDisplay = React.memo<Props>(
   function DashboardDisplayComponent({ dashboard }) {
     const { DashboardService } = useOpenDashServices();
-    const [t] = useTranslation(["opendash"]);
+    const t = useTranslation();
 
     const container = React.useRef();
     const size = useElementSize(container, 1000);
@@ -61,9 +61,11 @@ export const DashboardDisplay = React.memo<Props>(
         <ErrorMessage
           ref={container}
           icon={<Icon icon="fa:frown" />}
-          title={t("monitoring.dashboards.error.no_dashboard.title")}
-          message={t("monitoring.dashboards.error.no_dashboard.message")}
-          actionLabel={t("dashboards.create.action")}
+          title={t("opendash:monitoring.dashboards.error.no_dashboard.title")}
+          message={t(
+            "opendash:monitoring.dashboards.error.no_dashboard.message"
+          )}
+          actionLabel={t("opendash:dashboards.create.action")}
           actionClick={() => {
             setAddWidgets(true);
           }}
@@ -76,9 +78,9 @@ export const DashboardDisplay = React.memo<Props>(
         <ErrorMessage
           ref={container}
           icon={<Icon icon="fa:frown" />}
-          title={t("monitoring.dashboards.error.no_widgets.title")}
-          message={t("monitoring.dashboards.error.no_widgets.message")}
-          actionLabel={t("widgets.create.action")}
+          title={t("opendash:monitoring.dashboards.error.no_widgets.title")}
+          message={t("opendash:monitoring.dashboards.error.no_widgets.message")}
+          actionLabel={t("opendash:widgets.create.action")}
           actionClick={() => {
             setAddWidgets(true);
           }}

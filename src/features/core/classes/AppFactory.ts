@@ -1,5 +1,4 @@
 import {
-  createI18n,
   createState,
   AppConfigRouteInterface,
   WidgetTypeInterface,
@@ -25,6 +24,8 @@ import {
   AlarmService,
   AlarmAdapterInterface,
 } from "../../..";
+
+import { registerLanguage, registerTranslationResolver } from "@opendash/i18n";
 
 import enTranslation from "../translations/opendash_en";
 import antdTranslation from "../translations/antd_en";
@@ -93,6 +94,8 @@ export class AppFactory {
     if (this.locked) throw new AppFactoryLockedError("registerLanguage");
     this.languages = this.languages.filter((lang) => lang.key !== key);
     this.languages.push({ key, label, fallback });
+
+    registerLanguage(key, label, fallback);
   }
 
   registerTranslationResolver(
@@ -103,7 +106,9 @@ export class AppFactory {
     if (this.locked)
       throw new AppFactoryLockedError("registerTranslationResolver");
 
-    this.translationResolver.set([language, namespace].join(","), resolver);
+    // this.translationResolver.set([language, namespace].join(","), resolver);
+
+    registerTranslationResolver(language, namespace, resolver);
   }
 
   registerDataAdapter(adapter: PossibleESModule<DataAdapterInterface>): void {
@@ -218,7 +223,6 @@ export class AppFactory {
   }
 
   createApp(): AppInterface {
-    const i18n = createI18n(this.languages, this.translationResolver);
     const state = createState();
 
     // @ts-ignore
@@ -227,7 +231,6 @@ export class AppFactory {
     const app: AppInterface = {
       id: this.id,
       state,
-      i18n,
       routes: this.routes,
       widgets: this.widgets,
       services,

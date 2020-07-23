@@ -24,7 +24,7 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
   context: WidgetContextInterface;
   baseContext: WidgetBaseContextInterface;
 }>(function WidgetSettingsRenderWithSteps({ context, baseContext }) {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
   const [step, setStep] = React.useState(0);
 
   const SettingsComponent = React.useMemo(
@@ -41,8 +41,8 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
         <Steps current={step} onChange={setStep}>
           <Steps.Step
             disabled={!baseContext?.type?.dataItems}
-            title={t("monitoring.explorer.step_data_title")}
-            subTitle={t("monitoring.explorer.step_data_subtitle", {
+            title={t("opendash:monitoring.explorer.step_data_title")}
+            subTitle={t("opendash:monitoring.explorer.step_data_subtitle", {
               count: Math.max(
                 context.draft._sources?.length,
                 context.draft._items?.length,
@@ -53,17 +53,17 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
 
           <Steps.Step
             disabled={!baseContext?.type?.dataFetching}
-            title={t("monitoring.explorer.step_fetching_title")}
-            subTitle={t("monitoring.explorer.step_fetching_subtitle")}
+            title={t("opendash:monitoring.explorer.step_fetching_title")}
+            subTitle={t("opendash:monitoring.explorer.step_fetching_subtitle")}
           />
 
           <Steps.Step
             disabled={!SettingsComponent}
-            title={t("monitoring.explorer.step_settings_title")}
+            title={t("opendash:monitoring.explorer.step_settings_title")}
             subTitle={
               !SettingsComponent
-                ? t("monitoring.explorer.step_settings_no_settings")
-                : t("monitoring.explorer.step_settings_subtitle")
+                ? t("opendash:monitoring.explorer.step_settings_no_settings")
+                : t("opendash:monitoring.explorer.step_settings_subtitle")
             }
           />
         </Steps>
@@ -76,9 +76,12 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
           activeKey={step.toString()}
           renderTabBar={() => <React.Fragment />}
         >
-          <Tabs.TabPane tab={t("monitoring.explorer.step_data_title")} key="0">
+          <Tabs.TabPane
+            tab={t("opendash:monitoring.explorer.step_data_title")}
+            key="0"
+          >
             <Description
-              children={t("monitoring.explorer.step_data_description")}
+              children={t("opendash:monitoring.explorer.step_data_description")}
             />
             <DataSelect
               selectionOptions={baseContext?.type?.dataItems}
@@ -113,11 +116,13 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
             />
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={t("monitoring.explorer.step_fetching_title")}
+            tab={t("opendash:monitoring.explorer.step_fetching_title")}
             key="1"
           >
             <Description
-              children={t("monitoring.explorer.step_fetching_description")}
+              children={t(
+                "opendash:monitoring.explorer.step_fetching_description"
+              )}
             />
             <DataItemHistoryOptionsPicker
               options={baseContext?.type?.dataFetching}
@@ -130,7 +135,7 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
             />
           </Tabs.TabPane>
           <Tabs.TabPane
-            tab={t("monitoring.explorer.step_settings_title")}
+            tab={t("opendash:monitoring.explorer.step_settings_title")}
             key="2"
           >
             <SettingsComponent {...context} />

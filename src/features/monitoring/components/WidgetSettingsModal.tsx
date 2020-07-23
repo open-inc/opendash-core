@@ -17,7 +17,7 @@ interface Props {
 }
 
 export const WidgetSettingsModal = React.memo<Props>(({ id, open, close }) => {
-  const [t] = useTranslation(["opendash"]);
+  const t = useTranslation();
 
   const baseContext = useWidgetBaseContextSetup(id);
   const context = useWidgetContextSetup(baseContext);
@@ -37,13 +37,13 @@ export const WidgetSettingsModal = React.memo<Props>(({ id, open, close }) => {
   return (
     <Modal
       visible={open}
-      title={t("widgets.settings_modal_title")}
-      okText={t("ui.save")}
+      title={t("opendash:widgets.settings_modal_title")}
+      okText={t("opendash:ui.save")}
       onOk={() => {
         context.saveDraft();
         close();
       }}
-      cancelText={t("ui.cancel")}
+      cancelText={t("opendash:ui.cancel")}
       onCancel={(e) => close()}
       width={Math.min(800, window.innerWidth)}
     >
