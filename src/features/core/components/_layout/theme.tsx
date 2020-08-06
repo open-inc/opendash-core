@@ -6,6 +6,9 @@ const layout: CSSProperties = {
 const content: CSSProperties = {
   position: "relative",
   height: "100%",
+  width: "100%",
+  display: "flex",
+  alignSelf: "stretch",
 };
 const header: CSSProperties = {
   height: "48px",
