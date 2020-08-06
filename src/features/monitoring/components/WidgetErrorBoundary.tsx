@@ -66,7 +66,7 @@ export class WidgetErrorBoundary extends React.Component<
                 <Icon icon="fa:cog" />
               </IconHolder>
               <Type>
-                <Translate t="monitoring.widgets.error.config" />
+                <Translate t="opendash:monitoring.widgets.error.config" />
               </Type>
               <Message>
                 <Translate t={this.state.error.message} />
@@ -77,7 +77,7 @@ export class WidgetErrorBoundary extends React.Component<
                   this.props.context.setState({ settings: true });
                 }}
               >
-                <Translate t="widgets.settings" />
+                <Translate t="opendash:widgets.settings" />
               </Button>
             </div>
           </Container>
@@ -91,10 +91,10 @@ export class WidgetErrorBoundary extends React.Component<
               <Icon icon="fa:exclamation-circle" />
             </IconHolder>
             <Type>
-              <Translate t="monitoring.widgets.error.default" />
+              <Translate t="opendash:monitoring.widgets.error.default" />
             </Type>
             <Message>
-              <Translate t="monitoring.widgets.error.default_desc" />
+              <Translate t="opendash:monitoring.widgets.error.default_desc" />
             </Message>
             <Button
               type="primary"
@@ -102,7 +102,7 @@ export class WidgetErrorBoundary extends React.Component<
                 this.props.context.setState({ key: "" + Math.random() })
               }
             >
-              <Translate t="widgets.reload" />
+              <Translate t="opendash:widgets.reload" />
             </Button>
           </div>
         </Container>

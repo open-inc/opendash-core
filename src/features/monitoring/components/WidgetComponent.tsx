@@ -32,7 +32,7 @@ export const WidgetComponent = React.memo<Props>(({ id, fullscreen }) => {
     <>
       <WidgetComponentLayout
         key={context?.state.key}
-        layout="default"
+        layout={fullscreen ? "fullscreen" : "default"}
         {...context}
       >
         <WidgetErrorBoundary context={context}>

@@ -161,11 +161,13 @@ export { MonitoringRoute } from "./features/monitoring/components/MonitoringRout
 export { WidgetComponent } from "./features/monitoring/components/WidgetComponent";
 export { WidgetComponentLayout } from "./features/monitoring/components/WidgetComponentLayout";
 export { WidgetComponentLayoutDefault } from "./features/monitoring/components/WidgetComponentLayoutDefault";
+export { WidgetComponentLayoutFullscreen } from "./features/monitoring/components/WidgetComponentLayoutFullscreen";
 export { WidgetComponentRender } from "./features/monitoring/components/WidgetComponentRender";
 export { WidgetCreationModal } from "./features/monitoring/components/WidgetCreationModal";
 export { WidgetDeletionModal } from "./features/monitoring/components/WidgetDeletionModal";
 export { WidgetErrorBoundary } from "./features/monitoring/components/WidgetErrorBoundary";
 export { WidgetRenamingModal } from "./features/monitoring/components/WidgetRenamingModal";
+export { WidgetRoute } from "./features/monitoring/components/WidgetRoute";
 export { WidgetSettingsModal } from "./features/monitoring/components/WidgetSettingsModal";
 export { WidgetSettingsRender } from "./features/monitoring/components/WidgetSettingsRender";
 export { WidgetSettingsRenderWithoutSteps } from "./features/monitoring/components/WidgetSettingsRenderWithoutSteps";

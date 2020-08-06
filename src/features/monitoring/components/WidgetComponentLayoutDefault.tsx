@@ -13,6 +13,7 @@ import {
 } from "./WidgetComponentLayoutDefault.layout";
 
 import { useTranslation, WidgetBaseContextInterface } from "../../..";
+import { useNavigate } from "react-router";
 
 export const WidgetComponentLayoutDefault = React.memo<
   React.PropsWithChildren<WidgetBaseContextInterface>
@@ -25,6 +26,7 @@ export const WidgetComponentLayoutDefault = React.memo<
   container,
 }) {
   const t = useTranslation();
+  const navigate = useNavigate();
 
   const hasSettings =
     type?.settingsComponent || type?.dataItems || type?.dataFetching;
@@ -66,7 +68,7 @@ export const WidgetComponentLayoutDefault = React.memo<
               <Menu.Item
                 title={t("opendash:widgets.fullscreen_tooltip")}
                 onClick={(e) => {
-                  message.info("Coming soon..");
+                  navigate("/monitoring/widgets/" + widget.id);
                 }}
               >
                 <Icon icon="fa:expand-arrows" />
