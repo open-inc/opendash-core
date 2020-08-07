@@ -25,10 +25,15 @@ import {
   AlarmAdapterInterface,
 } from "../../..";
 
-import { registerLanguage, registerTranslationResolver } from "@opendash/i18n";
+import {
+  registerLanguage,
+  registerTranslationResolver,
+  changeLanguage,
+} from "@opendash/i18n";
 
 import enTranslation from "../translations/opendash_en";
-import antdTranslation from "../translations/antd_en";
+import antdTranslationEN from "../translations/antd_en";
+import antdTranslationDE from "../translations/antd_de";
 
 type PossibleESModule<T> = T | { default: T };
 
@@ -81,7 +86,23 @@ export class AppFactory {
       async () => enTranslation
     );
 
-    this.registerTranslationResolver("en", "antd", async () => antdTranslation);
+    this.registerTranslationResolver(
+      "de",
+      "opendash",
+      async () => enTranslation
+    );
+
+    this.registerTranslationResolver(
+      "en",
+      "antd",
+      async () => antdTranslationEN
+    );
+
+    this.registerTranslationResolver(
+      "de",
+      "antd",
+      async () => antdTranslationDE
+    );
   }
 
   async use(plugin: AppPluginInterface): Promise<void> {
@@ -223,6 +244,14 @@ export class AppFactory {
   }
 
   createApp(): AppInterface {
+    try {
+      const lang = JSON.parse(window.localStorage.getItem("opendash:language"));
+
+      if (this.languages.find((l) => l.key === lang)) {
+        changeLanguage(lang);
+      }
+    } catch (error) {}
+
     const state = createState();
 
     // @ts-ignore

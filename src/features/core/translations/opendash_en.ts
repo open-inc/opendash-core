@@ -376,6 +376,11 @@ export default {
     explorer: {
       label: "Data Explorer",
 
+      save_to_dashboard: "Save to dashboard",
+      save_to_dashboard_success: "Adding widget to dashboard...",
+      save_to_dashboard_error: "Error...",
+      visualisation_missing: "You first need to select a visualisation.",
+
       step_data_title: "Data",
       step_data_subtitle: "One selected",
       step_data_subtitle_plural: "{{count}} selected",
@@ -389,10 +394,11 @@ export default {
       step_vis_subtitle: "One available",
       step_vis_subtitle_plural: "{{count}} available",
       step_vis_description: "Choose what you want to visualize.",
+      step_vis_none_available: "No visualisations available. Please change your selection.",
 
       step_settings_title: "Settings",
       step_settings_subtitle: "",
-      step_settings_description: "Fine tune your widget.",
+      step_settings_description: "...",
       step_settings_no_settings: "No settings available.",
 
       step_preview_title: "Preview",
