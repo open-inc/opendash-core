@@ -14,5 +14,9 @@ export const WidgetSettingsRenderWithoutSteps = React.memo<{
     [baseContext?.type?.settingsComponent]
   );
 
+  if (!SettingsComponent) {
+    return null;
+  }
+
   return <SettingsComponent {...context} />;
 });
