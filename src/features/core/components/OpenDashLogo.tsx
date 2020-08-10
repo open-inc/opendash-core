@@ -1,10 +1,12 @@
 import * as React from "react";
 import { useOpenDashApp } from "../../..";
+import { useNavigate } from "react-router";
 
 export const OpenDashLogo: React.FC<{ style: React.CSSProperties }> = ({
   style = {},
 }) => {
   const app = useOpenDashApp();
+  const navigate = useNavigate();
 
   if (app.ui.logoImage || app.ui.logoText) {
     return (
@@ -12,7 +14,14 @@ export const OpenDashLogo: React.FC<{ style: React.CSSProperties }> = ({
         <img
           src={app.ui.logoImage}
           title={app.ui.logoText}
-          style={{ height: "100%", width: "auto" }}
+          style={{ display: "block", height: "100%", width: "auto" }}
+          onClick={() => {
+            if (app.ui.logoLink && app.ui.logoLinkExternal) {
+              window.location.href = app.ui.logoLink;
+            } else if (app.ui.logoLink && !app.ui.logoLinkExternal) {
+              navigate(app.ui.logoLink);
+            }
+          }}
         />
 
         {app.ui.logoText && <span>{app.ui.logoText}</span>}
