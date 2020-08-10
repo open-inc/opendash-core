@@ -15,6 +15,7 @@ export interface AppInterface {
     refs: AppRefsInterface;
 
     disableHeader: boolean;
+    disableHeaderSourcePicker: boolean;
     disableFooter: boolean;
     logoImage: string;
     logoText: string;

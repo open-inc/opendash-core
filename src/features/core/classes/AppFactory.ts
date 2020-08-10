@@ -71,6 +71,7 @@ export class AppFactory {
   private staticNavigationItems: NavigationItemInterface[] = [];
 
   private disableHeader: boolean = false;
+  private disableHeaderSourcePicker: boolean = false;
   private disableFooter: boolean = false;
   private logoImage: string = null;
   private logoText: string = null;
@@ -225,6 +226,9 @@ export class AppFactory {
       disableHeader: () => {
         this.disableHeader = true;
       },
+      disableHeaderSourcePicker: () => {
+        this.disableHeaderSourcePicker = true;
+      },
       disableFooter: () => {
         this.disableFooter = true;
       },
@@ -273,6 +277,7 @@ export class AppFactory {
         },
 
         disableHeader: this.disableHeader,
+        disableHeaderSourcePicker: this.disableHeaderSourcePicker,
         disableFooter: this.disableFooter,
         logoImage: this.logoImage,
         logoText: this.logoText,

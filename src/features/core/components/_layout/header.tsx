@@ -91,9 +91,11 @@ export default function AppLayout() {
           />
         </MenuItem>
         <MenuRef key="headerAfterLogo" ref={app.ui.refs.headerAfterLogo} />
-        <MenuItem key="source">
-          <SourcePicker></SourcePicker>
-        </MenuItem>
+        {!app.ui.disableHeaderSourcePicker && (
+          <MenuItem key="source">
+            <SourcePicker></SourcePicker>
+          </MenuItem>
+        )}
         <MenuRef
           key="headerAfterMenuLeft"
           ref={app.ui.refs.headerAfterMenuLeft}
