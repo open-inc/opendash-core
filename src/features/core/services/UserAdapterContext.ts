@@ -30,4 +30,10 @@ export class UserAdapterContext {
       draft.user.current = user;
     });
   }
+
+  setPermissions(permissions: string[]) {
+    this.app.state.update((draft) => {
+      draft.user.permissions = permissions;
+    });
+  }
 }

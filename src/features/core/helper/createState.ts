@@ -10,6 +10,7 @@ export function createState(): Store<AppStateInterface> {
         current: undefined,
         validated: false,
         offline: false,
+        permissions: [],
       },
       collaboration: {
         users: [],

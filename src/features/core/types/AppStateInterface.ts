@@ -16,6 +16,7 @@ export interface AppStateInterface {
     current: UserInterface;
     offline: boolean;
     validated: boolean;
+    permissions: string[];
   };
   collaboration: {
     users: UserInterface[];

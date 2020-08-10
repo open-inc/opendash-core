@@ -47,6 +47,7 @@ export { useNavigation } from "./features/core/hooks/useNavigation";
 export { useOpenDashApp } from "./features/core/hooks/useOpenDashApp";
 export { useOpenDashServices } from "./features/core/hooks/useOpenDashServices";
 export { usePath } from "./features/core/hooks/usePath";
+export { usePermission } from "./features/core/hooks/usePermission";
 export { useServicesSuspense } from "./features/core/hooks/useServicesSuspense";
 export { useSource } from "./features/core/hooks/useSource";
 export { useStorage } from "./features/core/hooks/useStorage";
