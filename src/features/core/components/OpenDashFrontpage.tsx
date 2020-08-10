@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Container, Element } from "./OpenDashFrontpage.layout";
+import { Container, ContainerInner, Element } from "./OpenDashFrontpage.layout";
 import { useNavigate } from "react-router-dom";
 
 import { useNavigation, useTranslation } from "../../..";
@@ -35,11 +35,13 @@ export const OpenDashFrontpage: React.FC<Props> = ({}) => {
 
   return (
     <Container>
-      {elements.map((e) => (
-        <Element key={e.id} {...e} />
-      ))}
+      <ContainerInner>
+        {elements.map((e) => (
+          <Element key={e.id} {...e} />
+        ))}
 
-      {elements.length === 0 && t("opendash:frontpage.empty")}
+        {elements.length === 0 && t("opendash:frontpage.empty")}
+      </ContainerInner>
     </Container>
   );
 };

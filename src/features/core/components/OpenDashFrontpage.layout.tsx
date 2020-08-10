@@ -4,22 +4,31 @@ import { Icon } from "@opendash/icons";
 import { useTranslation } from "../../..";
 
 export const Container = styled.div`
-  position: absolute;
+  height: auto;
+  min-height: 100%;
+  width: 100%;
 
   display: flex;
   justify-content: center;
   align-items: center;
+`;
 
-  overflow: hidden;
-
-  height: 100%;
-  width: 100%;
+export const ContainerInner = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Tile = styled.div`
-  /* ${(props) => (props.size === "small" ? "100px" : "200px")} */
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
+
+  @media (min-width: 480px) {
+    width: 200px;
+    height: 200px;
+  }
 
   margin: 10px;
 
@@ -53,7 +62,11 @@ export const LabelHolder = styled.div`
 
 export const IconHolder = styled.div`
   text-align: center;
-  font-size: 60px;
+  font-size: 40px;
+
+  @media (min-width: 480px) {
+    font-size: 60px;
+  }
 `;
 
 export const Element = ({ label, icon, color, onClick }: any) => {
