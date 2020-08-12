@@ -20,6 +20,10 @@ export function LinkedSourcePicker({ style }: Props) {
       value={source ? source.id : undefined}
       onChange={setSource}
       disabled={sources.length < 2}
+      showSearch
+      filterOption={(input, option) =>
+        option.children.toLowerCase().indexOf(input.toLowerCase()) >= 0
+      }
     >
       {sources.map((source) => (
         <Select.Option key={source.id} value={source.id}>
