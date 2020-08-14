@@ -3,16 +3,28 @@ import * as React from "react";
 import { Container, Box, Background, Title, SwitchState } from "./layout";
 import { Alert, Button } from "antd";
 
-import { useTranslation, useOpenDashServices } from "../../../..";
-
-import LoginForm from "./LoginForm";
-import SignupForm from "./SignupForm";
+import {
+  useUrlParam,
+  useTranslation,
+  useOpenDashApp,
+  useOpenDashServices,
+} from "../../../..";
 
 export default function OpenDashAuth() {
   const t = useTranslation();
-  const [state, setState] = React.useState("login");
+  const [state, setState] = useUrlParam("action", "login", "string");
   const [error, setError] = React.useState();
+  const app = useOpenDashApp();
   const { UserService } = useOpenDashServices();
+
+  const LoginForm = app.ui.authLoginForm;
+  const SignupForm = app.ui.authSignupForm;
+
+  React.useEffect(() => {
+    if (!["login", "signup"].includes(state)) {
+      setState("login");
+    }
+  }, [state]);
 
   return (
     <Container>

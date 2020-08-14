@@ -6,6 +6,7 @@ import {
   WidgetTypeInterface,
   NavigationGroupInterface,
   NavigationItemInterface,
+  AuthFormComponentInterface,
   Store,
 } from "../../..";
 
@@ -13,6 +14,9 @@ export interface AppInterface {
   id: string;
   ui: {
     refs: AppRefsInterface;
+
+    authLoginForm: AuthFormComponentInterface;
+    authSignupForm: AuthFormComponentInterface;
 
     disableHeader: boolean;
     disableHeaderSourcePicker: boolean;

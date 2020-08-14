@@ -2,9 +2,15 @@ import * as React from "react";
 
 import { Icon } from "@opendash/icons";
 
-import { FormGenerator, useTranslation } from "../../../..";
+import {
+  AuthFormComponentInterface,
+  FormGenerator,
+  useTranslation,
+} from "../../..";
 
-export default ({ onSubmit }) => {
+export const AuthDefaultSignupForm: AuthFormComponentInterface = ({
+  onSubmit,
+}) => {
   const t = useTranslation();
 
   return (

@@ -23,6 +23,9 @@ import {
   AppPluginInterface,
   AlarmService,
   AlarmAdapterInterface,
+  AuthDefaultLoginForm,
+  AuthDefaultSignupForm,
+  AuthFormComponentInterface,
 } from "../../..";
 
 import {
@@ -58,15 +61,10 @@ export class AppFactory {
 
   private languages: { key: string; label: string; fallback: string }[] = [];
 
-  private translationResolver: Map<
-    string,
-    TranslationResolverInterface
-  > = new Map();
-
-  // context / provider
-  private providerRegister: [any, any][] = [];
-
   // ui settings:
+  private authLoginForm: AuthFormComponentInterface = AuthDefaultLoginForm;
+  private authSignupForm: AuthFormComponentInterface = AuthDefaultSignupForm;
+
   private staticNavigationGroups: NavigationGroupInterface[] = [];
   private staticNavigationItems: NavigationItemInterface[] = [];
 
@@ -244,6 +242,12 @@ export class AppFactory {
       setLogoLinkExternal: (value: boolean) => {
         this.logoLinkExternal = value;
       },
+      setAuthLoginForm: (value: AuthFormComponentInterface) => {
+        this.authLoginForm = value;
+      },
+      setAuthSignupForm: (value: AuthFormComponentInterface) => {
+        this.authSignupForm = value;
+      },
     };
   }
 
@@ -275,6 +279,9 @@ export class AppFactory {
           headerAfterMenuRight: { current: null },
           headerAfterLogo: { current: null },
         },
+
+        authLoginForm: this.authLoginForm,
+        authSignupForm: this.authSignupForm,
 
         disableHeader: this.disableHeader,
         disableHeaderSourcePicker: this.disableHeaderSourcePicker,

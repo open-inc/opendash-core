@@ -228,137 +228,143 @@ const FormGeneratorField: React.FC<FieldProps> = ({
 }) => {
   const t = useTranslation();
 
-  switch (field.type) {
-    case "input":
-      if (field.settings && field.settings?.prefixIcon) {
-        field.settings.prefix = (
-          <Icon
-            icon={field.settings?.prefixIcon}
-            style={{ color: "rgba(0,0,0,.25)" }}
-          />
-        );
-      }
+  if (field.type === "input") {
+    const { prefixIcon, ...settings } = field.settings;
 
-      return (
-        <Input
-          {...field.settings}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          type={field.settings?.type || "text"}
-          style={field.style}
-        />
+    if (prefixIcon) {
+      settings.prefix = (
+        <Icon icon={prefixIcon} style={{ color: "rgba(0,0,0,.25)" }} />
       );
+    }
 
-    case "input.password":
-      if (field.settings && field.settings?.prefixIcon) {
-        field.settings.prefix = (
-          <Icon
-            icon={field.settings?.prefixIcon}
-            style={{ color: "rgba(0,0,0,.25)" }}
-          />
-        );
-      }
-
-      return (
-        <Input.Password
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder={field.settings?.placeholder || void 0}
-          prefix={field.settings?.prefix || null}
-          style={field.style}
-        />
-      );
-
-    case "input.number":
-      return (
-        <InputNumber
-          value={value}
-          onChange={(nextValue) => setValue(nextValue)}
-          style={field.style}
-          {...field.settings}
-        />
-      );
-
-    case "switch":
-      return (
-        <Switch
-          checked={value}
-          onChange={(nextValue: boolean) => {
-            setValue(nextValue);
-          }}
-          style={field.style}
-        />
-      );
-
-    case "checkbox":
-      return (
-        <Checkbox
-          checked={value}
-          onChange={(e) => {
-            setValue(e.target.checked);
-          }}
-          style={field.style}
-        />
-      );
-
-    case "textarea":
-      return (
-        <Input.TextArea
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          rows={field.settings?.rows || 4}
-          style={field.style}
-        />
-      );
-
-    case "select":
-      return (
-        <Select
-          value={value}
-          onChange={(v) => {
-            setValue(v);
-          }}
-          style={field.style}
-        >
-          {field.settings?.options.map((option) => {
-            return (
-              <Select.Option key={option.value} value={option.value}>
-                {t(option.label)}
-              </Select.Option>
-            );
-          })}
-        </Select>
-      );
-
-    case "select-item":
-    // return (
-    //   <DataItemPicker
-    //     value={value}
-    //     onChange={(v) => setValue(v)}
-    //     style={field.style}
-    //   />
-    // );
-
-    case "select-item-dimension":
-      return (
-        <DataItemValuePicker
-          value={value}
-          onChange={(v) => setValue(v)}
-          style={field.style}
-        />
-      );
-
-    case "select-date":
-      return (
-        <DataItemHistoryOptionsPicker
-          value={value}
-          onChange={(v) => setValue(v)}
-          style={field.style}
-        />
-      );
-
-    default:
-      console.warn(`FormGenerator: Type '${field.type}' does not exist.`);
-      return null;
+    return (
+      <Input
+        {...settings}
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        type={settings.type || "text"}
+        style={field.style}
+      />
+    );
   }
+
+  if (field.type === "input.password") {
+    const { prefixIcon, ...settings } = field.settings;
+
+    if (prefixIcon) {
+      settings.prefix = (
+        <Icon icon={prefixIcon} style={{ color: "rgba(0,0,0,.25)" }} />
+      );
+    }
+
+    return (
+      <Input.Password
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        placeholder={field.settings?.placeholder || void 0}
+        prefix={field.settings?.prefix || null}
+        style={field.style}
+      />
+    );
+  }
+
+  if (field.type === "input.number") {
+    return (
+      <InputNumber
+        value={value}
+        onChange={(nextValue) => setValue(nextValue)}
+        style={field.style}
+        {...field.settings}
+      />
+    );
+  }
+
+  if (field.type === "switch") {
+    return (
+      <Switch
+        checked={value}
+        onChange={(nextValue: boolean) => {
+          setValue(nextValue);
+        }}
+        style={field.style}
+      />
+    );
+  }
+
+  if (field.type === "checkbox") {
+    return (
+      <Checkbox
+        checked={value}
+        onChange={(e) => {
+          setValue(e.target.checked);
+        }}
+        style={field.style}
+      />
+    );
+  }
+
+  if (field.type === "textarea") {
+    return (
+      <Input.TextArea
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        rows={field.settings?.rows || 4}
+        style={field.style}
+      />
+    );
+  }
+
+  if (field.type === "select") {
+    return (
+      <Select
+        placeholder={field.settings?.placeholder}
+        value={value}
+        onChange={(v) => {
+          setValue(v);
+        }}
+        style={field.style}
+      >
+        {field.settings?.options.map((option) => {
+          return (
+            <Select.Option key={option.value} value={option.value}>
+              {t(option.label)}
+            </Select.Option>
+          );
+        })}
+      </Select>
+    );
+  }
+
+  // if (field.type === "select-item") {
+  // return (
+  //   <DataItemPicker
+  //     value={value}
+  //     onChange={(v) => setValue(v)}
+  //     style={field.style}
+  //   />
+  // );
+  // }
+
+  if (field.type === "select-item-dimension" || field.type === "select-item") {
+    return (
+      <DataItemValuePicker
+        value={value}
+        onChange={(v) => setValue(v)}
+        style={field.style}
+      />
+    );
+  }
+
+  if (field.type === "select-date") {
+    return (
+      <DataItemHistoryOptionsPicker
+        value={value}
+        onChange={(v) => setValue(v)}
+        style={field.style}
+      />
+    );
+  }
+
+  console.warn(`FormGenerator: Type '${field.type}' does not exist.`);
+  return null;
 };

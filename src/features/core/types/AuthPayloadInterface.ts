@@ -3,4 +3,5 @@ export interface AuthPayloadInterface {
   email?: string;
   username?: string;
   password?: string;
+  [key: string]: any;
 }

@@ -9,7 +9,6 @@ import { useTranslation, useNavigation, Boundary } from "../../..";
 import { useNavigate } from "react-router-dom";
 
 export const AdminLayout: React.FC = ({ children }) => {
-  console.log("useTranslation-AdminLayout");
   // test asd asdasdasd
   const t = useTranslation();
   const navigate = useNavigate();
