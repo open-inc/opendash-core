@@ -28,7 +28,7 @@ export function useLocalStorage(key: string, initialValue?: any) {
     window.localStorage.setItem(key, JSON.stringify(newValue));
 
     window.dispatchEvent(
-      new StorageEvent("opendash:storage", {
+      new StorageEvent("storage", {
         key,
         newValue: JSON.stringify(newValue),
       })
