@@ -46,7 +46,7 @@ export const DashboardManagement = React.memo<Props>(
 
     return (
       <>
-        <AppSidebar>
+        <AppSidebar showSourcePicker={true}>
           <DashboardMenuContainer>
             <Menu
               mode="inline"
