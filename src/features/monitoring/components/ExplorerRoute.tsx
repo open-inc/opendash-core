@@ -10,7 +10,7 @@ interface Props {}
 
 export const ExplorerRoute = React.memo<Props>(function ExplorerRoute({}) {
   return (
-    <AdminLayout>
+    <AdminLayout contentPadding={true}>
       <Explorer />
     </AdminLayout>
   );

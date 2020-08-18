@@ -195,6 +195,8 @@ export const Explorer = React.memo(function Explorer() {
               children={t("opendash:monitoring.explorer.step_data_description")}
             />
             <DataSelect
+              showValue={true}
+              showTimestamp={true}
               selectionOptions={{
                 select: "dimension",
                 min: 1,

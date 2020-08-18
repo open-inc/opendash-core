@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { AntDesignProvider, OpenDashContext } from "../../..";
-import { BrowserRouter as Router, useRoutes } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 export function OpenDashProvider({ app, children }) {
   return (

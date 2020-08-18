@@ -39,6 +39,8 @@ export const DashboardDisplay = React.memo<Props>(
     const widgets = useWidgetsForDashboard(dashboard);
 
     const [editMode] = useUrlParam("dashboard_edit", false);
+
+    const [, setAddDashboard] = useUrlParam("db_create", false);
     const [, setAddWidgets] = useUrlParam("db_add_widgets", false);
 
     // Update layout, if it changes elsewhere
@@ -67,7 +69,7 @@ export const DashboardDisplay = React.memo<Props>(
           )}
           actionLabel={t("opendash:dashboards.create.action")}
           actionClick={() => {
-            setAddWidgets(true);
+            setAddDashboard(true);
           }}
         />
       );

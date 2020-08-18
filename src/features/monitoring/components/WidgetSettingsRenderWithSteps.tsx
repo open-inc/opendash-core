@@ -84,6 +84,8 @@ export const WidgetSettingsRenderWithSteps = React.memo<{
               children={t("opendash:monitoring.explorer.step_data_description")}
             />
             <DataSelect
+              showValue={true}
+              showTimestamp={true}
               selectionOptions={baseContext?.type?.dataItems}
               selection={
                 baseContext?.type?.dataItems?.select === "source"

@@ -1,56 +1,32 @@
 import * as React from "react";
 
-import { Icon } from "@opendash/icons";
+import { Layout } from "antd";
 
-import { Layout, Menu } from "antd";
+import { Boundary, NavigationMenu, useElementSize, AppSidebar } from "../../..";
 
-import { useTranslation, useNavigation, Boundary } from "../../..";
-// import { Breadcrumb } from "../../..";
-import { useNavigate } from "react-router-dom";
+interface Props extends React.PropsWithChildren<{}> {
+  contentPadding?: boolean;
+}
 
-export const AdminLayout: React.FC = ({ children }) => {
-  // test asd asdasdasd
-  const t = useTranslation();
-  const navigate = useNavigate();
+export const AdminLayout = React.memo<Props>(function AdminLayout({
+  children,
+  contentPadding = false,
+}) {
+  const { width } = useElementSize({ current: window?.document?.body }, 100);
 
-  const [groups, , activeItems] = useNavigation("sidebar");
+  const isMobile = width < 1200;
 
   return (
-    <div style={{ width: "100%", padding: "50px" }}>
-      {/* <Breadcrumb style={{ margin: "16px 0" }}></Breadcrumb> */}
-      <Layout style={{ padding: "24px 0", background: "#fff" }}>
+    <Layout style={{ background: "#fff" }}>
+      {isMobile && <AppSidebar />}
+      {!isMobile && (
         <Layout.Sider width={300} style={{ background: "#fff" }}>
-          <Menu
-            mode="inline"
-            selectedKeys={activeItems}
-            defaultOpenKeys={groups.map((group) => group.id)}
-            style={{ height: "100%" }}
-          >
-            {groups.map((group) => (
-              <Menu.SubMenu
-                key={group.id}
-                title={
-                  <span>
-                    {group.icon && <Icon icon={group.icon} />} {t(group.label)}
-                  </span>
-                }
-              >
-                {group.children.map((route) => (
-                  <Menu.Item
-                    key={route.id}
-                    onClick={(e) => navigate(route.link)}
-                  >
-                    {route.icon && <Icon icon={route.icon} />} {t(route.label)}
-                  </Menu.Item>
-                ))}
-              </Menu.SubMenu>
-            ))}
-          </Menu>
+          <NavigationMenu style={{ height: "100%" }} />
         </Layout.Sider>
-        <Layout.Content style={{ padding: "0 24px" }}>
-          <Boundary>{children}</Boundary>
-        </Layout.Content>
-      </Layout>
-    </div>
+      )}
+      <Layout.Content style={contentPadding ? { padding: 24 } : {}}>
+        <Boundary>{children}</Boundary>
+      </Layout.Content>
+    </Layout>
   );
-};
+});

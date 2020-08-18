@@ -8,6 +8,16 @@ export const OpenDashLogo: React.FC<{ style: React.CSSProperties }> = ({
   const app = useOpenDashApp();
   const navigate = useNavigate();
 
+  const onClick = React.useCallback(() => {
+    if (app.ui.logoLink && app.ui.logoLinkExternal) {
+      window.location.href = app.ui.logoLink;
+    } else if (app.ui.logoLink && !app.ui.logoLinkExternal) {
+      navigate(app.ui.logoLink);
+    } else {
+      navigate("/");
+    }
+  }, []);
+
   if (app.ui.logoImage || app.ui.logoText) {
     return (
       <div style={style}>
@@ -15,13 +25,7 @@ export const OpenDashLogo: React.FC<{ style: React.CSSProperties }> = ({
           src={app.ui.logoImage}
           title={app.ui.logoText}
           style={{ display: "block", height: "100%", width: "auto" }}
-          onClick={() => {
-            if (app.ui.logoLink && app.ui.logoLinkExternal) {
-              window.location.href = app.ui.logoLink;
-            } else if (app.ui.logoLink && !app.ui.logoLinkExternal) {
-              navigate(app.ui.logoLink);
-            }
-          }}
+          onClick={onClick}
         />
 
         {app.ui.logoText && <span>{app.ui.logoText}</span>}
@@ -40,6 +44,7 @@ export const OpenDashLogo: React.FC<{ style: React.CSSProperties }> = ({
       viewBox="0 0 244.149 243.984"
       enableBackground="new 0 0 244.149 243.984"
       style={style}
+      onClick={onClick}
     >
       <g>
         <path

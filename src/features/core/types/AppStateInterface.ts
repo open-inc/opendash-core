@@ -40,4 +40,10 @@ export interface AppStateInterface {
     userNavigationGroups: NavigationGroupInterface[];
     userNavigationItems: NavigationItemInterface[];
   };
+  ui: {
+    sidebar: {
+      open: boolean;
+      visible: boolean;
+    };
+  };
 }

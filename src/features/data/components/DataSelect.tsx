@@ -19,6 +19,7 @@ import {
 } from "../../..";
 
 import { Table, Tag, Space, Input } from "antd";
+import { ColumnsType } from "antd/lib/table";
 
 interface Props {
   selectionOptions?: DataItemSelectionInterface;
@@ -37,33 +38,45 @@ interface Props {
 
   /**
    * Enable/disable the 'Type' Column
-   * @default true
+   * @default false
    */
   showType?: boolean;
 
   /**
    * Enable/disable the 'Value' Column
-   * @default true
+   * @default false
    */
   showValue?: boolean;
 
   /**
    * Enable/disable the 'Timestamp' Column
-   * @default true
+   * @default false
    */
   showTimestamp?: boolean;
 
   /**
    * Enable/disable the 'Actions' Column
-   * @default true
+   * @default false
    */
   showActions?: boolean;
 
   /**
    * Enable/disable a search field above the table
-   * @default true
+   * @default false
    */
   showSearch?: boolean;
+
+  /**
+   * Overwrite the internal search string
+   * @default undefined
+   */
+  searchString?: string;
+
+  /**
+   * rows with types that are disabled by selectionOptions.
+   * @default false
+   */
+  showDisabledTypes?: boolean;
 
   style?: React.CSSProperties;
 }
@@ -85,11 +98,13 @@ export const DataSelect = React.memo<Props>(function DataSelect({
   selectionOptions: options,
   selection = [],
   onSelection = () => {},
-  showType = true,
-  showValue = true,
-  showTimestamp = true,
-  showActions = true,
-  showSearch = true,
+  showType = false,
+  showValue = false,
+  showTimestamp = false,
+  showActions = false,
+  showSearch = false,
+  searchString: searchStringOverwrite = undefined,
+  showDisabledTypes = false,
 }) {
   const t = useTranslation();
   const { SourceService, DataService } = useOpenDashServices();
@@ -98,8 +113,10 @@ export const DataSelect = React.memo<Props>(function DataSelect({
   const [searchString, setSearchString] = React.useState("");
 
   const items = React.useMemo(() => {
-    if (searchString) {
-      const searchStrings = searchString.toLowerCase().split(" ");
+    if (searchString || searchStringOverwrite) {
+      const searchStrings = (searchStringOverwrite || searchString)
+        .toLowerCase()
+        .split(" ");
 
       return allItems.filter((item) => {
         const searchIndex = [
@@ -118,7 +135,7 @@ export const DataSelect = React.memo<Props>(function DataSelect({
     }
 
     return allItems;
-  }, [allItems, searchString]);
+  }, [allItems, searchString, searchStringOverwrite]);
 
   const data = React.useMemo(() => {
     return createNodesForSource(rootSource);
@@ -178,13 +195,16 @@ export const DataSelect = React.memo<Props>(function DataSelect({
     }
   }, [sources, items, options?.select]);
 
-  const columns = [
+  const columns: ColumnsType<RowType> = [
     {
       title: t("opendash:data.viewer.col_name"),
       dataIndex: "name",
       key: "name",
     },
-    {
+  ];
+
+  if (showType) {
+    columns.push({
       title: t("opendash:data.viewer.col_type"),
       dataIndex: "key",
       key: "type",
@@ -216,8 +236,10 @@ export const DataSelect = React.memo<Props>(function DataSelect({
 
         return null;
       },
-    },
-    {
+    });
+  }
+  if (showValue) {
+    columns.push({
       title: t("opendash:data.viewer.col_value"),
       dataIndex: "key",
       key: "value",
@@ -234,8 +256,10 @@ export const DataSelect = React.memo<Props>(function DataSelect({
           </span>
         );
       },
-    },
-    {
+    });
+  }
+  if (showTimestamp) {
+    columns.push({
       title: t("opendash:data.viewer.col_time"),
       dataIndex: "key",
       key: "time",
@@ -250,8 +274,10 @@ export const DataSelect = React.memo<Props>(function DataSelect({
           </span>
         );
       },
-    },
-    {
+    });
+  }
+  if (showActions) {
+    columns.push({
       title: t("opendash:data.viewer.col_actions"),
       dataIndex: "key",
       key: "actions",
@@ -275,8 +301,8 @@ export const DataSelect = React.memo<Props>(function DataSelect({
           </Space>
         );
       },
-    },
-  ];
+    });
+  }
 
   const rowSelection = React.useMemo(
     () =>

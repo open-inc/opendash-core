@@ -7,7 +7,9 @@ export { Store } from "./features/core/classes/Store";
 export { AdminLayout } from "./features/core/components/AdminLayout";
 export { AggregationOperationSelect } from "./features/core/components/AggregationOperationSelect";
 export { AntDesignProvider } from "./features/core/components/AntDesignProvider";
+export { AppContextMenu } from "./features/core/components/AppContextMenu";
 export { AppPortal } from "./features/core/components/AppPortal";
+export { AppSidebar } from "./features/core/components/AppSidebar";
 export { AuthDefaultLoginForm } from "./features/core/components/AuthDefaultLoginForm";
 export { AuthDefaultSignupForm } from "./features/core/components/AuthDefaultSignupForm";
 export { Boundary } from "./features/core/components/Boundary";
@@ -18,6 +20,7 @@ export { FormatRelativeDates } from "./features/core/components/FormatRelativeDa
 export { FormGenerator } from "./features/core/components/FormGenerator";
 export { Hamburger } from "./features/core/components/Hamburger";
 export { Loading } from "./features/core/components/Loading";
+export { NavigationMenu } from "./features/core/components/NavigationMenu";
 export { OpenDashApp } from "./features/core/components/OpenDashApp";
 export { OpenDashAuth } from "./features/core/components/OpenDashAuth";
 export { OpenDashDefaultRoute } from "./features/core/components/OpenDashDefaultRoute";

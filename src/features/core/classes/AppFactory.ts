@@ -273,10 +273,12 @@ export class AppFactory {
       services,
       ui: {
         refs: {
+          content: { current: null },
           headerBeforeMenuLeft: { current: null },
           headerAfterMenuLeft: { current: null },
           headerBeforeMenuRight: { current: null },
           headerAfterMenuRight: { current: null },
+          headerBeforeLogo: { current: null },
           headerAfterLogo: { current: null },
         },
 

@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Layout } from "antd";
 
-import { useTranslation, useOpenDashApp } from "../../../..";
+import { useTranslation, useOpenDashApp, AppContextMenu } from "../../../..";
 
 import Header from "./header";
 import { LanguageSelection } from "./LanguageSelection";
@@ -19,11 +19,21 @@ export default function AppLayout({ children }) {
       {!app.ui.disableHeader && (
         <Layout.Header style={theme.header}>
           <Header />
-          <LanguageSelection />
         </Layout.Header>
       )}
 
-      <Layout.Content style={theme.content}>{children}</Layout.Content>
+      {/* <Layout.Header style={theme.menu}>
+        <AppContextMenu />
+      </Layout.Header> */}
+
+      <Layout.Content
+        style={theme.content}
+        ref={app.ui.refs.content as React.LegacyRef<any>}
+      >
+        <LanguageSelection />
+
+        {children}
+      </Layout.Content>
 
       {!app.ui.disableFooter && (
         <Layout.Footer style={theme.footer}>

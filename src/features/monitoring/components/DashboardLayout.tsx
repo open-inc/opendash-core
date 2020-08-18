@@ -26,48 +26,8 @@ export const DashboardLayout = React.memo(function DashboardLayoutComponent({
 
   return (
     <>
-      {/* <AppPortal place="headerBeforeMenuLeft">
-        <div style={{ paddingTop: 6, paddingRight: 10 }}>
-          <Hamburger open={open} setOpen={setOpen} />
-        </div>
-      </AppPortal> */}
-      <Layout style={{ minHeight: "calc(100vh - 96px)", padding: 0 }}>
-        <Layout.Sider
-          collapsible={true}
-          collapsed={!open}
-          collapsedWidth={0}
-          zeroWidthTriggerStyle={{ display: "none" }}
-          width={Math.min(400, window.innerWidth)}
-          style={{ background: "#fff" }}
-        >
-          <DashboardManagement />
-
-          <Menu
-            mode="inline"
-            selectedKeys={activeItems}
-            defaultOpenKeys={groups.map((group) => group.id)}
-          >
-            {groups.map((group) => (
-              <Menu.SubMenu
-                key={group.id}
-                title={
-                  <span>
-                    {group.icon && <Icon icon={group.icon} />} {group.label}
-                  </span>
-                }
-              >
-                {group.children.map((route) => (
-                  <Menu.Item
-                    key={route.id}
-                    onClick={(e) => navigate(route.link)}
-                  >
-                    {route.icon && <Icon icon={route.icon} />} {route.label}
-                  </Menu.Item>
-                ))}
-              </Menu.SubMenu>
-            ))}
-          </Menu>
-        </Layout.Sider>
+      <DashboardManagement />
+      <Layout>
         <Layout.Content>
           <Boundary>{children}</Boundary>
         </Layout.Content>

@@ -83,6 +83,9 @@ export default {
       location: "Koordinaten",
     },
   },
+  admin: {
+    label: "Administration",
+  },
   error: {
     not_found_title: "404",
     not_found_subtitle: "Page not found",
@@ -351,6 +354,7 @@ export default {
     data: {},
 
     dashboards: {
+      title: "Dashboards",
       error: {
         no_dashboard: {
           title: "No Dashboard",
@@ -364,6 +368,7 @@ export default {
     },
 
     widgets: {
+      title: "Widgets",
       error: {
         default: "Unknown Error",
         default_desc: "We are sorry, please contact your admin",

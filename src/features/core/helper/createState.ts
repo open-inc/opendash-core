@@ -34,6 +34,12 @@ export function createState(): Store<AppStateInterface> {
         userNavigationGroups: [],
         userNavigationItems: [],
       },
+      ui: {
+        sidebar: {
+          open: false,
+          visible: true,
+        },
+      },
     }
   );
 
