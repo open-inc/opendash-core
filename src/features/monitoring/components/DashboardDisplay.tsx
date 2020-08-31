@@ -14,6 +14,7 @@ import {
   useOpenDashServices,
   useDeepCompareEffect,
   useTranslation,
+  useWidgetTypes,
 } from "../../..";
 
 import { ErrorMessage } from "./_layout";
@@ -37,6 +38,7 @@ export const DashboardDisplay = React.memo<Props>(
     const [layout, setLayout] = React.useState([]);
 
     const widgets = useWidgetsForDashboard(dashboard);
+    const widgetTypes = useWidgetTypes();
 
     const [editMode] = useUrlParam("dashboard_edit", false);
 
@@ -93,14 +95,38 @@ export const DashboardDisplay = React.memo<Props>(
     if (size.width < 600) {
       return (
         <Container ref={container}>
-          {widgets.map((widget) => (
-            <div
-              key={widget.id}
-              style={{ height: Math.floor((size.width / 3) * 2), padding: 10 }}
-            >
-              <WidgetComponent id={widget.id} />
-            </div>
-          ))}
+          {widgets.map((widget) => {
+            const containerWidth = size.width;
+
+            const widgetType = widgetTypes.find(
+              (wt) => wt.type === widget.type
+            );
+
+            const orientation = window.matchMedia("(orientation: portrait)")
+              .matches
+              ? "portrait"
+              : "landscape";
+
+            const width = widgetType.mobileSize
+              ? widgetType.mobileSize(containerWidth, orientation)
+              : (containerWidth / 3) * 2;
+
+            if (width === null) {
+              return null;
+            }
+
+            return (
+              <div
+                key={widget.id}
+                style={{
+                  height: Math.floor(width),
+                  padding: 10,
+                }}
+              >
+                <WidgetComponent id={widget.id} />
+              </div>
+            );
+          })}
         </Container>
       );
     }

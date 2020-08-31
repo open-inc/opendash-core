@@ -18,6 +18,12 @@ export interface WidgetTypeInterface<T = any> {
     linkedHistory?: boolean;
   };
 
+  // TODO
+  mobileSize?: (
+    width: number,
+    orientation: "portrait" | "landscape"
+  ) => number | null;
+
   presets: WidgetTypePresetsInterface<T>[];
 
   dataVisualisation?: boolean;
