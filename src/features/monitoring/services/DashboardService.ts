@@ -1,3 +1,4 @@
+import produce from "immer";
 import {
   AppInterface,
   BaseService,
@@ -43,15 +44,27 @@ export class DashboardService extends BaseService {
     );
   }
 
-  setCurrentDashboard(db: DashboardInterface): void {
+  setCurrentDashboard(dashboard: DashboardInterface): void {
+    if (!dashboard.id) {
+      console.warn("DashboardService.setCurrentDashboard(db) db.id missing");
+      return;
+    }
+
     this.app.state.update((state) => {
-      state.dashboards.currentDashboard = db?.id;
+      state.dashboards.currentDashboard = dashboard?.id;
     });
 
     this.notifySubscribers();
   }
 
   async createDashboard(dashboard: DashboardInterface): Promise<string> {
+    // if (!dashboard.id) {
+    //   console.warn(
+    //     "DashboardService.createDashboard(dashboard) dashboard.id missing"
+    //   );
+    //   return;
+    // }
+
     const source = this.app.services.SourceService.getCurrent();
 
     return await this.adapter.createDashboard({
@@ -61,10 +74,24 @@ export class DashboardService extends BaseService {
   }
 
   async updateDashboard(dashboard: DashboardInterface): Promise<void> {
+    if (!dashboard.id) {
+      console.warn(
+        "DashboardService.updateDashboard(dashboard) dashboard.id missing"
+      );
+      return;
+    }
+
     return await this.adapter.updateDashboard(dashboard);
   }
 
   async deleteDashboard(dashboard: DashboardInterface): Promise<void> {
+    if (!dashboard.id) {
+      console.warn(
+        "DashboardService.deleteDashboard(dashboard) dashboard.id missing"
+      );
+      return;
+    }
+
     return await this.adapter.deleteDashboard(dashboard);
   }
 
@@ -77,6 +104,18 @@ export class DashboardService extends BaseService {
   }
 
   async deleteWidget(widget: WidgetInterface): Promise<void> {
+    for (const dashboard of this.listDashboards()) {
+      const widgetId = widget.id;
+
+      if (dashboard.widgets.includes(widget.id)) {
+        const dashboardUpdate = produce(dashboard, (draft) => {
+          draft.widgets = draft.widgets.filter((w) => w !== widgetId);
+          draft.layout = draft.layout.filter((l) => l.i !== widgetId);
+        });
+
+        await this.updateDashboard(dashboardUpdate);
+      }
+    }
     return await this.adapter.deleteWidget(widget);
   }
 

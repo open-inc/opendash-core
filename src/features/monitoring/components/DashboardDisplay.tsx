@@ -50,7 +50,8 @@ export const DashboardDisplay = React.memo<Props>(
       if (dashboard?.layout) {
         setLayout(dashboard.layout);
       }
-    }, [dashboard?.id, dashboard?.layout]);
+    }, [dashboard?.id]);
+    // }, [dashboard?.id, dashboard?.layout]);
 
     // Save layout to user storage, if it really changes
     useDeepCompareEffect(() => {

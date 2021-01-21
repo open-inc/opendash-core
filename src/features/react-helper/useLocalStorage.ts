@@ -2,7 +2,10 @@ import * as React from "react";
 
 import { useEventListener } from "../..";
 
-export function useLocalStorage(key: string, initialValue?: any) {
+export function useLocalStorage<T = any>(
+  key: string,
+  initialValue?: T
+): [T, (next: T) => void] {
   const [storedValue, setStoredValue] = React.useState(() => {
     try {
       const item = window.localStorage.getItem(key);

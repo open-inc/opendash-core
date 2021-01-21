@@ -3,9 +3,7 @@ import * as React from "react";
 import { ErrorBoundaryPropsInterface, equals } from "../../..";
 import { ErrorLayout } from "./ErrorBoundary.layout";
 
-export class ErrorBoundary extends React.Component<
-  ErrorBoundaryPropsInterface
-> {
+export class ErrorBoundary extends React.Component<ErrorBoundaryPropsInterface> {
   state: { error: Error } = { error: undefined };
 
   resetState = (goHome = false) => {
