@@ -18,6 +18,7 @@ interface Props {
   height?: number;
   style?: CSSProperties;
   immutable?: boolean;
+  catchError?: boolean;
   callback?: (chart: Highcharts.Chart) => void;
 }
 
@@ -35,6 +36,7 @@ export const HighchartsChart = memo<Props>(
       height = "auto",
       style = {},
       immutable = false,
+      catchError = false,
     },
     ref
   ) {
@@ -67,10 +69,18 @@ export const HighchartsChart = memo<Props>(
         }
       }
 
-      if (!chartRef.current || immutable) {
-        createChart();
-      } else {
-        chartRef.current.update(options, ...updateArgs);
+      try {
+        if (!chartRef.current || immutable) {
+          createChart();
+        } else {
+          chartRef.current.update(options, ...updateArgs);
+        }
+      } catch (error) {
+        if (!catchError) {
+          throw error;
+        } else {
+          console.error(error);
+        }
       }
     }, [options]);
 
