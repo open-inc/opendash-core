@@ -13,6 +13,7 @@ import {
   DataItemIdentifierInterface,
   DataItemDimensionValueInterface,
   evaluateDataFetchingOptions,
+  stringToColor,
 } from "../../..";
 
 type SubscriptionCallback = () => void;
@@ -139,7 +140,7 @@ export class DataService extends BaseService {
       this.itemSubscriptions.set(key, new Set());
     }
 
-    if (!this.itemStore.has(key) || equals(this.itemStore.get(key), item)) {
+    if (!this.itemStore.has(key) || !equals(this.itemStore.get(key), item)) {
       this.itemStore.set(key, item);
 
       this.notifyDataSubscribers(this.itemListSubscriptions);
@@ -510,6 +511,14 @@ export class DataService extends BaseService {
 
   public async update(item: DataItemInterface): Promise<void> {
     return await this.adapter.update(item);
+  }
+
+  public getItemColor(item: DataItemInterface, dimension: number = 0): string {
+    if (item.meta.color) {
+      return item.meta.color;
+    }
+
+    return stringToColor(item.id + "-" + dimension);
   }
 }
 
