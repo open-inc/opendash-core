@@ -1,7 +1,12 @@
 import { ComponentType } from "react";
 
-export interface AppConfigRouteInterface {
-  path: string;
-  component: () => Promise<{ default: ComponentType<any> }>;
-  props?: any;
-}
+export type AppConfigRouteInterface =
+  | {
+      path: string;
+      component: () => Promise<{ default: ComponentType<any> }>;
+      props?: any;
+    }
+  | {
+      path: string;
+      redirectPath: string;
+    };

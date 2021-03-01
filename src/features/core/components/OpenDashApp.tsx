@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { useRoutes } from "react-router-dom";
+import { Navigate, useRoutes } from "react-router-dom";
 
 import {
   useAppState,
@@ -67,13 +67,24 @@ function AppRouter() {
   const routes = React.useMemo(() => {
     return [
       ...app.routes.map((route) => {
-        return {
-          path: route.path,
-          element: React.createElement(
-            React.lazy(route.component),
-            route.props || {}
-          ),
-        };
+        if ("component" in route) {
+          return {
+            path: route.path,
+            element: React.createElement(
+              React.lazy(route.component),
+              route.props || {}
+            ),
+          };
+        }
+
+        if ("redirectPath" in route) {
+          return {
+            path: route.path,
+            element: <Navigate to={route.redirectPath} />,
+          };
+        }
+
+        return null;
       }),
 
       { path: "/", element: <OpenDashFrontpage /> },
@@ -87,7 +98,7 @@ function AppRouter() {
         element: <DataItemOverviewRoute />,
       },
       { path: "*", element: <OpenDashDefaultRoute /> },
-    ];
+    ].filter((x) => !!x);
   }, []);
 
   return useRoutes(routes, "");
