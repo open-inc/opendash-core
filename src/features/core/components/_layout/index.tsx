@@ -26,10 +26,8 @@ export default function AppLayout({ children }) {
         <AppContextMenu />
       </Layout.Header> */}
 
-      <Layout.Content
-        style={theme.content}
-        ref={app.ui.refs.content as React.LegacyRef<any>}
-      >
+      <Layout.Content style={theme.content}>
+        <div ref={app.ui.refs.content} />
         <LanguageSelection />
 
         {children}
