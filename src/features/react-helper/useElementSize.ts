@@ -57,9 +57,11 @@ export function useElementSize<T = any>(
         handleResize();
       });
 
+      // @ts-ignore // TS doesn't know about ResizeObserver yet
       resizeObserver.observe(ref.current);
 
       return () => {
+        // @ts-ignore // TS doesn't know about ResizeObserver yet
         resizeObserver.disconnect(ref.current);
       };
     } else {
