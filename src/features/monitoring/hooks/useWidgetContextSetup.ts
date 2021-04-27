@@ -3,77 +3,38 @@ import * as React from "react";
 import {
   equals,
   useElementSize,
-  useImmerState,
   useDataItems,
   WidgetContextInterface,
-  WidgetBaseContextInterface,
   WidgetConfigError,
   useTranslation,
   DataItemInterface,
-  useOpenDashServices,
   DataFetchingOptionsInterface,
   SourceInterface,
   useSource,
   useDataFetchValues,
   useDataFetchDimensionValues,
   useDeepCompareEffect,
-  WidgetConfigInterface,
   useDeepCompareMemo,
 } from "../../..";
 
+import { WidgetContext } from "../services/states/WidgetContext";
+
 export function useWidgetContextSetup(
-  context: WidgetBaseContextInterface
+  context: WidgetContext
 ): WidgetContextInterface {
   const t = useTranslation();
-  const { DashboardService } = useOpenDashServices();
-
-  const [draft, updateDraft, replaceDraft, assignToDraft] = useImmerState({});
-
-  const config: WidgetConfigInterface = draft;
-  const savedConfig = context?.widget.config;
-
-  const unsaved: boolean = React.useMemo(() => !equals(draft, savedConfig), [
-    draft,
-    savedConfig,
-  ]);
-
-  useDeepCompareEffect(() => {
-    if (context?.widget?.config && !equals(context?.widget?.config, draft)) {
-      replaceDraft(context?.widget?.config);
-    }
-  }, [context?.widget?.config]);
 
   if (!context) {
     return null;
   }
 
-  function saveDraft() {
-    if (context.id) {
-      DashboardService.updateWidget({
-        ...context.widget,
-        id: context.id,
-        config: draft,
-      });
-    }
-  }
-
-  function setName(name: string) {
-    if (!context.widget.name && context.state.name !== name) {
-      context.setState({ name });
-    }
-  }
-
-  function setLoading(loading: boolean) {
-    if (context.state.loading !== loading) {
-      context.setState({ loading });
-    }
-  }
+  const { config } = context.store.getState();
 
   function useContainerSize(): {
     width: number;
     height: number;
   } {
-    return useElementSize(context.container, 250);
+    return useElementSize(context.containerRef, 250);
   }
 
   function useSourceConfig(): SourceInterface[] {
@@ -252,16 +213,17 @@ export function useWidgetContextSetup(
   }
 
   return {
-    config,
-    savedConfig,
-    unsaved,
-    draft,
-    updateDraft,
-    replaceDraft,
-    assignToDraft,
-    saveDraft,
-    setName,
-    setLoading,
+    context,
+    config: context.store.getState().config,
+    savedConfig: context.store.getState().savedConfig,
+    unsaved: context.store.getState().unsaved,
+    draft: context.store.getState().draft,
+    updateDraft: (x) => context.updateDraft(x),
+    replaceDraft: (x) => context.replaceDraft(x),
+    assignToDraft: (x) => context.assignToDraft(x),
+    saveDraft: () => context.saveDraft(),
+    setName: (x) => context.setName(x),
+    setLoading: (x) => context.setLoading(x),
     useContainerSize,
     useSourceConfig,
     useItemConfig,

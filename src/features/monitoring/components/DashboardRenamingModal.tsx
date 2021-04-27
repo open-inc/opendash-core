@@ -1,7 +1,12 @@
 import * as React from "react";
 
 import { Modal, Input } from "antd";
-import { useOpenDashServices, useTranslation, useDashboard } from "../../..";
+import {
+  useOpenDashServices,
+  useTranslation,
+  useDashboard,
+  createInternalComponent,
+} from "../../..";
 
 interface Props {
   id: string;
@@ -9,10 +14,10 @@ interface Props {
   close: () => void;
 }
 
-export const DashboardRenamingModal = React.memo<Props>(
-  ({ id, open, close }) => {
+export const DashboardRenamingModal = createInternalComponent<Props>(
+  function DashboardRenamingModal({ id, open, close }) {
     const t = useTranslation();
-    const { DashboardService } = useOpenDashServices();
+    const { MonitoringService } = useOpenDashServices();
     const dashboard = useDashboard(id);
 
     const [draft, setDraft] = React.useState(undefined);
@@ -34,7 +39,7 @@ export const DashboardRenamingModal = React.memo<Props>(
         title={t("opendash:dashboards.rename_modal_title")}
         okText={t("opendash:ui.rename")}
         onOk={() => {
-          DashboardService.updateDashboard({ ...dashboard, id, name: draft });
+          MonitoringService.updateDashboard({ ...dashboard, id, name: draft });
           close();
         }}
         cancelText={t("opendash:ui.cancel")}

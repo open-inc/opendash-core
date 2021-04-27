@@ -12,34 +12,37 @@ import {
   DataSidebar,
   useTranslation,
   useUrlParam,
+  createInternalComponent,
 } from "../../..";
 
 import { DashboardDisplay } from "./DashboardDisplay";
 
 interface Props {}
 
-export const DashboardRoute: React.FC<Props> = () => {
-  const t = useTranslation();
+export const DashboardRoute = createInternalComponent<Props>(
+  function DashboardRoute({}) {
+    const t = useTranslation();
 
-  const dashboards = useDashboardsBySource();
-  const [dashboard, setDashboard] = useDashboardCurrent();
+    const dashboards = useDashboardsBySource();
+    const [dashboard, setDashboard] = useDashboardCurrent();
 
-  const [, setCreate] = useUrlParam("db_create", false);
+    const [, setCreate] = useUrlParam("db_create", false);
 
-  // Create a new dashboard, if there is none
-  React.useEffect(() => {
-    if (!dashboard) {
-      if (dashboards.length === 0) {
-        setCreate(true);
-      } else {
-        setDashboard(dashboards[0]);
+    // Create a new dashboard, if there is none
+    React.useEffect(() => {
+      if (!dashboard) {
+        if (dashboards.length === 0) {
+          setCreate(true);
+        } else {
+          setDashboard(dashboards[0]);
+        }
       }
-    }
-  }, [dashboards]);
+    }, [dashboards]);
 
-  return (
-    <DashboardLayout>
-      <DashboardDisplay dashboard={dashboard} />
-    </DashboardLayout>
-  );
-};
+    return (
+      <DashboardLayout>
+        <DashboardDisplay dashboard={dashboard} />
+      </DashboardLayout>
+    );
+  }
+);

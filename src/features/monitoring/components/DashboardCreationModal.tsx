@@ -1,7 +1,12 @@
 import * as React from "react";
 
 import { Modal, Input } from "antd";
-import { useOpenDashServices, useTranslation, useDashboard } from "../../..";
+import {
+  useOpenDashServices,
+  useTranslation,
+  useDashboard,
+  createInternalComponent,
+} from "../../..";
 
 interface Props {
   open: boolean;
@@ -9,10 +14,10 @@ interface Props {
   onSave: (id: string) => void;
 }
 
-export const DashboardCreationModal = React.memo<Props>(
-  ({ open, close, onSave }) => {
+export const DashboardCreationModal = createInternalComponent<Props>(
+  function DashboardCreationModal({ open, close, onSave }) {
     const t = useTranslation();
-    const { DashboardService } = useOpenDashServices();
+    const { MonitoringService } = useOpenDashServices();
 
     const [name, setName] = React.useState(undefined);
 
@@ -27,7 +32,7 @@ export const DashboardCreationModal = React.memo<Props>(
         okText={t("opendash:ui.create")}
         onOk={() => {
           // @ts-ignore
-          DashboardService.createDashboard({ name: name }).then((id) => {
+          MonitoringService.createDashboard({ name: name }).then((id) => {
             if (onSave) {
               onSave(id);
             }

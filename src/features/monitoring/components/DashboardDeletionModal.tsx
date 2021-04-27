@@ -1,7 +1,12 @@
 import * as React from "react";
 
 import { Modal } from "antd";
-import { useOpenDashServices, useTranslation, useDashboard } from "../../..";
+import {
+  useOpenDashServices,
+  useTranslation,
+  useDashboard,
+  createInternalComponent,
+} from "../../..";
 
 interface Props {
   id: string;
@@ -9,10 +14,10 @@ interface Props {
   close: () => void;
 }
 
-export const DashboardDeletionModal = React.memo<Props>(
-  ({ id, open, close }) => {
+export const DashboardDeletionModal = createInternalComponent<Props>(
+  function DashboardDeletionModal({ id, open, close }) {
     const t = useTranslation();
-    const { DashboardService } = useOpenDashServices();
+    const { MonitoringService } = useOpenDashServices();
     const dashboard = useDashboard(id);
 
     if (!dashboard) {
@@ -27,7 +32,7 @@ export const DashboardDeletionModal = React.memo<Props>(
         okText={t("opendash:ui.delete")}
         onOk={() => {
           close();
-          DashboardService.deleteDashboard(dashboard);
+          MonitoringService.deleteDashboard(dashboard);
         }}
         cancelText={t("opendash:ui.cancel")}
         onCancel={(e) => close()}

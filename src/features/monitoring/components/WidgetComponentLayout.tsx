@@ -1,28 +1,35 @@
 import * as React from "react";
 
 import {
+  createInternalComponent,
   WidgetComponentLayoutDefault,
   WidgetComponentLayoutFullscreen,
-  WidgetBaseContextInterface,
+  WidgetContext,
 } from "../../..";
 
-interface Props extends WidgetBaseContextInterface {
+interface Props {
   layout: string;
+  context: WidgetContext;
 }
 
-export const WidgetComponentLayout = React.memo<React.PropsWithChildren<Props>>(
-  function WidgetComponentLayoutComponent({ layout, children, ...props }) {
-    switch (layout) {
-      case "default":
-        return <WidgetComponentLayoutDefault {...props} children={children} />;
+export const WidgetComponentLayout = createInternalComponent<
+  React.PropsWithChildren<Props>
+>(function WidgetComponentLayout({ layout, children, context }) {
+  switch (layout) {
+    case "default":
+      return (
+        <WidgetComponentLayoutDefault context={context} children={children} />
+      );
 
-      case "fullscreen":
-        return (
-          <WidgetComponentLayoutFullscreen {...props} children={children} />
-        );
+    case "fullscreen":
+      return (
+        <WidgetComponentLayoutFullscreen
+          context={context}
+          children={children}
+        />
+      );
 
-      default:
-        return null;
-    }
+    default:
+      return null;
   }
-);
+});

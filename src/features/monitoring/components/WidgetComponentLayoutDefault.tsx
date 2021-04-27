@@ -12,24 +12,26 @@ import {
   WidgetHeaderAction,
 } from "./WidgetComponentLayoutDefault.layout";
 
-import { useTranslation, WidgetBaseContextInterface } from "../../..";
+import {
+  createInternalComponent,
+  useServiceStore,
+  useTranslation,
+  WidgetContext,
+} from "../../..";
 import { useNavigate } from "react-router";
 
-export const WidgetComponentLayoutDefault = React.memo<
-  React.PropsWithChildren<WidgetBaseContextInterface>
->(function WidgetComponentLayoutComponent({
-  children,
-  widget,
-  type,
-  state,
-  setState,
-  container,
-}) {
+export const WidgetComponentLayoutDefault = createInternalComponent<
+  React.PropsWithChildren<{ context: WidgetContext }>
+>(function WidgetComponentLayoutDefault({ children, context }) {
   const t = useTranslation();
   const navigate = useNavigate();
 
+  const name = useServiceStore(context, (state) => state.name);
+
   const hasSettings =
-    type?.settingsComponent || type?.dataItems || type?.dataFetching;
+    context.type?.settingsComponent ||
+    context.type?.dataItems ||
+    context.type?.dataFetching;
 
   return (
     <WidgetContainer>
@@ -40,7 +42,11 @@ export const WidgetComponentLayoutDefault = React.memo<
             <Menu>
               <Menu.Item
                 title={t("opendash:widgets.rename_modal_tooltip")}
-                onClick={(e) => setState({ rename: true })}
+                onClick={(e) => {
+                  context.store.update((state) => {
+                    state.rename = true;
+                  });
+                }}
               >
                 <Icon icon="fa:pen" />
 
@@ -49,7 +55,11 @@ export const WidgetComponentLayoutDefault = React.memo<
 
               <Menu.Item
                 title={t("opendash:widgets.delete_modal_tooltip")}
-                onClick={(e) => setState({ delete: true })}
+                onClick={(e) => {
+                  context.store.update((state) => {
+                    state.delete = true;
+                  });
+                }}
               >
                 <Icon icon="fa:trash" />
 
@@ -58,7 +68,11 @@ export const WidgetComponentLayoutDefault = React.memo<
 
               <Menu.Item
                 title={t("opendash:widgets.share_modal_tooltip")}
-                onClick={(e) => setState({ share: true })}
+                onClick={(e) => {
+                  context.store.update((state) => {
+                    state.share = true;
+                  });
+                }}
               >
                 <Icon icon="fa:share-alt" />
 
@@ -68,7 +82,7 @@ export const WidgetComponentLayoutDefault = React.memo<
               <Menu.Item
                 title={t("opendash:widgets.fullscreen_tooltip")}
                 onClick={(e) => {
-                  navigate("/monitoring/widgets/" + widget.id);
+                  navigate("/monitoring/widgets/" + context.id);
                 }}
               >
                 <Icon icon="fa:expand-arrows" />
@@ -79,7 +93,9 @@ export const WidgetComponentLayoutDefault = React.memo<
               <Menu.Item
                 disabled={!hasSettings}
                 title={t("opendash:widgets.reload_tooltip")}
-                onClick={(e) => setState({ key: "" + Math.random() })}
+                onClick={(e) => {
+                  context.refresh();
+                }}
               >
                 <Icon icon="fa:sync" />
 
@@ -89,7 +105,11 @@ export const WidgetComponentLayoutDefault = React.memo<
               <Menu.Item
                 disabled={!hasSettings}
                 title={t("opendash:widgets.settings_modal_tooltip")}
-                onClick={(e) => setState({ settings: true })}
+                onClick={(e) => {
+                  context.store.update((state) => {
+                    state.settings = true;
+                  });
+                }}
               >
                 <Icon icon="fa:cog" />
 
@@ -103,12 +123,12 @@ export const WidgetComponentLayoutDefault = React.memo<
           </WidgetHeaderAction>
         </Dropdown>
 
-        <WidgetHeaderName title={widget.name || state.name}>
-          {widget.name || state.name}
+        <WidgetHeaderName title={context.widget.name || name}>
+          {context.widget.name || name}
         </WidgetHeaderName>
       </WidgetHeader>
 
-      <WidgetContent ref={container}>{children}</WidgetContent>
+      <WidgetContent ref={context.containerRef}>{children}</WidgetContent>
     </WidgetContainer>
   );
 });

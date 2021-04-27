@@ -5,144 +5,132 @@ import {
   DataItemIdentifierInterface,
   DataItemDimensionIdentifierInterface,
   WidgetContextInterface,
-  WidgetBaseContextInterface,
+  WidgetContext,
   useTranslation,
   DataSelect,
   DataItemHistoryOptionsPicker,
+  createInternalComponent,
+  useServiceStore,
 } from "../../..";
 
-import { Steps, Tabs, Divider } from "antd";
+import { Collapse } from "antd";
 
 import {
   Container,
-  StepNav,
   SettingsHolder,
   Description,
 } from "./WidgetSettingsRenderWithSteps.layout";
 
-export const WidgetSettingsRenderWithSteps = React.memo<{
+export const WidgetSettingsRenderWithSteps = createInternalComponent<{
   context: WidgetContextInterface;
-  baseContext: WidgetBaseContextInterface;
-}>(function WidgetSettingsRenderWithSteps({ context, baseContext }) {
+}>(function WidgetSettingsRenderWithSteps({ context }) {
   const t = useTranslation();
-  const [step, setStep] = React.useState(0);
+  const [step, setStep] = React.useState(
+    context.context.type?.dataItems
+      ? 0
+      : context.context.type?.dataFetching
+      ? 1
+      : 2
+  );
 
   const SettingsComponent = React.useMemo(
     () =>
-      baseContext?.type?.settingsComponent
-        ? React.lazy(baseContext.type.settingsComponent)
+      context.context.type?.settingsComponent
+        ? React.lazy(context.context.type.settingsComponent)
         : null,
-    [baseContext?.type?.settingsComponent]
+    [context.context?.type?.settingsComponent]
   );
+
+  const currentDraft = useServiceStore(context.context, (state) => state.draft);
 
   return (
     <Container>
-      <StepNav>
-        <Steps current={step} onChange={setStep}>
-          <Steps.Step
-            disabled={!baseContext?.type?.dataItems}
-            title={t("opendash:monitoring.explorer.step_data_title")}
-            subTitle={t("opendash:monitoring.explorer.step_data_subtitle", {
-              count: Math.max(
-                context.draft._sources?.length,
-                context.draft._items?.length,
-                context.draft._dimensions?.length
-              ),
-            })}
-          />
-
-          <Steps.Step
-            disabled={!baseContext?.type?.dataFetching}
-            title={t("opendash:monitoring.explorer.step_fetching_title")}
-            subTitle={t("opendash:monitoring.explorer.step_fetching_subtitle")}
-          />
-
-          <Steps.Step
-            disabled={!SettingsComponent}
-            title={t("opendash:monitoring.explorer.step_settings_title")}
-            subTitle={
-              !SettingsComponent
-                ? t("opendash:monitoring.explorer.step_settings_no_settings")
-                : t("opendash:monitoring.explorer.step_settings_subtitle")
-            }
-          />
-        </Steps>
-      </StepNav>
-
-      <Divider></Divider>
-
       <SettingsHolder>
-        <Tabs
+        <Collapse
+          bordered={false}
+          accordion={true}
           activeKey={step.toString()}
-          renderTabBar={() => <React.Fragment />}
+          onChange={(key) =>
+            setStep(parseInt(Array.isArray(key) ? key[0] : key))
+          }
         >
-          <Tabs.TabPane
-            tab={t("opendash:monitoring.explorer.step_data_title")}
-            key="0"
-          >
-            <Description
-              children={t("opendash:monitoring.explorer.step_data_description")}
-            />
-            <DataSelect
-              showValue={true}
-              showTimestamp={true}
-              selectionOptions={baseContext?.type?.dataItems}
-              selection={
-                baseContext?.type?.dataItems?.select === "source"
-                  ? context.draft._sources
-                  : baseContext?.type?.dataItems?.select === "item"
-                  ? context.draft._items
-                  : baseContext?.type?.dataItems?.select === "dimension"
-                  ? context.draft._dimensions
-                  : []
-              }
-              onSelection={(nextValue) => {
-                context.updateDraft((draft) => {
-                  if (baseContext?.type?.dataItems?.select === "source") {
-                    draft._sources = nextValue as SourceIdentifierInterface[];
-                    draft._items = [];
-                    draft._dimensions = [];
-                  }
-                  if (baseContext?.type?.dataItems?.select === "item") {
-                    draft._sources = [];
-                    draft._items = nextValue as DataItemIdentifierInterface[];
-                    draft._dimensions = [];
-                  }
-                  if (baseContext?.type?.dataItems?.select === "dimension") {
-                    draft._sources = [];
-                    draft._items = [];
-                    draft._dimensions = nextValue as DataItemDimensionIdentifierInterface[];
-                  }
-                });
-              }}
-            />
-          </Tabs.TabPane>
-          <Tabs.TabPane
-            tab={t("opendash:monitoring.explorer.step_fetching_title")}
-            key="1"
-          >
-            <Description
-              children={t(
-                "opendash:monitoring.explorer.step_fetching_description"
-              )}
-            />
-            <DataItemHistoryOptionsPicker
-              options={baseContext?.type?.dataFetching}
-              value={context.draft._history}
-              onChange={(nextValue) => {
-                context.updateDraft((draft) => {
-                  draft._history = nextValue;
-                });
-              }}
-            />
-          </Tabs.TabPane>
-          <Tabs.TabPane
-            tab={t("opendash:monitoring.explorer.step_settings_title")}
-            key="2"
-          >
-            <SettingsComponent {...context} />
-          </Tabs.TabPane>
-        </Tabs>
+          {context.context.type?.dataItems && (
+            <Collapse.Panel
+              header={t("opendash:monitoring.explorer.step_data_title")}
+              key="0"
+            >
+              <Description
+                children={t(
+                  "opendash:monitoring.explorer.step_data_description"
+                )}
+              />
+              <DataSelect
+                showValue={true}
+                showTimestamp={true}
+                selectionOptions={context.context?.type?.dataItems}
+                selection={
+                  context.context?.type?.dataItems?.select === "source"
+                    ? currentDraft._sources
+                    : context.context?.type?.dataItems?.select === "item"
+                    ? currentDraft._items
+                    : context.context?.type?.dataItems?.select === "dimension"
+                    ? currentDraft._dimensions
+                    : []
+                }
+                onSelection={(nextValue) => {
+                  context.context.updateDraft((draft) => {
+                    if (context.context?.type?.dataItems?.select === "source") {
+                      draft._sources = nextValue as SourceIdentifierInterface[];
+                      draft._items = [];
+                      draft._dimensions = [];
+                    }
+                    if (context.context?.type?.dataItems?.select === "item") {
+                      draft._sources = [];
+                      draft._items = nextValue as DataItemIdentifierInterface[];
+                      draft._dimensions = [];
+                    }
+                    if (
+                      context.context?.type?.dataItems?.select === "dimension"
+                    ) {
+                      draft._sources = [];
+                      draft._items = [];
+                      draft._dimensions = nextValue as DataItemDimensionIdentifierInterface[];
+                    }
+                  });
+                }}
+              />
+            </Collapse.Panel>
+          )}
+          {context.context.type?.dataFetching && (
+            <Collapse.Panel
+              header={t("opendash:monitoring.explorer.step_fetching_title")}
+              key="1"
+            >
+              <Description
+                children={t(
+                  "opendash:monitoring.explorer.step_fetching_description"
+                )}
+              />
+              <DataItemHistoryOptionsPicker
+                options={context.context?.type?.dataFetching}
+                value={currentDraft?._history}
+                onChange={(nextValue) => {
+                  context.context.updateDraft((draft) => {
+                    draft._history = nextValue;
+                  });
+                }}
+              />
+            </Collapse.Panel>
+          )}
+          {context.context.type?.settingsComponent && (
+            <Collapse.Panel
+              header={t("opendash:monitoring.explorer.step_settings_title")}
+              key="2"
+            >
+              <SettingsComponent {...context} />
+            </Collapse.Panel>
+          )}
+        </Collapse>
       </SettingsHolder>
     </Container>
   );

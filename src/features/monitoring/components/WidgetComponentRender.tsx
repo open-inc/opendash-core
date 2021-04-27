@@ -1,18 +1,17 @@
 import * as React from "react";
 
 import {
-  WidgetBaseContextInterface,
+  WidgetContext,
   useWidgetContextSetup,
   WidgetContextInterface,
+  createInternalComponent,
 } from "../../..";
 
-export const WidgetComponentRender = React.memo<{
-  baseContext: WidgetBaseContextInterface;
+export const WidgetComponentRender = createInternalComponent<{
+  baseContext: WidgetContext;
   context?: WidgetContextInterface;
 }>(function WidgetComponentRender({ baseContext, context: injectedContext }) {
-  const internalContext = useWidgetContextSetup(
-    injectedContext ? null : baseContext
-  );
+  const internalContext = useWidgetContextSetup(baseContext);
   const context = injectedContext || internalContext;
 
   const DisplayComponent = React.useMemo(
@@ -35,7 +34,7 @@ export const WidgetComponentRender = React.memo<{
     return null;
   }
 
-  if (baseContext?.state.settings) {
+  if (baseContext?.store.getState().settings) {
     return null;
   }
 

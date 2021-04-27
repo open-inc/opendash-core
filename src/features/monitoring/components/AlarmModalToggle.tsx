@@ -3,7 +3,12 @@ import * as React from "react";
 import { Button } from "antd";
 import { Icon } from "@opendash/icons";
 
-import { DataItemInterface, useAlarmsForItem, useAlarmModal } from "../../..";
+import {
+  DataItemInterface,
+  useAlarmsForItem,
+  useAlarmModal,
+  createInternalComponent,
+} from "../../..";
 
 interface Props {
   item: DataItemInterface;
@@ -11,23 +16,21 @@ interface Props {
   buttonProps?: any;
 }
 
-export const AlarmModalToggle = React.memo<Props>(function AlarmModalToggle({
-  item,
-  dimension,
-  buttonProps = {},
-}) {
-  const alarms = useAlarmsForItem(item, dimension);
-  const [, openModal] = useAlarmModal();
+export const AlarmModalToggle = createInternalComponent<Props>(
+  function AlarmModalToggle({ item, dimension, buttonProps = {} }) {
+    const alarms = useAlarmsForItem(item, dimension);
+    const [, openModal] = useAlarmModal();
 
-  return (
-    <Button
-      {...buttonProps}
-      type={alarms.length > 0 ? "primary" : "default"}
-      shape="circle"
-      icon={<Icon icon="fa:bell" />}
-      onClick={() => {
-        openModal(item, dimension);
-      }}
-    />
-  );
-});
+    return (
+      <Button
+        {...buttonProps}
+        type={alarms.length > 0 ? "primary" : "default"}
+        shape="circle"
+        icon={<Icon icon="fa:bell" />}
+        onClick={() => {
+          openModal(item, dimension);
+        }}
+      />
+    );
+  }
+);

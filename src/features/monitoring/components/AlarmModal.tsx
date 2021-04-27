@@ -14,6 +14,7 @@ import {
   AlarmCreate,
   useAlarmsForItem,
   DataItemInterface,
+  createInternalComponent,
 } from "../../..";
 
 interface Props {
@@ -38,7 +39,7 @@ function getEmptyAlarm(
   return alarm;
 }
 
-export const AlarmModal = React.memo<Props>(function AlarmModal({
+export const AlarmModal = createInternalComponent<Props>(function AlarmModal({
   item,
   dimension,
   open,

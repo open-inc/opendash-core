@@ -1,7 +1,9 @@
-import * as React from "react";
+import { useServiceStore, WidgetInterface } from "../../..";
 
-import { useAppState, WidgetInterface } from "../../..";
+import { useMonitoringService } from "./useMonitoringService";
 
-export function useWidgets(): WidgetInterface[] {
-  return useAppState((state) => state.dashboards.widgets);
+export function useWidgets(): WidgetInterface<any>[] {
+  const monitoring = useMonitoringService();
+
+  return useServiceStore(monitoring, (state) => state.allWidgets);
 }

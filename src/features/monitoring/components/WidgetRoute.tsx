@@ -1,10 +1,14 @@
 import * as React from "react";
 
-import { WidgetComponent, useTranslation } from "../../..";
+import {
+  WidgetComponent,
+  useTranslation,
+  createInternalComponent,
+} from "../../..";
 
 import { useParams } from "react-router";
 
-export const WidgetRoute = React.memo(function WidgetRoute() {
+export const WidgetRoute = createInternalComponent(function WidgetRoute() {
   const t = useTranslation();
 
   const { id } = useParams();

@@ -1,17 +1,20 @@
 import * as React from "react";
 
-import { WidgetContextInterface, WidgetBaseContextInterface } from "../../..";
+import {
+  WidgetContextInterface,
+  WidgetContext,
+  createInternalComponent,
+} from "../../..";
 
-export const WidgetSettingsRenderWithoutSteps = React.memo<{
+export const WidgetSettingsRenderWithoutSteps = createInternalComponent<{
   context: WidgetContextInterface;
-  baseContext: WidgetBaseContextInterface;
-}>(function WidgetSettingsRenderWithoutSteps({ context, baseContext }) {
+}>(function WidgetSettingsRenderWithoutSteps({ context }) {
   const SettingsComponent = React.useMemo(
     () =>
-      baseContext?.type?.settingsComponent
-        ? React.lazy(baseContext.type.settingsComponent)
+      context.context?.type?.settingsComponent
+        ? React.lazy(context.context.type.settingsComponent)
         : null,
-    [baseContext?.type?.settingsComponent]
+    [context.context?.type?.settingsComponent]
   );
 
   if (!SettingsComponent) {

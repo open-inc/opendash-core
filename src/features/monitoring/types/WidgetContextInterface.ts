@@ -6,8 +6,10 @@ import {
   DataItemValueInterface,
   DataItemDimensionValueInterface,
 } from "../../..";
+import { WidgetContext } from "../services/states/WidgetContext";
 
 export interface WidgetContextInterface<T = any> {
+  context: WidgetContext;
   config: WidgetConfigInterface<T>;
   draft: WidgetConfigInterface<T>;
   savedConfig: WidgetConfigInterface<T>;

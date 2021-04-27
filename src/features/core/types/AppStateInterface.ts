@@ -27,12 +27,9 @@ export interface AppStateInterface {
     all: SourceInterface[];
   };
   dashboards: {
-    dashboards: DashboardInterface[];
-    widgets: WidgetInterface[];
     alarms: AlarmInterface[];
     alarmWebhooks: AlarmWebhookInterface[];
 
-    currentDashboard: string | undefined;
     linkedItem: string | undefined;
     linkedHistory: DataFetchingOptionsInterface;
   };

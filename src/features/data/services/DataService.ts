@@ -32,7 +32,9 @@ export class DataService extends BaseService {
   private valueSubscriptions = new Map<string, Set<SubscriptionCallback>>();
 
   constructor(app: AppInterface, adapter: DataAdapterInterface) {
-    super();
+    super({
+      initialState: {},
+    });
 
     this.app = app;
     this.services = app.services;

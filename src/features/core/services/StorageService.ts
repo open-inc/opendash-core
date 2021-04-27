@@ -17,7 +17,9 @@ export class StorageService extends BaseService {
   private cache = new Map<string, any>();
 
   constructor(app: AppInterface, adapter: StorageAdapterInterface) {
-    super();
+    super({
+      initialState: {},
+    });
 
     this.app = app;
     this.services = app.services;

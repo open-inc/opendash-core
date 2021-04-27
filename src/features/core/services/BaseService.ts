@@ -1,12 +1,18 @@
-import { equals, ServicesInterface } from "../../..";
+import { equals, ServicesInterface, Store } from "../../..";
 
 type SubscriptionCallback = () => void;
 
-export class BaseService {
+export class BaseService<T = any> {
   private enabled: boolean = false;
   private loading: boolean = true;
 
   private subscribers = new Set<SubscriptionCallback>();
+
+  public store: Store<T>;
+
+  constructor({ initialState }: { initialState: T }) {
+    this.store = new Store(initialState);
+  }
 
   public isEnabled() {
     return this.enabled;

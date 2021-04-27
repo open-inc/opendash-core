@@ -38,12 +38,15 @@
     "highcharts": "^9.0.1",
     "immer": "^8.0.1",
     "lodash.throttle": "^4.1.1",
+    "mobx": "^6.1.8",
+    "mobx-react-lite": "^3.2.0",
     "picomatch": "^2.2.2",
     "react-grid-layout": "^1.2.2",
     "react-router": "6.0.0-alpha.5",
     "react-router-dom": "6.0.0-alpha.5",
     "rison": "^0.1.1",
-    "simple-statistics": "^7.6.0"
+    "simple-statistics": "^7.6.0",
+    "zustand": "^3.4.1"
   },
   "peerDependencies": {
     "antd": "^4.13.0",

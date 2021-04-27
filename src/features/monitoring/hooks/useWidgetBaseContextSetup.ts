@@ -1,33 +1,22 @@
 import * as React from "react";
 
-import {
-  useWidget,
-  useWidgetType,
-  useObjectState,
-  WidgetComponentStateInterface,
-  WidgetBaseContextInterface,
-} from "../../..";
+import { useMonitoringService } from "../../..";
+
+import { WidgetContext } from "../services/states/WidgetContext";
 
 export function useWidgetBaseContextSetup(
   id: string,
   fullscreen: boolean = false
-): WidgetBaseContextInterface {
-  const widget = useWidget(id);
-  const type = useWidgetType(widget?.type);
-  const container = React.useRef<HTMLElement>();
+): WidgetContext {
+  const service = useMonitoringService();
 
-  const [state, setState] = useObjectState<WidgetComponentStateInterface>({
-    key: "" + Math.random(),
-    name: null,
-    loading: true,
-    rename: false,
-    delete: false,
-    share: false,
-    settings: false,
-  });
+  const context = React.useMemo(() => service.createWidgetContext(id), [id]);
 
-  return React.useMemo(
-    () => ({ id, widget, type, fullscreen, container, state, setState }),
-    [id, widget, type, fullscreen, container, state, setState]
-  );
+  React.useEffect(() => {
+    context.store.update((state) => {
+      state.fullscreen = fullscreen;
+    });
+  }, [context, fullscreen]);
+
+  return context;
 }

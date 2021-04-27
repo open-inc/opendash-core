@@ -15,6 +15,7 @@ import {
   useDeepCompareEffect,
   useTranslation,
   useWidgetTypes,
+  createInternalComponent,
 } from "../../..";
 
 import { ErrorMessage } from "./_layout";
@@ -27,9 +28,9 @@ const Container = styled.div`
   overflow-x: hidden;
 `;
 
-export const DashboardDisplay = React.memo<Props>(
-  function DashboardDisplayComponent({ dashboard }) {
-    const { DashboardService } = useOpenDashServices();
+export const DashboardDisplay = createInternalComponent<Props>(
+  function DashboardDisplay({ dashboard }) {
+    const { MonitoringService } = useOpenDashServices();
     const t = useTranslation();
 
     const container = React.useRef();
@@ -55,7 +56,7 @@ export const DashboardDisplay = React.memo<Props>(
 
     // Save layout to user storage, if it really changes
     useDeepCompareEffect(() => {
-      DashboardService.updateDashboard({
+      MonitoringService.updateDashboard({
         ...dashboard,
         layout,
       });

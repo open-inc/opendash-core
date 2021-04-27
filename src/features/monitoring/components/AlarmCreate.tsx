@@ -4,13 +4,14 @@ import produce from "immer";
 import { message } from "antd";
 
 import {
+  useAppState,
   AlarmInterface,
   useOpenDashServices,
   useTranslation,
   FormGenerator,
   DataItemInterface,
+  createInternalComponent,
 } from "../../..";
-import { useAppState } from "../../core/hooks/useAppState";
 
 interface Props {
   item: DataItemInterface;
@@ -33,7 +34,7 @@ function getEmptyAlarm(
   return alarm;
 }
 
-export const AlarmCreate = React.memo<Props>(function AlarmCreate({
+export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
   item,
   dimension = 0,
   onSave,

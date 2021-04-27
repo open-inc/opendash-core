@@ -13,7 +13,9 @@ export class UserService extends BaseService {
   private context: UserAdapterContext;
 
   constructor(app: AppInterface, adapter: UserAdapterInterface) {
-    super();
+    super({
+      initialState: {},
+    });
 
     this.app = app;
     this.adapter = adapter;

@@ -11,6 +11,8 @@ import {
   useTranslation,
   useUrlParam,
   AppSidebar,
+  createInternalComponent,
+  useMonitoringService,
 } from "../../..";
 
 const DashboardMenuContainer = styled.div`
@@ -30,9 +32,11 @@ const DashboardButtonContainer = styled.div`
 
 interface Props {}
 
-export const DashboardManagement = React.memo<Props>(
-  function DashboardManagementComponent({}) {
+export const DashboardManagement = createInternalComponent<Props>(
+  function DashboardManagement({}) {
     const t = useTranslation();
+
+    const MonitoringService = useMonitoringService();
 
     const dashboards = useDashboardsBySource();
     const [currentDashboard, setDashboard] = useDashboardCurrent();

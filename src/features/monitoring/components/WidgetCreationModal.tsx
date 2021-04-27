@@ -5,6 +5,7 @@ import {
   useWidgetPresets,
   useOpenDashServices,
   WidgetTypePresetsInterface,
+  createInternalComponent,
 } from "../../..";
 
 import { Modal, List, Checkbox } from "antd";
@@ -16,8 +17,8 @@ interface Props {
   onSave?: (presets: WidgetTypePresetsInterface[]) => void;
 }
 
-export const WidgetCreationModal = React.memo<Props>(
-  function WidgetCreationModalComponent({ open, close, limit = 1, onSave }) {
+export const WidgetCreationModal = createInternalComponent<Props>(
+  function WidgetCreationModal({ open, close, limit = 1, onSave }) {
     const t = useTranslation();
     const presets = useWidgetPresets();
     const [selection, setSelection] = React.useState([]);

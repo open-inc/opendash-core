@@ -1,7 +1,13 @@
-import * as React from "react";
+import React from "react";
+import { DashboardInterface, useServiceStore } from "../../..";
 
-import { useAppState, DashboardInterface } from "../../..";
+import { useMonitoringService } from "./useMonitoringService";
 
 export function useDashboards(): DashboardInterface[] {
-  return useAppState((state) => state.dashboards.dashboards);
+  const monitoring = useMonitoringService();
+
+  return useServiceStore(
+    monitoring,
+    React.useCallback((state) => state.allDashboards, [])
+  );
 }

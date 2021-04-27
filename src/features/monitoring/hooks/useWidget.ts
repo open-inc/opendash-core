@@ -1,9 +1,17 @@
-import * as React from "react";
+import React from "react";
 
-import { useAppState, WidgetInterface } from "../../..";
+import { useServiceStore, WidgetInterface } from "../../..";
+
+import { useMonitoringService } from "./useMonitoringService";
 
 export function useWidget(id: string): WidgetInterface {
-  return useAppState((state) =>
-    state.dashboards.widgets.find((widget) => widget.id === id)
+  const monitoring = useMonitoringService();
+
+  return useServiceStore(
+    monitoring,
+    React.useCallback(
+      (state) => state.allWidgets.find((widget) => widget.id === id),
+      [id]
+    )
   );
 }

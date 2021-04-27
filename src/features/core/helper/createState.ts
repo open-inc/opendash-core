@@ -21,12 +21,9 @@ export function createState(): Store<AppStateInterface> {
         all: [],
       },
       dashboards: {
-        dashboards: [],
-        widgets: [],
         alarms: [],
         alarmWebhooks: [],
 
-        currentDashboard: undefined,
         linkedItem: undefined,
         linkedHistory: {},
       },
@@ -44,7 +41,7 @@ export function createState(): Store<AppStateInterface> {
   );
 
   store.subscribe(() => {
-    saveCache(cacheKey, store.state());
+    saveCache(cacheKey, store.getState());
   });
 
   return store;

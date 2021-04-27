@@ -1,7 +1,7 @@
 import {
   UserService,
   DataService,
-  DashboardService,
+  MonitoringService,
   StorageService,
   SourceService,
   NavigationService,
@@ -13,7 +13,7 @@ export interface ServicesInterface {
   SourceService: SourceService;
   NavigationService: NavigationService;
 
-  DashboardService: DashboardService;
+  MonitoringService: MonitoringService;
   AlarmService: AlarmService;
 
   DeviceStorageService: StorageService;

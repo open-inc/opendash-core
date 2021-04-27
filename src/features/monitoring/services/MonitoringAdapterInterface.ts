@@ -1,12 +1,12 @@
 import {
   BaseAdapterInterface,
-  DashboardAdapterContext,
+  MonitoringAdapterContext,
   DashboardInterface,
   WidgetInterface,
 } from "../../..";
 
-export interface DashboardAdapterInterface extends BaseAdapterInterface {
-  onContext(context: DashboardAdapterContext);
+export interface MonitoringAdapterInterface extends BaseAdapterInterface {
+  onContext(context: MonitoringAdapterContext);
 
   createDashboard(dashboard: DashboardInterface): Promise<string>;
   updateDashboard(dashboard: DashboardInterface): Promise<void>;

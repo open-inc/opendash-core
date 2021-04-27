@@ -4,51 +4,29 @@ import {
   useWidgetType,
   useObjectState,
   WidgetComponentStateInterface,
-  WidgetBaseContextInterface,
+  WidgetContext,
   WidgetConfigInterface,
   WidgetInterface,
+  useMonitoringService,
 } from "../../..";
 
 export function useWidgetBaseContextDraftSetup(
   type: string,
   config: WidgetConfigInterface<any>,
   fullscreen: boolean = false
-): WidgetBaseContextInterface {
-  const id = undefined;
+): WidgetContext {
+  const service = useMonitoringService();
 
-  const widget: WidgetInterface = React.useMemo(
-    () => ({
-      id,
+  const context = React.useMemo(() => service.createWidgetDraftContext(), []);
+
+  React.useEffect(() => {
+    context.widget = {
+      id: undefined,
       name: undefined,
       config,
       type,
-    }),
-    [type, config]
-  );
+    };
+  }, [context, type, config]);
 
-  const widgetType = useWidgetType(widget?.type);
-  const container = React.useRef<HTMLElement>();
-
-  const [state, setState] = useObjectState<WidgetComponentStateInterface>({
-    key: "" + Math.random(),
-    name: null,
-    loading: true,
-    rename: false,
-    delete: false,
-    share: false,
-    settings: false,
-  });
-
-  return React.useMemo(
-    () => ({
-      id,
-      widget,
-      type: widgetType,
-      fullscreen,
-      container,
-      state,
-      setState,
-    }),
-    [widget, widgetType, fullscreen, container, state, setState]
-  );
+  return context;
 }

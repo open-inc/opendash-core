@@ -4,26 +4,27 @@ import {
   useForceRender,
   useOpenDashServices,
   DashboardInterface,
+  useMonitoringService,
 } from "../../..";
 
 export function useDashboardCurrent(): [
   DashboardInterface,
   (next: DashboardInterface) => void
 ] {
-  const { DashboardService } = useOpenDashServices();
+  const MonitoringService = useMonitoringService();
 
   const forceRender = useForceRender();
 
   React.useEffect(() => {
-    return DashboardService.subscribe(() => {
+    return MonitoringService.subscribe(() => {
       forceRender();
     });
   }, []);
 
   return [
-    DashboardService.getCurrentDashboard(),
+    MonitoringService.getCurrentDashboard(),
     React.useCallback((input: DashboardInterface) => {
-      DashboardService.setCurrentDashboard(input);
+      MonitoringService.setCurrentDashboard(input);
     }, []),
   ];
 }

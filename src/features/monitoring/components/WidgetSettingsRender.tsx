@@ -2,16 +2,15 @@ import * as React from "react";
 
 import {
   WidgetContextInterface,
-  WidgetBaseContextInterface,
   WidgetSettingsRenderWithSteps,
   WidgetSettingsRenderWithoutSteps,
+  createInternalComponent,
 } from "../../..";
 
-export const WidgetSettingsRender = React.memo<{
+export const WidgetSettingsRender = createInternalComponent<{
   context: WidgetContextInterface;
-  baseContext: WidgetBaseContextInterface;
 }>(function WidgetSettingsRender(props) {
-  const type = props.baseContext?.type;
+  const type = props.context.context.type;
   const hasSteps = type?.dataItems || type?.dataFetching;
 
   if (hasSteps) {

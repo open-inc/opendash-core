@@ -12,7 +12,9 @@ export class SourceService extends BaseService {
   private context: SourceAdapterContext;
 
   constructor(app: AppInterface, adapter: SourceAdapterInterface) {
-    super();
+    super({
+      initialState: {},
+    });
 
     this.app = app;
     this.adapter = adapter;

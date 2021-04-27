@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { Button } from "antd";
 import { Icon } from "@opendash/icons";
 
-import { WidgetBaseContextInterface, Translate, equals } from "../../..";
+import { Translate, equals, WidgetContext } from "../../..";
 
 const Container = styled.div`
   width: 100%;
@@ -34,7 +34,7 @@ const Message = styled.div`
 
 export class WidgetErrorBoundary extends React.Component<
   {
-    context: WidgetBaseContextInterface;
+    context: WidgetContext;
   },
   { error: Error }
 > {
@@ -74,7 +74,9 @@ export class WidgetErrorBoundary extends React.Component<
               <Button
                 type="primary"
                 onClick={() => {
-                  this.props.context.setState({ settings: true });
+                  this.props.context.store.update((state) => {
+                    state.settings = true;
+                  });
                 }}
               >
                 <Translate t="opendash:widgets.settings" />
@@ -98,9 +100,9 @@ export class WidgetErrorBoundary extends React.Component<
             </Message>
             <Button
               type="primary"
-              onClick={(e) =>
-                this.props.context.setState({ key: "" + Math.random() })
-              }
+              onClick={(e) => {
+                this.props.context.refresh();
+              }}
             >
               <Translate t="opendash:widgets.reload" />
             </Button>

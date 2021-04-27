@@ -1,7 +1,7 @@
 import produce from "immer";
 
 type Selector<T, ReturnType> = (state: T) => ReturnType;
-type SubscriptionCallback<T> = () => void;
+type SubscriptionCallback<U> = (selection: U) => void;
 type ProducerCallback<T> = (currentState: T) => T | void;
 
 export class Store<T> {
@@ -13,7 +13,7 @@ export class Store<T> {
     this._state = initialState;
   }
 
-  state(): T {
+  getState(): T {
     return this._state;
   }
 
@@ -33,7 +33,7 @@ export class Store<T> {
 
     this.watcher.forEach((callback) => {
       try {
-        callback();
+        callback(this._state);
       } catch (error) {
         console.error("Error in Store subscription callback:", error);
       }
@@ -48,9 +48,9 @@ export class Store<T> {
     };
   }
 
-  subscribeSelection(
-    selector: Selector<T, any>,
-    callback: SubscriptionCallback<T>
+  subscribeSelection<U = any>(
+    selector: Selector<T, U>,
+    callback: SubscriptionCallback<U>
   ) {
     const selectorCallback = () => {
       const cache = this.selectorCache.get(selector);
@@ -59,7 +59,7 @@ export class Store<T> {
       if (!cache || cache !== selection) {
         this.selectorCache.set(selector, selection);
 
-        callback();
+        callback(selection);
       }
     };
 

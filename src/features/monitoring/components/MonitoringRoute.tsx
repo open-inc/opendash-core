@@ -8,17 +8,20 @@ import {
   OpenDashDefaultRoute,
   ExplorerRoute,
   WidgetRoute,
+  createInternalComponent,
 } from "../../..";
 
-export const MonitoringRoute = React.memo(function MonitoringRoute() {
-  return (
-    <MonitoringGlobals>
-      <Routes>
-        <Route path="dashboards" element={<DashboardRoute />} />
-        <Route path="widgets/:id" element={<WidgetRoute />} />
-        <Route path="explore" element={<ExplorerRoute />} />
-        <Route path="*" element={<OpenDashDefaultRoute />} />
-      </Routes>
-    </MonitoringGlobals>
-  );
-});
+export const MonitoringRoute = createInternalComponent(
+  function MonitoringRoute() {
+    return (
+      <MonitoringGlobals>
+        <Routes>
+          <Route path="dashboards" element={<DashboardRoute />} />
+          <Route path="widgets/:id" element={<WidgetRoute />} />
+          <Route path="explore" element={<ExplorerRoute />} />
+          <Route path="*" element={<OpenDashDefaultRoute />} />
+        </Routes>
+      </MonitoringGlobals>
+    );
+  }
+);

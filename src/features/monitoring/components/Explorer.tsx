@@ -13,10 +13,11 @@ import {
   useOpenDashServices,
   useWidgetTypes,
   validateDataFetchingSelection,
-  useWidgetBaseContextDraftSetup,
   useWidgetContextSetup,
   WidgetSettingsRenderWithoutSteps,
   WidgetComponentRender,
+  useWidgetBaseContextDraftSetup,
+  createInternalComponent,
 } from "../../..";
 
 import {
@@ -29,11 +30,11 @@ import {
 import { IconSelect } from "@opendash/ui";
 import { useNavigate } from "react-router";
 
-export const Explorer = React.memo(function Explorer() {
+export const Explorer = createInternalComponent(function Explorer() {
   const t = useTranslation();
   const navigate = useNavigate();
 
-  const { DataService, DashboardService } = useOpenDashServices();
+  const { DataService, MonitoringService } = useOpenDashServices();
 
   const widgets = useWidgetTypes();
 
@@ -298,7 +299,6 @@ export const Explorer = React.memo(function Explorer() {
             {state.visualisation && state.step === 3 && (
               <WidgetSettingsRenderWithoutSteps
                 key={state.visualisation + "~" + state.step}
-                baseContext={widgetBaseContext}
                 context={widgetContext}
               />
             )}
@@ -324,7 +324,7 @@ export const Explorer = React.memo(function Explorer() {
             )}
 
             {state.visualisation && state.step === 4 && (
-              <div ref={widgetBaseContext.container} style={{ height: 500 }}>
+              <div ref={widgetBaseContext.containerRef} style={{ height: 500 }}>
                 <WidgetComponentRender
                   key={state.visualisation + "~" + state.step}
                   baseContext={widgetBaseContext}
@@ -371,8 +371,8 @@ export const Explorer = React.memo(function Explorer() {
               disabled={!state.visualisation}
               children={t("opendash:monitoring.explorer.save_to_dashboard")}
               onClick={() => {
-                DashboardService.addPresetsToDashboard(
-                  DashboardService.getCurrentDashboard(),
+                MonitoringService.addPresetsToDashboard(
+                  MonitoringService.getCurrentDashboard(),
                   [
                     // @ts-ignore
                     {

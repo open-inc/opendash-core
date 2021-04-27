@@ -8,12 +8,12 @@ import {
   UserAdapterInterface,
   DataService,
   DataAdapterInterface,
-  DashboardService,
+  MonitoringService,
   TranslationResolverInterface,
   NavigationGroupInterface,
   NavigationItemInterface,
   ServicesInterface,
-  DashboardAdapterInterface,
+  MonitoringAdapterInterface,
   StorageAdapterInterface,
   SourceAdapterInterface,
   NavigationAdapterInterface,
@@ -50,7 +50,7 @@ export class AppFactory {
     Data?: DataAdapterInterface;
     Source?: SourceAdapterInterface;
     Navigation?: NavigationAdapterInterface;
-    Dashboard?: DashboardAdapterInterface;
+    Monitoring?: MonitoringAdapterInterface;
     Alarm?: AlarmAdapterInterface;
     DeviceStorage?: StorageAdapterInterface;
     UserStorage?: StorageAdapterInterface;
@@ -143,13 +143,13 @@ export class AppFactory {
     this.adapter.User = this.extractESModule(adapter);
   }
 
-  registerDashboardAdapter(
-    adapter: PossibleESModule<DashboardAdapterInterface>
+  registerMonitoringAdapter(
+    adapter: PossibleESModule<MonitoringAdapterInterface>
   ): void {
     if (this.locked)
-      throw new AppFactoryLockedError("registerDashboardAdapter");
+      throw new AppFactoryLockedError("registerMonitoringAdapter");
 
-    this.adapter.Dashboard = this.extractESModule(adapter);
+    this.adapter.Monitoring = this.extractESModule(adapter);
   }
 
   registerAlarmAdapter(adapter: PossibleESModule<AlarmAdapterInterface>): void {
@@ -313,9 +313,9 @@ export class AppFactory {
 
     services.SourceService = new SourceService(app, this.adapter.Source);
 
-    services.DashboardService = new DashboardService(
+    services.MonitoringService = new MonitoringService(
       app,
-      this.adapter.Dashboard
+      this.adapter.Monitoring
     );
 
     services.AlarmService = new AlarmService(app, this.adapter.Alarm);

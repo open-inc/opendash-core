@@ -44,7 +44,7 @@ export function useElementSize<T = any>(
   );
 
   useLayoutEffect(() => {
-    if (!ref || !ref.current) {
+    if (!ref || !ref?.current) {
       return;
     }
 
@@ -71,7 +71,7 @@ export function useElementSize<T = any>(
         window.removeEventListener("resize", handleResize);
       };
     }
-  }, [ref.current]);
+  }, [ref?.current]);
 
   return state;
 }

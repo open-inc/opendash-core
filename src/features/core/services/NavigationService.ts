@@ -19,7 +19,9 @@ export class NavigationService extends BaseService {
   private dynamicNavigationItems = new Set<NavigationItemInterface>();
 
   constructor(app: AppInterface, adapter: NavigationAdapterInterface) {
-    super();
+    super({
+      initialState: {},
+    });
 
     this.app = app;
     this.services = app.services;

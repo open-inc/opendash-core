@@ -52,7 +52,7 @@ export class AlarmService extends BaseService {
   }
 
   constructor(app: AppInterface, adapter: AlarmAdapterInterface) {
-    super();
+    super({ initialState: {} });
 
     this.app = app;
     this.adapter = adapter;
