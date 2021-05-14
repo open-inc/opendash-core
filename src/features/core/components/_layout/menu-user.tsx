@@ -9,6 +9,7 @@ import {
   useOpenDashServices,
   useUrlParam,
   useAppState,
+  useCurrentUser,
 } from "../../../..";
 
 import {
@@ -20,7 +21,7 @@ import {
 export default function HeaderUserMenu({ right = false }) {
   const services = useOpenDashServices();
   const t = useTranslation();
-  const user = useAppState((state) => state.user.current);
+  const user = useCurrentUser();
   const [, setShowLangSelect] = useUrlParam("opendash_language", false, "json");
   const navigate = useNavigate();
 
@@ -46,12 +47,12 @@ export default function HeaderUserMenu({ right = false }) {
         <Icon icon="fa:globe" />
         <span>{t("opendash:account.language.label")}</span>
       </HeaderDropdownButton>
-      <HeaderDropdownButton
+      {/* <HeaderDropdownButton
         onClick={(e) => navigate("/account/data-item-overview")}
       >
         <Icon icon="fa:database" />
         <span>{t("opendash:account.data_item_settings.label")}</span>
-      </HeaderDropdownButton>
+      </HeaderDropdownButton> */}
       {/* <HeaderDropdownButton>
         <Icon type="setting" />
         <span>{t("opendash:account.settings.label")}</span>

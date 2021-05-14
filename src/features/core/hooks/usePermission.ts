@@ -1,6 +1,10 @@
 import * as React from "react";
-import { useAppState } from "../../..";
+import { useUserService, useServiceStore } from "../../..";
 
 export function usePermission(permission: string): boolean {
-  return useAppState((state) => state.user.permissions.includes(permission));
+  const UserService = useUserService();
+
+  return useServiceStore(UserService, (state) =>
+    state.permissions.includes(permission)
+  );
 }

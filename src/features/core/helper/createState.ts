@@ -6,16 +6,6 @@ export function createState(): Store<AppStateInterface> {
 
   const store = new Store<AppStateInterface>(
     cache || {
-      user: {
-        current: undefined,
-        validated: false,
-        offline: false,
-        permissions: [],
-      },
-      collaboration: {
-        users: [],
-        roles: [],
-      },
       sources: {
         current: undefined,
         all: [],

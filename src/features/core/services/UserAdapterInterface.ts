@@ -11,6 +11,11 @@ export interface UserAdapterInterface extends BaseAdapterInterface {
   register(payload: AuthPayloadInterface): Promise<void>;
   logout(): Promise<void>;
 
+  handleWebPushSubscription?(
+    id: string | undefined,
+    subscription: PushSubscriptionJSON
+  ): Promise<string>;
+
   // TODO
   // getAcl(type: string, id: string): Promise<CollectionAclInterface>;
   // setAcl(type: string, id: string, acl: CollectionAclInterface): Promise<void>;

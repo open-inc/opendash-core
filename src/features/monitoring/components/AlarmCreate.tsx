@@ -11,6 +11,8 @@ import {
   FormGenerator,
   DataItemInterface,
   createInternalComponent,
+  useUserService,
+  useServiceStore,
 } from "../../..";
 
 interface Props {
@@ -41,12 +43,16 @@ export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
 }) {
   const t = useTranslation();
   const { AlarmService } = useOpenDashServices();
+  const UserService = useUserService();
 
   const [alarm, setAlarm] = React.useState<Omit<AlarmInterface, "id">>(
     getEmptyAlarm(item, dimension)
   );
 
-  const defaultEmail = useAppState((state) => state.user.current.email);
+  const defaultEmail = useServiceStore(
+    UserService,
+    (state) => state.currentUser?.email
+  );
 
   React.useEffect(() => {
     setAlarm(getEmptyAlarm(item, dimension));

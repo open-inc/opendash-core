@@ -7,6 +7,7 @@ import {
   useOpenDashApp,
   useServicesSuspense,
   DataGlobals,
+  useCurrentUser,
 } from "../../..";
 
 import {
@@ -48,7 +49,7 @@ export function OpenDashApp({ app }) {
 function AppGuard() {
   useServicesSuspense();
 
-  const user = useAppState((state) => state.user.current);
+  const user = useCurrentUser();
 
   if (!user) {
     return <OpenDashAuth />;

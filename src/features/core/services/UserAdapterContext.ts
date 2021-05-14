@@ -14,26 +14,32 @@ export class UserAdapterContext {
   }
 
   setValidated(value: boolean) {
-    this.app.state.update((draft) => {
-      draft.user.validated = value;
+    this.service.store.update((draft) => {
+      draft.validated = value;
     });
   }
 
   setOffline(value: boolean) {
-    this.app.state.update((draft) => {
-      draft.user.offline = value;
+    this.service.store.update((draft) => {
+      draft.offline = value;
     });
   }
 
   setCurrentUser(user: UserInterface) {
-    this.app.state.update((draft) => {
-      draft.user.current = user;
+    this.service.store.update((draft) => {
+      draft.currentUser = user;
+    });
+  }
+
+  setConfig(config: Record<string, string>) {
+    this.service.store.update((draft) => {
+      draft.config = config;
     });
   }
 
   setPermissions(permissions: string[]) {
-    this.app.state.update((draft) => {
-      draft.user.permissions = permissions;
+    this.service.store.update((draft) => {
+      draft.permissions = permissions;
     });
   }
 }

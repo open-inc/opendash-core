@@ -11,6 +11,7 @@ import {
   useAppState,
   useOpenDashApp,
   Hamburger,
+  useCurrentUser,
 } from "../../../..";
 
 import { HeaderMenuItem as MenuItem } from "@opendash/ui";
@@ -59,7 +60,7 @@ const MenuRef = styled.div`
 
 export default function AppLayout() {
   const navigate = useNavigate();
-  const user = useAppState((state) => state.user.current);
+  const user = useCurrentUser();
   const sidebar = useAppState((state) => state.ui.sidebar);
   const [open, setOpen] = React.useState(false);
 
