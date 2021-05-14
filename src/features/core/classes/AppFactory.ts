@@ -59,7 +59,12 @@ export class AppFactory {
   private routes: AppConfigRouteInterface[] = [];
   private widgets: WidgetTypeInterface[] = [];
 
-  private languages: { key: string; label: string; fallback: string }[] = [];
+  private languages: {
+    key: string;
+    label: string;
+    fallback: string;
+    isDefault: boolean;
+  }[] = [];
 
   // ui settings:
   private authLoginForm: AuthFormComponentInterface = AuthDefaultLoginForm;
@@ -86,21 +91,9 @@ export class AppFactory {
     );
 
     this.registerTranslationResolver(
-      "de",
-      "opendash",
-      async () => enTranslation
-    );
-
-    this.registerTranslationResolver(
       "en",
       "antd",
       async () => antdTranslationEN
-    );
-
-    this.registerTranslationResolver(
-      "de",
-      "antd",
-      async () => antdTranslationDE
     );
   }
 
@@ -110,10 +103,15 @@ export class AppFactory {
     await Promise.resolve(plugin.onFactory(this));
   }
 
-  registerLanguage(key: string, label: string, fallback: string = "en") {
+  registerLanguage(
+    key: string,
+    label: string,
+    fallback: string = undefined,
+    isDefault: boolean = false
+  ) {
     if (this.locked) throw new AppFactoryLockedError("registerLanguage");
     this.languages = this.languages.filter((lang) => lang.key !== key);
-    this.languages.push({ key, label, fallback });
+    this.languages.push({ key, label, fallback, isDefault });
 
     registerLanguage(key, label, fallback);
   }
@@ -253,11 +251,20 @@ export class AppFactory {
 
   createApp(): AppInterface {
     try {
-      const lang = JSON.parse(window.localStorage.getItem("opendash:language"));
+      let lang = this.languages.find(
+        (l) =>
+          l.key === JSON.parse(window.localStorage.getItem("opendash:language"))
+      )?.key;
 
-      if (this.languages.find((l) => l.key === lang)) {
-        changeLanguage(lang);
+      if (!lang) {
+        lang = this.languages.find((l) => l.isDefault)?.key;
       }
+
+      if (!lang) {
+        lang = this.languages[0]?.key;
+      }
+
+      changeLanguage(lang);
     } catch (error) {}
 
     const state = createState();
