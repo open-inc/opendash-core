@@ -37,6 +37,7 @@ import {
 import enTranslation from "../translations/opendash_en";
 import antdTranslationEN from "../translations/antd_en";
 import antdTranslationDE from "../translations/antd_de";
+import { Locale } from "antd/lib/locale-provider";
 
 type PossibleESModule<T> = T | { default: T };
 
@@ -127,6 +128,20 @@ export class AppFactory {
     // this.translationResolver.set([language, namespace].join(","), resolver);
 
     registerTranslationResolver(language, namespace, resolver);
+  }
+
+  registerAntDesignTranslation(
+    language: string,
+    resolver: () => Promise<{ default: Locale }>
+  ) {
+    if (this.locked)
+      throw new AppFactoryLockedError("registerAntDesignTranslation");
+
+    registerTranslationResolver(language, "antd", async () => {
+      const { default: translation } = await resolver();
+
+      return { json: JSON.stringify(translation) };
+    });
   }
 
   registerDataAdapter(adapter: PossibleESModule<DataAdapterInterface>): void {
