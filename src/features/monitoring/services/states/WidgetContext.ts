@@ -107,8 +107,6 @@ export class WidgetContext<C = any, S = any> extends BaseService<
     }
 
     this.observeContainerResize();
-
-    console.log("widget context:", this.id, this);
   }
 
   public get containerRef(): React.MutableRefObject<HTMLDivElement> {
