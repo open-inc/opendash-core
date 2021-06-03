@@ -16,6 +16,7 @@ import {
   useTranslation,
   useWidgetTypes,
   createInternalComponent,
+  DashboardStyle,
 } from "../../..";
 
 import { ErrorMessage } from "./_layout";
@@ -26,6 +27,13 @@ interface Props {
 
 const Container = styled.div`
   overflow-x: hidden;
+  overflow-y: hidden;
+
+  min-height: 100%;
+
+  > .react-grid-layout {
+    min-height: 100%;
+  }
 `;
 
 export const DashboardDisplay = createInternalComponent<Props>(
@@ -135,6 +143,7 @@ export const DashboardDisplay = createInternalComponent<Props>(
 
     return (
       <Container ref={container}>
+        <DashboardStyle />
         <GridLayout
           key={dashboard.id}
           verticalCompact={true}
