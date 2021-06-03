@@ -155,12 +155,13 @@ export class MonitoringService extends BaseService<StateInterface> {
       const id = await this.createWidget(preset.widget);
 
       widgets.push(id);
+
       if (Array.isArray(preset.layout)) {
         const [h, w] = preset.layout;
 
-        layout.push({ i: id, w, h, x: 0, y: 0 });
+        layout.push({ i: id, w, h, x: 0, y: 9999 });
       } else {
-        layout.push({ i: id, w: 4, h: 4, x: 0, y: 0 });
+        layout.push({ i: id, w: 4, h: 4, x: 0, y: 9999 });
       }
     }
 

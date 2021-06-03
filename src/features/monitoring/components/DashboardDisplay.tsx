@@ -17,6 +17,7 @@ import {
   useWidgetTypes,
   createInternalComponent,
   DashboardStyle,
+  equals,
 } from "../../..";
 
 import { ErrorMessage } from "./_layout";
@@ -56,18 +57,19 @@ export const DashboardDisplay = createInternalComponent<Props>(
 
     // Update layout, if it changes elsewhere
     useDeepCompareEffect(() => {
-      if (dashboard?.layout) {
+      if (dashboard?.layout && !equals(layout, dashboard.layout)) {
         setLayout(dashboard.layout);
       }
-    }, [dashboard?.id]);
-    // }, [dashboard?.id, dashboard?.layout]);
+    }, [dashboard?.id, dashboard?.layout]);
 
     // Save layout to user storage, if it really changes
     useDeepCompareEffect(() => {
-      MonitoringService.updateDashboard({
-        ...dashboard,
-        layout,
-      });
+      if (dashboard?.id && !equals(layout, dashboard.layout)) {
+        MonitoringService.updateDashboard({
+          ...dashboard,
+          layout,
+        });
+      }
     }, [layout]);
 
     if (!dashboard) {
