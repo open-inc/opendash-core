@@ -94,10 +94,13 @@ export class WidgetContext<C = any, S = any> extends BaseService<
 
         this.replaceDraft(this.widget.config);
 
+        // TODO: this needs to be removed, if the widget context is not used anymore or the widget gets deleted
         this.service.store.subscribeSelection(
-          (state) => state.allWidgets.find((widget) => widget.id === id).config,
-          (config) => {
-            this.replaceDraft(config);
+          (state) => state.allWidgets.find((widget) => widget.id === id),
+          (widget) => {
+            if (widget?.config) {
+              this.replaceDraft(widget.config);
+            }
           }
         );
       }
