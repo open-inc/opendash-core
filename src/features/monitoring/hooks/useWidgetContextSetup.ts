@@ -15,6 +15,7 @@ import {
   useDataFetchDimensionValues,
   useDeepCompareEffect,
   useDeepCompareMemo,
+  useStore,
 } from "../../..";
 
 import { WidgetContext } from "../services/states/WidgetContext";
@@ -24,11 +25,13 @@ export function useWidgetContextSetup(
 ): WidgetContextInterface {
   const t = useTranslation();
 
+  const state = useStore(context?.store, (state) => state);
+
+  const { config, draft, savedConfig, unsaved } = state;
+
   if (!context) {
     return null;
   }
-
-  const { config } = context.store.getState();
 
   function useContainerSize(): {
     width: number;
@@ -214,10 +217,10 @@ export function useWidgetContextSetup(
 
   return {
     context,
-    config: context.store.getState().config,
-    savedConfig: context.store.getState().savedConfig,
-    unsaved: context.store.getState().unsaved,
-    draft: context.store.getState().draft,
+    config,
+    savedConfig,
+    unsaved,
+    draft,
     updateDraft: (x) => context.updateDraft(x),
     replaceDraft: (x) => context.replaceDraft(x),
     assignToDraft: (x) => context.assignToDraft(x),
