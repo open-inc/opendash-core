@@ -43,84 +43,72 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
               <Menu.Item
                 key="rename"
                 title={t("opendash:widgets.rename_modal_tooltip")}
+                icon={<Icon icon="fa:pen" />}
+                children={t("opendash:ui.rename")}
                 onClick={(e) => {
                   context.store.update((state) => {
                     state.rename = true;
                   });
                 }}
-              >
-                <Icon icon="fa:pen" />
-
-                {t("opendash:ui.rename")}
-              </Menu.Item>
+              />
 
               <Menu.Item
                 key="delete"
                 title={t("opendash:widgets.delete_modal_tooltip")}
+                icon={<Icon icon="fa:trash" />}
+                children={t("opendash:ui.delete")}
                 onClick={(e) => {
                   context.store.update((state) => {
                     state.delete = true;
                   });
                 }}
-              >
-                <Icon icon="fa:trash" />
-
-                {t("opendash:ui.delete")}
-              </Menu.Item>
+              />
 
               <Menu.Item
                 key="share"
                 title={t("opendash:widgets.share_modal_tooltip")}
+                icon={<Icon icon="fa:share-alt" />}
+                children={t("opendash:ui.share")}
                 onClick={(e) => {
                   context.store.update((state) => {
                     state.share = true;
                   });
                 }}
-              >
-                <Icon icon="fa:share-alt" />
-
-                {t("opendash:ui.share")}
-              </Menu.Item>
+              />
 
               <Menu.Item
                 key="full"
                 title={t("opendash:widgets.fullscreen_tooltip")}
+                icon={<Icon icon="fa:expand-arrows" />}
+                children={t("opendash:widgets.fullscreen_action")}
                 onClick={(e) => {
                   navigate("/monitoring/widgets/" + context.id);
                 }}
-              >
-                <Icon icon="fa:expand-arrows" />
-
-                {t("opendash:widgets.fullscreen_action")}
-              </Menu.Item>
+              />
 
               <Menu.Item
                 disabled={!hasSettings}
                 key="reload"
                 title={t("opendash:widgets.reload_tooltip")}
+                icon={<Icon icon="fa:sync" />}
+                children={t("opendash:widgets.reload")}
                 onClick={(e) => {
                   context.refresh();
                 }}
-              >
-                <Icon icon="fa:sync" />
-
-                {t("opendash:widgets.reload")}
-              </Menu.Item>
+              />
 
               <Menu.Item
                 disabled={!hasSettings}
                 key="settings"
                 title={t("opendash:widgets.settings_modal_tooltip")}
+                icon={<Icon icon="fa:cog" />}
+                children={t("opendash:widgets.settings")}
                 onClick={(e) => {
                   context.store.update((state) => {
                     state.settings = true;
                   });
                 }}
-              >
-                <Icon icon="fa:cog" />
-
-                {t("opendash:widgets.settings")}
-              </Menu.Item>
+              />
             </Menu>
           }
         >
