@@ -34,9 +34,10 @@ import {
   changeLanguage,
 } from "@opendash/i18n";
 
+import { setIconClassName } from "@opendash/icons";
+
 import enTranslation from "../translations/opendash_en";
-import antdTranslationEN from "../translations/antd_en";
-import antdTranslationDE from "../translations/antd_de";
+
 import { Locale } from "antd/lib/locale-provider";
 
 type PossibleESModule<T> = T | { default: T };
@@ -85,16 +86,12 @@ export class AppFactory {
   constructor(id: string) {
     this.id = id;
 
+    setIconClassName("anticon");
+
     this.registerTranslationResolver(
       "en",
       "opendash",
       async () => enTranslation
-    );
-
-    this.registerTranslationResolver(
-      "en",
-      "antd",
-      async () => antdTranslationEN
     );
   }
 
