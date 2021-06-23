@@ -130,19 +130,23 @@ export class WidgetContext<C = any, S = any> extends BaseService<
   }
 
   public setName(name: string) {
-    if (!this.widget.name && this.store.getState().name !== name) {
-      this.store.update((state) => {
-        state.name = name;
-      });
-    }
+    setTimeout(() => {
+      if (!this.widget.name && this.store.getState().name !== name) {
+        this.store.update((state) => {
+          state.name = name;
+        });
+      }
+    }, 0);
   }
 
   public setLoading(loading: boolean) {
-    if (this.store.getState().loading !== loading) {
-      this.store.update((state) => {
-        state.loading = loading;
-      });
-    }
+    setTimeout(() => {
+      if (this.store.getState().loading !== loading) {
+        this.store.update((state) => {
+          state.loading = loading;
+        });
+      }
+    }, 0);
   }
 
   public async saveDraft() {
