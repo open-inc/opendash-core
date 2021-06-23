@@ -45,7 +45,7 @@ export const DashboardDisplay = createInternalComponent<Props>(
     const container = React.useRef();
     const size = useElementSize(container, 1000);
 
-    const [layout, setLayout] = React.useState([]);
+    const [layout, setLayout] = React.useState(dashboard?.layout || []);
 
     const widgets = useWidgetsForDashboard(dashboard);
     const widgetTypes = useWidgetTypes();
