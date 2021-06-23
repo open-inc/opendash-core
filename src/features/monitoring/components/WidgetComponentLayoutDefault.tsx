@@ -41,6 +41,7 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
           overlay={
             <Menu>
               <Menu.Item
+                key="rename"
                 title={t("opendash:widgets.rename_modal_tooltip")}
                 onClick={(e) => {
                   context.store.update((state) => {
@@ -54,6 +55,7 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
               </Menu.Item>
 
               <Menu.Item
+                key="delete"
                 title={t("opendash:widgets.delete_modal_tooltip")}
                 onClick={(e) => {
                   context.store.update((state) => {
@@ -67,6 +69,7 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
               </Menu.Item>
 
               <Menu.Item
+                key="share"
                 title={t("opendash:widgets.share_modal_tooltip")}
                 onClick={(e) => {
                   context.store.update((state) => {
@@ -80,6 +83,7 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
               </Menu.Item>
 
               <Menu.Item
+                key="full"
                 title={t("opendash:widgets.fullscreen_tooltip")}
                 onClick={(e) => {
                   navigate("/monitoring/widgets/" + context.id);
@@ -92,6 +96,7 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
 
               <Menu.Item
                 disabled={!hasSettings}
+                key="reload"
                 title={t("opendash:widgets.reload_tooltip")}
                 onClick={(e) => {
                   context.refresh();
@@ -104,6 +109,7 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
 
               <Menu.Item
                 disabled={!hasSettings}
+                key="settings"
                 title={t("opendash:widgets.settings_modal_tooltip")}
                 onClick={(e) => {
                   context.store.update((state) => {
