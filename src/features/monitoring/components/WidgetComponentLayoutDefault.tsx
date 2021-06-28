@@ -87,7 +87,6 @@ export const WidgetComponentLayoutDefault = createInternalComponent<
               />
 
               <Menu.Item
-                disabled={!hasSettings}
                 key="reload"
                 title={t("opendash:widgets.reload_tooltip")}
                 icon={<Icon icon="fa:sync" />}
