@@ -34,4 +34,9 @@ export interface AppInterface {
   widgets: WidgetTypeInterface[];
   state: Store<AppStateInterface>;
   services: ServicesInterface;
+
+  _internal: {
+    globalComponents: [React.ComponentType, any][];
+    providerComponents: [React.ComponentType, any][];
+  };
 }

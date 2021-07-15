@@ -25,6 +25,7 @@ export { OpenDashApp } from "./features/core/components/OpenDashApp";
 export { OpenDashAuth } from "./features/core/components/OpenDashAuth";
 export { OpenDashDefaultRoute } from "./features/core/components/OpenDashDefaultRoute";
 export { OpenDashFrontpage } from "./features/core/components/OpenDashFrontpage";
+export { OpenDashGlobals } from "./features/core/components/OpenDashGlobals";
 export { OpenDashLogo } from "./features/core/components/OpenDashLogo";
 export { OpenDashProvider } from "./features/core/components/OpenDashProvider";
 export { SourcePicker } from "./features/core/components/SourcePicker";

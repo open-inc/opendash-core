@@ -19,6 +19,7 @@ import {
   DataItemRenameRoute,
   OpenDashDefaultRoute,
   OpenDashProvider,
+  OpenDashGlobals,
 } from "../../..";
 
 import Layout from "./_layout";
@@ -33,6 +34,7 @@ export function OpenDashApp({ app }) {
   return (
     <Boundary>
       <OpenDashProvider app={app}>
+        <OpenDashGlobals />
         <Boundary>
           <Layout>
             <Boundary>

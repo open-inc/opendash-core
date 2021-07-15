@@ -83,6 +83,9 @@ export class AppFactory {
   private logoLink: string = null;
   private logoLinkExternal: boolean = false;
 
+  private globalComponents: [React.ComponentType, any][] = [];
+  private providerComponents: [React.ComponentType, any][] = [];
+
   constructor(id: string) {
     this.id = id;
 
@@ -151,6 +154,25 @@ export class AppFactory {
     if (this.locked) throw new AppFactoryLockedError("registerUserAdapter");
 
     this.adapter.User = this.extractESModule(adapter);
+  }
+
+  registerGlobalComponent<P = {}>(
+    component: React.ComponentType<P>,
+    props?: P
+  ) {
+    if (this.locked) throw new AppFactoryLockedError("registerGlobalComponent");
+
+    this.globalComponents.push([component, props]);
+  }
+
+  registerProviderComponent<P = {}>(
+    component: React.ComponentType<P>,
+    props?: P
+  ) {
+    if (this.locked)
+      throw new AppFactoryLockedError("registerProviderComponent");
+
+    this.providerComponents.push([component, props]);
   }
 
   registerMonitoringAdapter(
@@ -315,6 +337,10 @@ export class AppFactory {
         languages: this.languages,
         staticNavigationGroups: this.staticNavigationGroups,
         staticNavigationItems: this.staticNavigationItems,
+      },
+      _internal: {
+        globalComponents: this.globalComponents,
+        providerComponents: this.providerComponents,
       },
     };
 
