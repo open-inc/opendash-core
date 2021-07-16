@@ -3,6 +3,7 @@ import {
   MonitoringAdapterContext,
   DashboardInterface,
   WidgetInterface,
+  AlarmInterface,
 } from "../../..";
 
 export interface MonitoringAdapterInterface extends BaseAdapterInterface {
@@ -15,4 +16,8 @@ export interface MonitoringAdapterInterface extends BaseAdapterInterface {
   createWidget(widget: WidgetInterface): Promise<string>;
   updateWidget(widget: WidgetInterface): Promise<void>;
   deleteWidget(widget: WidgetInterface): Promise<void>;
+
+  createAlarm(alarm: Omit<AlarmInterface, "id">): Promise<string>;
+  updateAlarm(alarm: AlarmInterface): Promise<void>;
+  deleteAlarm(alarm: AlarmInterface): Promise<void>;
 }

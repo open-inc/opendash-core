@@ -48,7 +48,7 @@ export const AlarmModal = createInternalComponent<Props>(function AlarmModal({
 }) {
   const t = useTranslation();
 
-  const { AlarmService, DataService } = useOpenDashServices();
+  const { DataService } = useOpenDashServices();
 
   const alarms = useAlarmsForItem(item, dimension);
 

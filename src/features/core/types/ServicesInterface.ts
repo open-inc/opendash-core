@@ -5,7 +5,6 @@ import {
   StorageService,
   SourceService,
   NavigationService,
-  AlarmService,
 } from "../../..";
 
 export interface ServicesInterface {
@@ -14,7 +13,6 @@ export interface ServicesInterface {
   NavigationService: NavigationService;
 
   MonitoringService: MonitoringService;
-  AlarmService: AlarmService;
 
   DeviceStorageService: StorageService;
   UserStorageService: StorageService;

@@ -1,30 +1,39 @@
+import React from "react";
 import {
-  useAppState,
-  equals,
   DataItemInterface,
   AlarmInterface,
+  useMonitoringService,
+  useServiceStore,
 } from "../../..";
 
 export function useAlarmsForItem(
   item: DataItemInterface,
   dimension?: number
 ): AlarmInterface[] {
-  return useAppState((state) => {
-    if (!item) {
-      return [];
-    }
+  const monitoring = useMonitoringService();
 
-    if (Number.isInteger(dimension)) {
-      return state.dashboards.alarms.filter(
-        (alarm) =>
-          alarm.item[0] === item.source &&
-          alarm.item[1] === item.id &&
-          alarm.item[2] === dimension
-      );
-    }
+  return useServiceStore(
+    monitoring,
+    React.useCallback(
+      (state) => {
+        if (!item) {
+          return [];
+        }
 
-    return state.dashboards.alarms.filter(
-      (alarm) => alarm.item[0] === item.source && alarm.item[1] === item.id
-    );
-  });
+        if (Number.isInteger(dimension)) {
+          return state.alarms.filter(
+            (alarm) =>
+              alarm.item[0] === item.source &&
+              alarm.item[1] === item.id &&
+              alarm.item[2] === dimension
+          );
+        }
+
+        return state.alarms.filter(
+          (alarm) => alarm.item[0] === item.source && alarm.item[1] === item.id
+        );
+      },
+      [item?.source, item?.id, dimension]
+    )
+  );
 }

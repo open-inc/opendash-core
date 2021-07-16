@@ -4,15 +4,14 @@ import produce from "immer";
 import { message } from "antd";
 
 import {
-  useAppState,
   AlarmInterface,
-  useOpenDashServices,
   useTranslation,
   FormGenerator,
   DataItemInterface,
   createInternalComponent,
   useUserService,
   useServiceStore,
+  useMonitoringService,
 } from "../../..";
 
 interface Props {
@@ -42,7 +41,7 @@ export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
   onSave,
 }) {
   const t = useTranslation();
-  const { AlarmService } = useOpenDashServices();
+  const MonitoringService = useMonitoringService();
   const UserService = useUserService();
 
   const [alarm, setAlarm] = React.useState<Omit<AlarmInterface, "id">>(
@@ -60,16 +59,16 @@ export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
 
   const type = item?.valueTypes[dimension].type;
 
-  const triggerTypes = AlarmService.triggerTypes.filter((value) =>
+  const triggerTypes = MonitoringService.triggerTypes.filter((value) =>
     value.startsWith(type?.toLowerCase())
   );
 
-  const actionTypes = AlarmService.actionTypes.filter((value) => {
-    if (AlarmService.devices.length === 0 && value === "notification") {
+  const actionTypes = MonitoringService.actionTypes.filter((value) => {
+    if (MonitoringService.devices.length === 0 && value === "notification") {
       return false;
     }
 
-    if (AlarmService.webhooks.length === 0 && value === "webhook") {
+    if (MonitoringService.listWebhooks().length === 0 && value === "webhook") {
       return false;
     }
 
@@ -224,7 +223,7 @@ export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
           children: t("opendash:monitoring.alarms.create.submit"),
         }}
         onSubmit={() => {
-          AlarmService.createAlarm(alarm).then(
+          MonitoringService.createAlarm(alarm).then(
             (id) => {
               message.success(t("opendash:monitoring.alarms.create.success"));
               onSave(id);
@@ -236,7 +235,7 @@ export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
         }}
         elements={[
           {
-            key: "type",
+            key: "objectId",
             type: "select",
             label: t("opendash:monitoring.alarms.action.select"),
             defaultValue: actionTypes[0],
@@ -247,39 +246,51 @@ export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
               })),
             },
           },
-          {
-            key: "email",
-            type: "input",
-            label: t("opendash:monitoring.alarms.action.email"),
-            defaultValue: defaultEmail,
-            visible: (state) => state.type === "email",
-          },
-          {
-            key: "device ",
-            type: "select",
-            label: t("opendash:monitoring.alarms.action.notification"),
-            visible: (state) => state.type === "notification",
-            defaultValue: AlarmService.devices[0]?.id,
-            settings: {
-              options: AlarmService.devices.map((device) => ({
-                value: device.id,
-                label: device.name,
-              })),
-            },
-          },
-          {
-            key: "webhook",
-            type: "select",
-            label: t("opendash:monitoring.alarms.action.webhook"),
-            visible: (state) => state.type === "webhook",
-            defaultValue: AlarmService.webhooks[0]?.id,
-            settings: {
-              options: AlarmService.webhooks.map((webhook) => ({
-                value: webhook.id,
-                label: webhook.name,
-              })),
-            },
-          },
+          // {
+          //   key: "type",
+          //   type: "select",
+          //   label: t("opendash:monitoring.alarms.action.select"),
+          //   defaultValue: actionTypes[0],
+          //   settings: {
+          //     options: actionTypes.map((value) => ({
+          //       value,
+          //       label: t("opendash:monitoring.alarms.action." + value),
+          //     })),
+          //   },
+          // },
+          // {
+          //   key: "email",
+          //   type: "input",
+          //   label: t("opendash:monitoring.alarms.action.email"),
+          //   defaultValue: defaultEmail,
+          //   visible: (state) => state.type === "email",
+          // },
+          // {
+          //   key: "device ",
+          //   type: "select",
+          //   label: t("opendash:monitoring.alarms.action.notification"),
+          //   visible: (state) => state.type === "notification",
+          //   defaultValue: MonitoringService.devices[0]?.id,
+          //   settings: {
+          //     options: MonitoringService.devices.map((device) => ({
+          //       value: device.id,
+          //       label: device.name,
+          //     })),
+          //   },
+          // },
+          // {
+          //   key: "webhook",
+          //   type: "select",
+          //   label: t("opendash:monitoring.alarms.action.webhook"),
+          //   visible: (state) => state.type === "webhook",
+          //   defaultValue: MonitoringService.listWebhooks()[0]?.id,
+          //   settings: {
+          //     options: MonitoringService.listWebhooks().map((webhook) => ({
+          //       value: webhook.id,
+          //       label: webhook.name,
+          //     })),
+          //   },
+          // },
         ]}
       />
     </>

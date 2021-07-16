@@ -9,6 +9,11 @@ import {
   WidgetInterface,
   WidgetTypePresetsInterface,
   WidgetTypeInterface,
+  AlarmInterface,
+  AlarmWebhookInterface,
+  AlarmActionInterface,
+  DataItemDimensionIdentifierInterface,
+  equals,
 } from "../../..";
 
 import { WidgetContext } from "./states/WidgetContext";
@@ -17,6 +22,10 @@ type StateInterface = {
   currentDashboard: string | undefined;
   allDashboards: DashboardInterface[];
   allWidgets: WidgetInterface[];
+
+  alarms: AlarmInterface[];
+  alarmWebhooks: AlarmWebhookInterface[];
+  alarmActions: AlarmActionInterface[];
 };
 
 export class MonitoringService extends BaseService<StateInterface> {
@@ -26,12 +35,49 @@ export class MonitoringService extends BaseService<StateInterface> {
 
   private widgetContextCache = new Map<string, WidgetContext>();
 
+  public readonly triggerTypes = [
+    "string_change",
+    "string_equals",
+    "string_equals_not",
+    "string_includes",
+    "string_includes_not",
+    "string_starts_with",
+    "string_starts_with_not",
+    "string_ends_with",
+    "string_ends_with_not",
+    "boolean_change",
+    "boolean_true",
+    "boolean_false",
+    "boolean_rising_edge",
+    "boolean_falling_edge",
+    "number_change",
+    "number_equals",
+    "number_equals_not",
+    "number_gt",
+    "number_lt",
+    "number_in_range",
+    "number_out_of_range",
+  ];
+
+  public readonly actionTypes = ["email", "notification", "webhook"];
+
+  public readonly devices = [
+    // {
+    //   id: "a",
+    //   name: "Device A",
+    // },
+  ];
+
   constructor(app: AppInterface, adapter: MonitoringAdapterInterface) {
     super({
       initialState: {
         currentDashboard: undefined,
         allDashboards: [],
         allWidgets: [],
+
+        alarms: [],
+        alarmWebhooks: [],
+        alarmActions: [],
       },
     });
 
@@ -186,5 +232,45 @@ export class MonitoringService extends BaseService<StateInterface> {
 
   public createWidgetDraftContext() {
     return new WidgetContext(this);
+  }
+
+  getAlarm(id: string): AlarmInterface {
+    return this.store.select((state) =>
+      state.alarms.find((alarm) => alarm.id === id)
+    );
+  }
+
+  listAlarms(): AlarmInterface[] {
+    return this.store.select((state) => state.alarms);
+  }
+
+  listAlarmsForItem(
+    item: DataItemDimensionIdentifierInterface
+  ): AlarmInterface[] {
+    try {
+      return this.listAlarms().filter((alarm) => equals(alarm.item, item));
+    } catch (error) {
+      return [];
+    }
+  }
+
+  async createAlarm(alarm: Omit<AlarmInterface, "id">): Promise<string> {
+    return await this.adapter.createAlarm(alarm);
+  }
+
+  async updateAlarm(alarm: AlarmInterface): Promise<void> {
+    return await this.adapter.updateAlarm(alarm);
+  }
+
+  async deleteAlarm(alarm: AlarmInterface): Promise<void> {
+    return await this.adapter.deleteAlarm(alarm);
+  }
+
+  listWebhooks(): AlarmWebhookInterface[] {
+    return this.store.select((state) => state.alarmWebhooks);
+  }
+
+  listAlarmActions(): AlarmActionInterface[] {
+    return this.store.select((state) => state.alarmActions);
   }
 }

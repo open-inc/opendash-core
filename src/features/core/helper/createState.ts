@@ -11,9 +11,6 @@ export function createState(): Store<AppStateInterface> {
         all: [],
       },
       dashboards: {
-        alarms: [],
-        alarmWebhooks: [],
-
         linkedItem: undefined,
         linkedHistory: {},
       },

@@ -3,8 +3,6 @@ import {
   SourceInterface,
   NavigationGroupInterface,
   NavigationItemInterface,
-  AlarmInterface,
-  AlarmWebhookInterface,
 } from "../../..";
 
 export interface AppStateInterface {
@@ -13,9 +11,6 @@ export interface AppStateInterface {
     all: SourceInterface[];
   };
   dashboards: {
-    alarms: AlarmInterface[];
-    alarmWebhooks: AlarmWebhookInterface[];
-
     linkedItem: string | undefined;
     linkedHistory: DataFetchingOptionsInterface;
   };

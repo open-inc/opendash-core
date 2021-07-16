@@ -21,8 +21,6 @@ import {
   NavigationService,
   SourceService,
   AppPluginInterface,
-  AlarmService,
-  AlarmAdapterInterface,
   AuthDefaultLoginForm,
   AuthDefaultSignupForm,
   AuthFormComponentInterface,
@@ -53,7 +51,6 @@ export class AppFactory {
     Source?: SourceAdapterInterface;
     Navigation?: NavigationAdapterInterface;
     Monitoring?: MonitoringAdapterInterface;
-    Alarm?: AlarmAdapterInterface;
     DeviceStorage?: StorageAdapterInterface;
     UserStorage?: StorageAdapterInterface;
   } = {};
@@ -182,12 +179,6 @@ export class AppFactory {
       throw new AppFactoryLockedError("registerMonitoringAdapter");
 
     this.adapter.Monitoring = this.extractESModule(adapter);
-  }
-
-  registerAlarmAdapter(adapter: PossibleESModule<AlarmAdapterInterface>): void {
-    if (this.locked) throw new AppFactoryLockedError("registerAlarmAdapter");
-
-    this.adapter.Alarm = this.extractESModule(adapter);
   }
 
   registerSourceAdapter(
@@ -362,8 +353,6 @@ export class AppFactory {
       app,
       this.adapter.Monitoring
     );
-
-    services.AlarmService = new AlarmService(app, this.adapter.Alarm);
 
     services.NavigationService = new NavigationService(
       app,

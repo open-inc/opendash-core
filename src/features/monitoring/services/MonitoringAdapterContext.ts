@@ -3,6 +3,9 @@ import {
   WidgetInterface,
   MonitoringService,
   AppInterface,
+  AlarmInterface,
+  AlarmWebhookInterface,
+  AlarmActionInterface,
 } from "../../..";
 
 export class MonitoringAdapterContext {
@@ -66,6 +69,87 @@ export class MonitoringAdapterContext {
       // update
       if (item) {
         Object.assign(item, widget);
+      }
+    });
+  }
+
+  setAlarms(Alarms: Array<AlarmInterface>) {
+    this.service.store.update((state) => {
+      state.alarms = Alarms;
+    });
+  }
+
+  updateAlarm(id: string, Alarm: AlarmInterface) {
+    this.service.store.update((state) => {
+      const item = state.alarms.find((i) => i.id === id);
+
+      // create
+      if (!item && Alarm) {
+        state.alarms.push(Alarm);
+      }
+
+      // delete
+      if (item && !Alarm) {
+        state.alarms = state.alarms.filter((i) => i !== item);
+      }
+
+      // update
+      if (item && Alarm) {
+        Object.assign(item, Alarm);
+      }
+    });
+  }
+
+  setAlarmWebhooks(hook: AlarmWebhookInterface[]) {
+    this.service.store.update((state) => {
+      state.alarmWebhooks = hook;
+    });
+  }
+
+  updateAlarmWebhooks(id: string, hook: AlarmWebhookInterface) {
+    this.service.store.update((state) => {
+      const item = state.alarmWebhooks.find((i) => i.id === id);
+
+      // create
+      if (!item && hook) {
+        state.alarmWebhooks.push(hook);
+      }
+
+      // delete
+      if (item && !hook) {
+        state.alarmWebhooks = state.alarmWebhooks.filter((i) => i !== item);
+      }
+
+      // update
+      if (item && hook) {
+        Object.assign(item, hook);
+      }
+    });
+  }
+
+  setAlarmAction(hook: AlarmActionInterface[]) {
+    this.service.store.update((state) => {
+      state.alarmActions = hook;
+    });
+  }
+
+  updateAlarmAction(id: string, hook: AlarmActionInterface) {
+    this.service.store.update((state) => {
+      const item = state.alarmActions.find((i) => i.id === id);
+
+      // create
+      if (!item && hook) {
+        state.alarmActions.push(hook);
+      }
+
+      // delete
+      if (item && !hook) {
+        state.alarmActions = state.alarmActions.filter((i) => i !== item);
+      }
+
+      // update
+      if (item && hook) {
+        Object.assign(item, hook);
       }
     });
   }

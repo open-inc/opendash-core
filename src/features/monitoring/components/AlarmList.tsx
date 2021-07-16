@@ -8,11 +8,10 @@ import produce from "immer";
 import {
   AlarmInterface,
   createInternalComponent,
-  DataItemDimensionIdentifierInterface,
   useDataItem,
-  useOpenDashServices,
   useTranslation,
 } from "../../..";
+import { useMonitoringService } from "../hooks/useMonitoringService";
 
 interface ListProps {
   alarms: AlarmInterface[];
@@ -25,7 +24,7 @@ interface ItemProps {
 const AlarmListItem = createInternalComponent<ItemProps>(
   function AlarmListItem({ alarm }) {
     const t = useTranslation();
-    const { AlarmService } = useOpenDashServices();
+    const MonitoringService = useMonitoringService();
 
     const item = useDataItem(alarm.item[0], alarm.item[1]);
 
@@ -52,7 +51,7 @@ const AlarmListItem = createInternalComponent<ItemProps>(
     }
 
     if ("webhook" in alarm.action) {
-      const webhook = AlarmService.webhooks.find(
+      const webhook = MonitoringService.listWebhooks().find(
         // @ts-ignore
         (webhook) => webhook.id === alarm.action.webhook
       );
@@ -67,7 +66,7 @@ const AlarmListItem = createInternalComponent<ItemProps>(
         okType: "danger",
         // cancelText: t("opendash:monitoring.alarms.delete.confirm_cancel"),
         onOk: () => {
-          AlarmService.deleteAlarm(alarm).then(
+          MonitoringService.deleteAlarm(alarm).then(
             (ok) => {
               message.success(t("opendash:monitoring.alarms.delete.success"));
             },
