@@ -248,6 +248,21 @@ const FormGeneratorField: React.FC<FieldProps> = ({
     );
   }
 
+  if (field.type === "input.tags") {
+    const seperator = field.settings?.seperator || ",";
+
+    return (
+      <Select
+        mode="tags"
+        tokenSeparators={[seperator]}
+        value={value ? value.split(seperator) : []}
+        onChange={(nextValue: string[]) => setValue(nextValue.join(seperator))}
+        style={field.style}
+        notFoundContent={null}
+      />
+    );
+  }
+
   if (field.type === "input.password") {
     const { prefixIcon, ...settings } = field.settings || {};
 
