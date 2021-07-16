@@ -67,19 +67,10 @@ type Trigger = SpecificTrigger & {
   interval: number;
 };
 
-type Action =
-  | {
-      type: "email";
-      email: string;
-    }
-  | {
-      type: "notification";
-      notification: string;
-    }
-  | {
-      type: "webhook";
-      webhook: string;
-    };
+type Action = {
+  actionId: string;
+  [key: string]: any;
+};
 
 export interface AlarmInterface {
   id: string;

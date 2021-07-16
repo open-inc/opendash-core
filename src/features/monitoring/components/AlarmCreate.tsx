@@ -235,17 +235,31 @@ export const AlarmCreate = createInternalComponent<Props>(function AlarmCreate({
         }}
         elements={[
           {
-            key: "objectId",
+            key: "actionId",
             type: "select",
             label: t("opendash:monitoring.alarms.action.select"),
-            defaultValue: actionTypes[0],
+            defaultValue: MonitoringService.listAlarmActions()[0]?.id,
             settings: {
-              options: actionTypes.map((value) => ({
-                value,
-                label: t("opendash:monitoring.alarms.action." + value),
+              options: MonitoringService.listAlarmActions().map((action) => ({
+                value: action.id,
+                label: action.label,
               })),
             },
           },
+
+          ...MonitoringService.listAlarmActions().flatMap((action) => {
+            if (!Array.isArray(action.formFields)) {
+              return [];
+            }
+
+            return action.formFields.map((field) => {
+              return {
+                ...field,
+
+                visible: (state) => state.actionId === action.id,
+              };
+            });
+          }),
           // {
           //   key: "type",
           //   type: "select",

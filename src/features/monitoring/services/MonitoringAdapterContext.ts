@@ -127,13 +127,13 @@ export class MonitoringAdapterContext {
     });
   }
 
-  setAlarmAction(hook: AlarmActionInterface[]) {
+  setAlarmActions(hook: AlarmActionInterface[]) {
     this.service.store.update((state) => {
       state.alarmActions = hook;
     });
   }
 
-  updateAlarmAction(id: string, hook: AlarmActionInterface) {
+  updateAlarmActions(id: string, hook: AlarmActionInterface) {
     this.service.store.update((state) => {
       const item = state.alarmActions.find((i) => i.id === id);
 

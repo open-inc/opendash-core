@@ -10,8 +10,9 @@ import {
   createInternalComponent,
   useDataItem,
   useTranslation,
+  useMonitoringService,
+  useOpenDashServices,
 } from "../../..";
-import { useMonitoringService } from "../hooks/useMonitoringService";
 
 interface ListProps {
   alarms: AlarmInterface[];
@@ -24,38 +25,31 @@ interface ItemProps {
 const AlarmListItem = createInternalComponent<ItemProps>(
   function AlarmListItem({ alarm }) {
     const t = useTranslation();
+    const { DataService } = useOpenDashServices();
     const MonitoringService = useMonitoringService();
 
     const item = useDataItem(alarm.item[0], alarm.item[1]);
 
-    let title = t("opendash:monitoring.alarms.trigger." + alarm.trigger.type);
+    const title = DataService.getItemName(item, alarm.item[2]);
+
+    let description = t(
+      "opendash:monitoring.alarms.trigger." + alarm.trigger.type
+    );
 
     if ("string" in alarm.trigger) {
-      title += ` '${alarm.trigger.string}'`;
+      description += ` '${alarm.trigger.string}'`;
     }
 
     if ("value" in alarm.trigger) {
-      title += ` ${alarm.trigger.value}`;
+      description += ` ${alarm.trigger.value}`;
     }
 
     if ("min" in alarm.trigger && "max" in alarm.trigger) {
-      title += ` ${alarm.trigger.min} - ${alarm.trigger.max}`;
+      description += ` ${alarm.trigger.min} - ${alarm.trigger.max}`;
     }
 
-    let description = t(
-      "opendash:monitoring.alarms.action." + alarm.action.type
-    );
-
-    if ("email" in alarm.action && alarm.action.email !== undefined) {
-      description += ` (${alarm.action.email})`;
-    }
-
-    if ("webhook" in alarm.action) {
-      const webhook = MonitoringService.listWebhooks().find(
-        // @ts-ignore
-        (webhook) => webhook.id === alarm.action.webhook
-      );
-      description += ` (${webhook.name})`;
+    if (alarm.action?.label) {
+      description += ` - ${alarm.action?.label}`;
     }
 
     function deleteAlarm() {
