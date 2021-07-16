@@ -229,7 +229,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
   const t = useTranslation();
 
   if (field.type === "input") {
-    const { prefixIcon, ...settings } = field.settings;
+    const { prefixIcon, ...settings } = field.settings || {};
 
     if (prefixIcon) {
       settings.prefix = (
@@ -249,7 +249,7 @@ const FormGeneratorField: React.FC<FieldProps> = ({
   }
 
   if (field.type === "input.password") {
-    const { prefixIcon, ...settings } = field.settings;
+    const { prefixIcon, ...settings } = field.settings || {};
 
     if (prefixIcon) {
       settings.prefix = (
