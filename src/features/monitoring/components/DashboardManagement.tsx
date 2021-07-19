@@ -13,7 +13,9 @@ import {
   AppSidebar,
   createInternalComponent,
   useMonitoringService,
+  AppPortal,
 } from "../../..";
+import { HeaderMenuItem } from "@opendash/ui";
 
 const DashboardMenuContainer = styled.div`
   .ant-menu-submenu-selected {
@@ -50,6 +52,18 @@ export const DashboardManagement = createInternalComponent<Props>(
 
     return (
       <>
+        <AppPortal place="headerBeforeMenuRight">
+          <HeaderMenuItem
+            onClick={() => {
+              setEditMode(!editMode);
+            }}
+          >
+            <Icon
+              icon="fa:pen"
+              style={{ color: editMode ? "#0063ac" : undefined }}
+            />
+          </HeaderMenuItem>
+        </AppPortal>
         <AppSidebar showSourcePicker={true}>
           <DashboardMenuContainer>
             <Menu

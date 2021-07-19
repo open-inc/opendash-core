@@ -1,8 +1,10 @@
 import * as React from "react";
 
+import { Icon } from "@opendash/icons";
+import { HeaderMenuItem } from "@opendash/ui";
+
 import {
   useDashboardCurrent,
-  useDashboardsBySource,
   useOpenDashServices,
   WidgetCreationModal,
   AlarmModal,
@@ -14,6 +16,7 @@ import {
   useUrlParam,
   useAlarmModal,
   createInternalComponent,
+  AppPortal,
 } from "../../..";
 
 type Props = React.PropsWithChildren<{}>;
@@ -23,10 +26,8 @@ export const MonitoringGlobals = createInternalComponent<Props>(
     const t = useTranslation();
     const { MonitoringService } = useOpenDashServices();
 
-    const dashboards = useDashboardsBySource();
     const [dashboard, setDashboard] = useDashboardCurrent();
 
-    const [editMode, setEditMode] = useUrlParam("dashboard_edit", false);
     const [datasidebar, setDatasidebar] = useUrlParam("data_sidebar", false);
     const [create, setCreate] = useUrlParam("db_create", false);
     const [addWidgets, setAddWidgets] = useUrlParam("db_add_widgets", false);
@@ -38,6 +39,16 @@ export const MonitoringGlobals = createInternalComponent<Props>(
     return (
       <React.Fragment>
         {children}
+
+        <AppPortal place="headerBeforeMenuRight">
+          <HeaderMenuItem
+            onClick={() => {
+              setDatasidebar(true);
+            }}
+          >
+            <Icon icon="fa:table" />
+          </HeaderMenuItem>
+        </AppPortal>
 
         {/* Modals */}
         <DataSidebar open={datasidebar} close={() => setDatasidebar(false)} />

@@ -125,7 +125,7 @@ export default function AppLayout() {
             placement="bottomLeft"
             overlay={<UserMenu right />}
             children={
-              <MenuItem style={{ fontSize: 16 }}>
+              <MenuItem>
                 <Icon icon="fa:user" />
                 {/* <Icon icon="fa:user-circle" /> */}
               </MenuItem>
