@@ -5,7 +5,7 @@ type Result<S> = [
   S,
   (f: (draft: Draft<S>) => void | S) => void,
   (replacement: S) => void,
-  (objectToAssign: S) => void
+  (objectToAssign: Partial<S>) => void
 ];
 
 export function useImmerState<S = any>(initialValue: S | (() => S)): Result<S> {
