@@ -8,6 +8,7 @@ import {
   useServicesSuspense,
   DataGlobals,
   useCurrentUser,
+  DebugTranslationsRoute,
 } from "../../..";
 
 import {
@@ -99,6 +100,14 @@ function AppRouter() {
       {
         path: "account/data-item-overview",
         element: <DataItemOverviewRoute />,
+      },
+      {
+        path: "debug",
+        element: <Navigate to={"/debug/translations"} />,
+      },
+      {
+        path: "debug/translations",
+        element: <DebugTranslationsRoute />,
       },
       { path: "*", element: <OpenDashDefaultRoute /> },
     ].filter((x) => !!x);

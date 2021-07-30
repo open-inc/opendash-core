@@ -14,6 +14,7 @@ export { AuthDefaultLoginForm } from "./features/core/components/AuthDefaultLogi
 export { AuthDefaultSignupForm } from "./features/core/components/AuthDefaultSignupForm";
 export { Boundary } from "./features/core/components/Boundary";
 export { Breadcrumb } from "./features/core/components/Breadcrumb";
+export { DebugTranslationsRoute } from "./features/core/components/DebugTranslationsRoute";
 export { ErrorBoundary } from "./features/core/components/ErrorBoundary";
 export { ErrorBoundaryPropsInterface } from "./features/core/components/ErrorBoundaryPropsInterface";
 export { FormatRelativeDates } from "./features/core/components/FormatRelativeDates";
