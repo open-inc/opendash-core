@@ -79,6 +79,9 @@ export class MonitoringService extends BaseService<StateInterface> {
         alarmWebhooks: [],
         alarmActions: [],
       },
+      cacheHandler: app.services.DeviceStorageService,
+      cacheKey: "opendash:monitoring-service",
+      cacheAllowlist: ["currentDashboard"],
     });
 
     this.app = app;
