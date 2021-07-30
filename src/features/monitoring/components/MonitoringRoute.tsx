@@ -9,6 +9,7 @@ import {
   ExplorerRoute,
   WidgetRoute,
   createInternalComponent,
+  AlarmManagementRoute,
 } from "../../..";
 
 export const MonitoringRoute = createInternalComponent(
@@ -19,6 +20,7 @@ export const MonitoringRoute = createInternalComponent(
           <Route path="dashboards" element={<DashboardRoute />} />
           <Route path="widgets/:id" element={<WidgetRoute />} />
           <Route path="explore" element={<ExplorerRoute />} />
+          <Route path="alarms" element={<AlarmManagementRoute />} />
           <Route path="*" element={<OpenDashDefaultRoute />} />
         </Routes>
       </MonitoringGlobals>

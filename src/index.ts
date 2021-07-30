@@ -162,6 +162,7 @@ export { DateUnitGroupedInterface } from "./features/data/types/DateUnitGroupedI
 export { DateUnitInterface } from "./features/data/types/DateUnitInterface";
 export { AlarmCreate } from "./features/monitoring/components/AlarmCreate";
 export { AlarmList } from "./features/monitoring/components/AlarmList";
+export { AlarmManagementRoute } from "./features/monitoring/components/AlarmManagementRoute";
 export { AlarmModal } from "./features/monitoring/components/AlarmModal";
 export { AlarmModalToggle } from "./features/monitoring/components/AlarmModalToggle";
 export { DashboardCreationModal } from "./features/monitoring/components/DashboardCreationModal";

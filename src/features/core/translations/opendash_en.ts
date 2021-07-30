@@ -418,6 +418,7 @@ export default {
       title: "Alarms",
       modal_title: "Alarms for {{name}}",
       management_title: "Alarm Management",
+      management_description: "Manage your existing alarms or create a new one.",
 
       modal: {
         tab_list: "Alarms",
