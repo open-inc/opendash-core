@@ -149,12 +149,15 @@ export { AggregationPotInterface } from "./features/data/types/AggregationPotInt
 export { DataFetchingOptionsInterface } from "./features/data/types/DataFetchingOptionsInterface";
 export { DataFetchingSelectionInterface } from "./features/data/types/DataFetchingSelectionInterface";
 export { DataItemDimensionIdentifierInterface } from "./features/data/types/DataItemDimensionIdentifierInterface";
+export { DataItemDimensionSelectionInterface } from "./features/data/types/DataItemDimensionSelectionInterface";
 export { DataItemDimensionValueInterface } from "./features/data/types/DataItemDimensionValueInterface";
 export { DataItemIdentifierInterface } from "./features/data/types/DataItemIdentifierInterface";
 export { DataItemInterface } from "./features/data/types/DataItemInterface";
-export { DataSelectionInterface } from "./features/data/types/DataSelectionInterface";
+export { DataItemSelectionInterface } from "./features/data/types/DataItemSelectionInterface";
 export { DataItemValueInterface } from "./features/data/types/DataItemValueInterface";
 export { DataItemValueTypeInterface } from "./features/data/types/DataItemValueTypeInterface";
+export { DataSelectionInterface } from "./features/data/types/DataSelectionInterface";
+export { DataSourceSelectionInterface } from "./features/data/types/DataSourceSelectionInterface";
 export { DateUnitGroupedInterface } from "./features/data/types/DateUnitGroupedInterface";
 export { DateUnitInterface } from "./features/data/types/DateUnitInterface";
 export { AlarmCreate } from "./features/monitoring/components/AlarmCreate";

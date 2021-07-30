@@ -8,7 +8,9 @@ import {
   SourceIdentifierInterface,
   DataItemIdentifierInterface,
   DataItemDimensionIdentifierInterface,
-  DataSelectionInterface,
+  DataItemDimensionSelectionInterface,
+  DataItemSelectionInterface,
+  DataSourceSelectionInterface,
   SourceInterface,
   DataItemInterface,
   DataItemValueDisplay,
@@ -16,26 +18,42 @@ import {
   DataItemValueTypeInterface,
   AlarmModalToggle,
   DataItemSettingsModalToggle,
+  DataSelectionInterface,
 } from "../../..";
 
 import { Table, Tag, Space, Input } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
-interface Props {
-  selectionOptions?: DataSelectionInterface;
+type SelectionProps =
+  | {
+      selectionOptions?: DataSelectionInterface;
+      selection?: any;
+      onSelection?: (itentifier: any[]) => void;
+    }
+  | {
+      selectionOptions?: DataSourceSelectionInterface;
+      selection?: SourceIdentifierInterface[];
+      onSelection?: (itentifier: SourceIdentifierInterface[]) => void;
+    }
+  | {
+      selectionOptions?: DataItemSelectionInterface;
+      selection?: DataItemIdentifierInterface[];
+      onSelection?: (
+        itentifier: DataItemIdentifierInterface[],
+        item: DataItemInterface[]
+      ) => void;
+    }
+  | {
+      selectionOptions?: DataItemDimensionSelectionInterface;
+      selection?: DataItemDimensionIdentifierInterface[];
+      onSelection?: (
+        itentifier: DataItemDimensionIdentifierInterface[],
+        item: DataItemInterface[],
+        dimension: number[]
+      ) => void;
+    };
 
-  selection?:
-    | SourceIdentifierInterface[]
-    | DataItemIdentifierInterface[]
-    | DataItemDimensionIdentifierInterface[];
-
-  onSelection?: (
-    nextValue:
-      | SourceIdentifierInterface[]
-      | DataItemIdentifierInterface[]
-      | DataItemDimensionIdentifierInterface[]
-  ) => void;
-
+type Props = SelectionProps & {
   /**
    * Enable/disable the 'Type' Column
    * @default false
@@ -79,7 +97,7 @@ interface Props {
   showDisabledTypes?: boolean;
 
   style?: React.CSSProperties;
-}
+};
 
 type RowType = {
   key: string;
@@ -95,7 +113,7 @@ type RowType = {
 };
 
 export const DataSelect = React.memo<Props>(function DataSelect({
-  selectionOptions: options,
+  selectionOptions,
   selection = [],
   onSelection = () => {},
   showType = false,
@@ -141,9 +159,9 @@ export const DataSelect = React.memo<Props>(function DataSelect({
     return createNodesForSource(rootSource);
 
     function createNodesForSource(source: SourceInterface): RowType {
-      const sourceChildren = SourceService.getChildren(
-        source
-      ).map((childSource) => createNodesForSource(childSource));
+      const sourceChildren = SourceService.getChildren(source).map(
+        (childSource) => createNodesForSource(childSource)
+      );
 
       const itemChildren = items
         .filter((item) => item.source === source.tag)
@@ -163,7 +181,7 @@ export const DataSelect = React.memo<Props>(function DataSelect({
 
         return {
           key:
-            options?.select === "item"
+            selectionOptions?.select === "item"
               ? JSON.stringify([item.source, item.id])
               : JSON.stringify([item.source, item.id, 0]),
           name: DataService.getItemName(item, 0),
@@ -193,7 +211,7 @@ export const DataSelect = React.memo<Props>(function DataSelect({
         }),
       };
     }
-  }, [sources, items, options?.select]);
+  }, [sources, items, selectionOptions?.select]);
 
   const columns: ColumnsType<RowType> = [
     {
@@ -306,49 +324,70 @@ export const DataSelect = React.memo<Props>(function DataSelect({
 
   const rowSelection = React.useMemo(
     () =>
-      !options
+      !selectionOptions
         ? undefined
         : {
-            type: (options?.max === 1 ? "radio" : "checkbox") as
+            type: (selectionOptions?.max === 1 ? "radio" : "checkbox") as
               | "radio"
               | "checkbox",
-            hideDefaultSelections: !!options?.max,
+            hideDefaultSelections: !!selectionOptions?.max,
             selectedRowKeys: (selection as any[]).map((v) => JSON.stringify(v)),
             getCheckboxProps: (row) => ({
               disabled:
-                options.select === "source"
+                selectionOptions.select === "source"
                   ? !row.sourceKey
-                  : options.select === "item"
+                  : selectionOptions.select === "item"
                   ? !row.itemKey
-                  : options.select === "dimension" &&
-                    Array.isArray(options.types)
+                  : selectionOptions.select === "dimension" &&
+                    Array.isArray(selectionOptions.types)
                   ? !row.dimensionKey ||
-                    !options.types.includes(row.dimensionType)
-                  : options.select === "dimension"
+                    !selectionOptions.types.includes(row.dimensionType)
+                  : selectionOptions.select === "dimension"
                   ? !row.dimensionKey
                   : true,
             }),
-            onChange: (selectedRowKeys, selectedRows) => {
-              const nextValue = selectedRows
-                .filter(Boolean)
-                .map((row) =>
-                  options.select === "source"
-                    ? row.sourceKey
-                    : options.select === "item"
-                    ? row.itemKey
-                    : options.select === "dimension"
-                    ? row.dimensionKey
-                    : null
+            onChange: (selectedRowKeys, selectedRows: RowType[]) => {
+              console.log(selectedRows);
+
+              selectedRows = selectedRows.filter(Boolean);
+
+              if (
+                selectionOptions.max &&
+                selectedRows.length > selectionOptions.max
+              ) {
+                selectedRows = selectedRows.slice(
+                  selectedRows.length - selectionOptions.max
+                );
+              }
+
+              if (selectionOptions.select === "source") {
+                const nextValue = selectedRows.map((row) => row.sourceKey);
+
+                // @ts-ignore
+                onSelection(nextValue);
+              }
+
+              if (selectionOptions.select === "item") {
+                const nextValue = selectedRows.map((row) => row.itemKey);
+                const items = selectedRows.map((row) => row.item);
+
+                // @ts-ignore
+                onSelection(nextValue, items);
+              }
+
+              if (selectionOptions.select === "dimension") {
+                const nextValue = selectedRows.map((row) => row.dimensionKey);
+                const items = selectedRows.map((row) => row.item);
+                const dimensions = selectedRows.map(
+                  (row) => row.dimensionNumber
                 );
 
-              if (options.max && nextValue.length > options.max) {
-                onSelection(nextValue.slice(nextValue.length - options.max));
-              } else {
-                onSelection(nextValue);
+                // @ts-ignore
+                onSelection(nextValue, items, dimensions);
               }
             },
           },
-    [options, selection, onSelection]
+    [selectionOptions, selection, onSelection]
   );
 
   return (
