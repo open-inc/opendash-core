@@ -1,4 +1,4 @@
-export type DataItemSelectionInterface =
+export type DataSelectionInterface =
   | {
       select: "source";
       min?: number;

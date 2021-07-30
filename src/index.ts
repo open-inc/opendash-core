@@ -152,7 +152,7 @@ export { DataItemDimensionIdentifierInterface } from "./features/data/types/Data
 export { DataItemDimensionValueInterface } from "./features/data/types/DataItemDimensionValueInterface";
 export { DataItemIdentifierInterface } from "./features/data/types/DataItemIdentifierInterface";
 export { DataItemInterface } from "./features/data/types/DataItemInterface";
-export { DataItemSelectionInterface } from "./features/data/types/DataItemSelectionInterface";
+export { DataSelectionInterface } from "./features/data/types/DataSelectionInterface";
 export { DataItemValueInterface } from "./features/data/types/DataItemValueInterface";
 export { DataItemValueTypeInterface } from "./features/data/types/DataItemValueTypeInterface";
 export { DateUnitGroupedInterface } from "./features/data/types/DateUnitGroupedInterface";

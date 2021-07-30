@@ -1,11 +1,11 @@
 import {
-  DataItemSelectionInterface,
+  DataSelectionInterface,
   DataItemInterface,
   SourceInterface,
 } from "../../..";
 
 export function validateDataSourceSelection(
-  type: DataItemSelectionInterface,
+  type: DataSelectionInterface,
   config: SourceInterface[],
   allSources: SourceInterface[]
 ) {

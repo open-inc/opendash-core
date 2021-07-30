@@ -8,7 +8,7 @@ import {
   SourceIdentifierInterface,
   DataItemIdentifierInterface,
   DataItemDimensionIdentifierInterface,
-  DataItemSelectionInterface,
+  DataSelectionInterface,
   SourceInterface,
   DataItemInterface,
   DataItemValueDisplay,
@@ -22,7 +22,7 @@ import { Table, Tag, Space, Input } from "antd";
 import { ColumnsType } from "antd/lib/table";
 
 interface Props {
-  selectionOptions?: DataItemSelectionInterface;
+  selectionOptions?: DataSelectionInterface;
 
   selection?:
     | SourceIdentifierInterface[]

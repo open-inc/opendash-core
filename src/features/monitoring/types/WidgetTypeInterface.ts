@@ -1,7 +1,7 @@
 import {
   WidgetTypePresetsInterface,
   WidgetComponentInterface,
-  DataItemSelectionInterface,
+  DataSelectionInterface,
   DataFetchingSelectionInterface,
   WidgetConfigInterface,
 } from "../../..";
@@ -28,7 +28,7 @@ export interface WidgetTypeInterface<T = any> {
 
   dataVisualisation?: boolean;
 
-  dataItems?: DataItemSelectionInterface;
+  dataItems?: DataSelectionInterface;
 
   dataFetching?: DataFetchingSelectionInterface;
 

@@ -1,7 +1,7 @@
-import { DataItemSelectionInterface, SourceInterface } from "../../..";
+import { DataSelectionInterface, SourceInterface } from "../../..";
 
 export function validateDataSelection(
-  type: DataItemSelectionInterface,
+  type: DataSelectionInterface,
   config: SourceInterface[],
   allSources: SourceInterface[]
 ) {
