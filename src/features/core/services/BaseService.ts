@@ -2,6 +2,20 @@ import { equals, ServicesInterface, Store } from "../../..";
 
 type SubscriptionCallback = () => void;
 
+interface StoreCacheHandler {
+  get(key: string): Promise<any>;
+  set(key: string, value: any): Promise<void>;
+}
+
+interface BaseServiceConfig<T> {
+  initialState: T;
+
+  cacheHandler?: StoreCacheHandler;
+  cacheKey?: string;
+  cacheAllowlist?: string[];
+  cacheBlocklist?: string[];
+}
+
 export class BaseService<T = any> {
   private enabled: boolean = false;
   private loading: boolean = true;
@@ -10,8 +24,13 @@ export class BaseService<T = any> {
 
   public store: Store<T>;
 
-  constructor({ initialState }: { initialState: T }) {
-    this.store = new Store(initialState);
+  constructor(config: BaseServiceConfig<T>) {
+    this.store = new Store(config.initialState, {
+      cacheHandler: config.cacheHandler,
+      cacheKey: config.cacheKey,
+      cacheAllowlist: config.cacheAllowlist,
+      cacheBlocklist: config.cacheBlocklist,
+    });
   }
 
   public isEnabled() {
@@ -101,9 +120,8 @@ export class BaseService<T = any> {
       const updateSourceOnChange = () => {
         if (!services.SourceService.isLoading()) {
           const localCurrent = services.SourceService.getCurrent();
-          const localDescendents = services.SourceService.getDescendents(
-            localCurrent
-          );
+          const localDescendents =
+            services.SourceService.getDescendents(localCurrent);
           const localDescendentsIds = localDescendents.map(
             (source) => source.id
           );
