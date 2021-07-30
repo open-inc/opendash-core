@@ -5,4 +5,8 @@ export interface WidgetInterface<T = any> {
   name: string;
   type: string;
   config: WidgetConfigInterface<T>;
+
+  isOwner?: boolean;
+  isShared?: boolean;
+  isReadOnly?: boolean;
 }

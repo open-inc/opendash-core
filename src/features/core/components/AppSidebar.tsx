@@ -81,7 +81,7 @@ export const AppSidebar = React.memo<Props>(function AppSidebar({
       getContainer={false}
       style={{ position: "absolute" }}
       bodyStyle={{ padding: 0 }}
-      width={300}
+      width={400}
     >
       <Container
         onClick={() => {

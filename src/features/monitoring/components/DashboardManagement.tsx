@@ -44,7 +44,6 @@ export const DashboardManagement = createInternalComponent<Props>(
     const [currentDashboard, setDashboard] = useDashboardCurrent();
 
     const [editMode, setEditMode] = useUrlParam("dashboard_edit", false);
-    const [datasidebar, setDatasidebar] = useUrlParam("data_sidebar", false);
     const [create, setCreate] = useUrlParam("db_create", false);
     const [addWidgets, setAddWidgets] = useUrlParam("db_add_widgets", false);
     const [rename, setRename] = useUrlParam<string>("db_rename", null);
@@ -74,7 +73,7 @@ export const DashboardManagement = createInternalComponent<Props>(
               <Menu.SubMenu
                 key="dashboard"
                 title={
-                  <span>
+                  <>
                     {t("opendash:monitoring.dashboards.title")}
 
                     <DashboardButtonContainer>
@@ -89,17 +88,42 @@ export const DashboardManagement = createInternalComponent<Props>(
                         }}
                       />
                     </DashboardButtonContainer>
-                  </span>
+                  </>
                 }
               >
                 {dashboards.map((dashboard) => (
                   <Menu.Item
                     key={dashboard.id}
                     children={
-                      <span>
-                        {dashboard.name}
+                      <>
+                        <span style={{ marginRight: 10 }}>
+                          {dashboard.name}
+                        </span>
+
+                        {dashboard.isShared && (
+                          <Tag>{t("opendash:ui.shared")}</Tag>
+                        )}
+
+                        {dashboard.isReadOnly && (
+                          <Tag>{t("opendash:ui.readonly")}</Tag>
+                        )}
 
                         <DashboardButtonContainer>
+                          {MonitoringService.adapterSupportsDashboardSharing && (
+                            <Button
+                              type="link"
+                              icon={<Icon icon="fa:share-alt" />}
+                              title={t("opendash:dashboards.share.action_desc")}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+
+                                MonitoringService.openDashboardSharingDialog(
+                                  dashboard
+                                );
+                              }}
+                            />
+                          )}
                           <Button
                             type="link"
                             icon={<Icon icon="fa:pen" />}
@@ -121,7 +145,7 @@ export const DashboardManagement = createInternalComponent<Props>(
                             }}
                           />
                         </DashboardButtonContainer>
-                      </span>
+                      </>
                     }
                     title={t("opendash:dashboards.change.action_desc")}
                     onClick={() => setDashboard(dashboard)}

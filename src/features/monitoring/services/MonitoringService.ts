@@ -92,6 +92,14 @@ export class MonitoringService extends BaseService<StateInterface> {
     return this.app.widgets;
   }
 
+  public get adapterSupportsDashboardSharing() {
+    return !!this.adapter.openDashboardSharingDialog;
+  }
+
+  public get adapterSupportsWidgetSharing() {
+    return !!this.adapter.openWidgetSharingDialog;
+  }
+
   public getDashboard(id: string): DashboardInterface {
     return this.store.getState().allDashboards.find((db) => db.id === id);
   }
@@ -161,6 +169,24 @@ export class MonitoringService extends BaseService<StateInterface> {
     return await this.adapter.deleteDashboard(dashboard);
   }
 
+  public async openDashboardSharingDialog(dashboard: DashboardInterface) {
+    if (!dashboard.id) {
+      console.warn(
+        "MonitoringService.openDashboardSharingDialog(dashboard) dashboard.id missing"
+      );
+      return;
+    }
+
+    if (!this.adapter.openDashboardSharingDialog) {
+      console.warn(
+        "MonitoringService.openDashboardSharingDialog(dashboard) adapter.openDashboardSharingDialog not implemented"
+      );
+      return;
+    }
+
+    return await this.adapter.openDashboardSharingDialog(dashboard);
+  }
+
   getWidgetById(id: string) {
     return this.store.getState().allWidgets.find((widget) => widget.id === id);
   }
@@ -187,6 +213,24 @@ export class MonitoringService extends BaseService<StateInterface> {
       }
     }
     return await this.adapter.deleteWidget(widget);
+  }
+
+  public async openWidgetSharingDialog(widget: WidgetInterface) {
+    if (!widget.id) {
+      console.warn(
+        "MonitoringService.openWidgetSharingDialog(widget) widget.id missing"
+      );
+      return;
+    }
+
+    if (!this.adapter.openWidgetSharingDialog) {
+      console.warn(
+        "MonitoringService.openWidgetSharingDialog(widget) adapter.openWidgetSharingDialog not implemented"
+      );
+      return;
+    }
+
+    return await this.adapter.openWidgetSharingDialog(widget);
   }
 
   public async addPresetsToDashboard(

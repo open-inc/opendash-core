@@ -1,11 +1,13 @@
-import { DashboardWidgetRelationInterface } from "../../..";
-
 export interface DashboardInterface {
   id: string;
   name: string;
   source: string;
   layout: Layout[];
   widgets: string[];
+
+  isOwner: boolean;
+  isShared: boolean;
+  isReadOnly: boolean;
 }
 
 interface Layout {
