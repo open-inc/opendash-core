@@ -74,6 +74,8 @@ export const WidgetComponent = createInternalComponent<Props>(
             context.store.update((state) => {
               state.settings = false;
             });
+
+            context.refresh();
           }}
         />
       </WidgetReactContext.Provider>
