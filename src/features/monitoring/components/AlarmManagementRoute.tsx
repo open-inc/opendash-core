@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { AdminToolbar } from "@opendash/ui";
-import { Button, List, Modal } from "antd";
+import { Button, Modal } from "antd";
 
 import {
   AdminLayout,
@@ -12,6 +12,8 @@ import {
   AlarmList,
   DataSelect,
   useAlarmModal,
+  useSource,
+  LinkedSourcePicker,
 } from "../../..";
 
 export const AlarmManagementRoute = React.memo(function AlarmManagementRoute() {
@@ -20,16 +22,28 @@ export const AlarmManagementRoute = React.memo(function AlarmManagementRoute() {
   const monitoring = useMonitoringService();
 
   const [state, updateState, setState, assignToState] = useImmerState({
-    create: true,
+    create: false,
     createItem: null,
     createItemDimension: 0,
     searchString: "",
   });
 
-  const alarms = useServiceStore(
+  const [source] = useSource();
+
+  const allAlarms = useServiceStore(
     monitoring,
     React.useCallback((state) => state.alarms, [])
   );
+
+  const alarms = React.useMemo(() => {
+    return allAlarms.filter((alarm) => {
+      const [sourceId] = alarm.item;
+
+      console.log(sourceId, source, sourceId === source?.id);
+
+      return sourceId === source?.tag;
+    });
+  }, [allAlarms, source]);
 
   const [, openModal] = useAlarmModal();
 
@@ -38,8 +52,8 @@ export const AlarmManagementRoute = React.memo(function AlarmManagementRoute() {
       <AdminToolbar
         title={t("opendash:monitoring.alarms.management_title")}
         description={t("opendash:monitoring.alarms.management_description")}
-        search={state.searchString}
-        onSearch={(searchString) => assignToState({ searchString })}
+        // search={state.searchString}
+        // onSearch={(searchString) => assignToState({ searchString })}
         actions={[
           <Button
             key="create"
@@ -50,6 +64,7 @@ export const AlarmManagementRoute = React.memo(function AlarmManagementRoute() {
             {t("opendash:monitoring.alarms.create.action")}
           </Button>,
         ]}
+        children={<LinkedSourcePicker style={{ width: "100%" }} />}
       />
 
       <div style={{ padding: "0 24px" }}>
