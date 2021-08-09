@@ -175,8 +175,11 @@ export const FormGenerator: React.FC<Props> = ({
             help={
               dirtyRef.current[field.key] && errorState[field.key]
                 ? errorState[field.key]
-                : null
+                : field.description
+                ? field.description
+                : undefined
             }
+            tooltip={field.hint}
           >
             <FormGeneratorField
               field={field}
