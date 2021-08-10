@@ -16,12 +16,13 @@ import { ButtonProps } from "antd/lib/button";
 
 import {
   useTranslation,
-  useObjectState,
   DataItemHistoryOptionsPicker,
-  DataItemPicker,
   DataItemValuePicker,
   FormElementInterface,
+  produce,
 } from "../../..";
+
+type NamePath = string | number | (string | number)[];
 
 // Avoid warnings from the validator in the console
 // @ts-ignore
@@ -58,7 +59,7 @@ export const FormGenerator: React.FC<Props> = ({
   const firstRunRef = React.useRef(true);
   const dirtyRef = React.useRef({});
 
-  const [internalState, internalUpdateState] = useObjectState({});
+  const [internalState, setInternalState] = React.useState({});
   const [errorState, setErrorState] = React.useState({});
 
   const schema = React.useMemo(() => {
@@ -74,11 +75,28 @@ export const FormGenerator: React.FC<Props> = ({
   const hasExternalState = externalState && externalUpdateState;
 
   const state = hasExternalState ? externalState : internalState;
-  const updateStateHandler = hasExternalState
-    ? externalUpdateState
-    : (key: string, value: string) => {
-        internalUpdateState({ [key]: value });
-      };
+
+  const updateStateHandler = React.useCallback(
+    (key: string, name: NamePath, value) => {
+      name = name || key;
+      const nextState = produce(state, (draft) => {
+        setSelector(draft, name, value);
+      });
+
+      if (hasExternalState) {
+        const x = (Array.isArray(name) ? name[0] : name).toString();
+
+        externalUpdateState(x, nextState[x]);
+      } else {
+        setInternalState(nextState);
+      }
+
+      if (!dirtyRef.current[key]) {
+        dirtyRef.current[key] = true;
+      }
+    },
+    [state, hasExternalState, externalUpdateState]
+  );
 
   const visibleElements = elements.filter((field) => {
     if (field.visible === false) {
@@ -127,26 +145,18 @@ export const FormGenerator: React.FC<Props> = ({
         field.defaultValue !== undefined &&
         (field.key in state === false || state[field.key] === undefined)
       ) {
-        updateStateHandler(field.key, field.defaultValue);
+        updateStateHandler(field.key, field.name, field.defaultValue);
       }
     }
 
     if (settings?.removeHidden) {
       for (const field of invisibleElements) {
         if (field.key in state === true && state[field.key] !== undefined) {
-          updateStateHandler(field.key, undefined);
+          updateStateHandler(field.key, field.name, undefined);
         }
       }
     }
   }, [state]);
-
-  const updateState = (key: string, value: string) => {
-    updateStateHandler(key, value);
-
-    if (!dirtyRef.current[key]) {
-      dirtyRef.current[key] = true;
-    }
-  };
 
   const layout = settings?.layout ? settings.layout : "vertical";
 
@@ -183,9 +193,9 @@ export const FormGenerator: React.FC<Props> = ({
           >
             <FormGeneratorField
               field={field}
-              value={state[field.key]}
+              value={getSelector(state, field.name || field.key)}
               setValue={(v) => {
-                updateState(field.key, v);
+                updateStateHandler(field.key, field.name, v);
               }}
             />
           </Form.Item>
@@ -386,3 +396,49 @@ const FormGeneratorField: React.FC<FieldProps> = ({
   console.warn(`FormGenerator: Type '${field.type}' does not exist.`);
   return null;
 };
+
+function getSelector(obj: any, path: NamePath) {
+  try {
+    let value = obj;
+
+    if (Array.isArray(path)) {
+      for (const key of path) {
+        value = value[key];
+      }
+    } else {
+      value = value[path];
+    }
+
+    return value;
+  } catch (error) {
+    return null;
+  }
+}
+
+function setSelector(obj: any, path: NamePath, value: any) {
+  try {
+    if (!Array.isArray(path)) {
+      obj[path] = value;
+
+      return true;
+    }
+
+    if (path.length === 1) {
+      return setSelector(obj, path[0], value);
+    }
+
+    const [key, nextKey, ...remainingSelector] = path;
+
+    if (!(key in obj)) {
+      if (Number.isInteger(nextKey)) {
+        obj[key] = [];
+      } else {
+        obj[key] = {};
+      }
+    }
+
+    return setSelector(obj[key], [nextKey, ...remainingSelector], value);
+  } catch (error) {
+    return false;
+  }
+}
