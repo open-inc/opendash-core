@@ -14,6 +14,8 @@ import {
 import { Icon } from "@opendash/icons";
 import { ButtonProps } from "antd/lib/button";
 
+import ReactMarkdown from "react-markdown";
+
 import {
   useTranslation,
   DataItemHistoryOptionsPicker,
@@ -183,13 +185,21 @@ export const FormGenerator: React.FC<Props> = ({
                 : undefined
             }
             help={
-              dirtyRef.current[field.key] && errorState[field.key]
-                ? errorState[field.key]
-                : field.description
-                ? field.description
-                : undefined
+              dirtyRef.current[field.key] && errorState[field.key] ? (
+                errorState[field.key]
+              ) : field.descriptionMarkdown ? (
+                <ReactMarkdown children={field.descriptionMarkdown} />
+              ) : field.description ? (
+                field.description
+              ) : undefined
             }
-            tooltip={field.hint}
+            tooltip={
+              field.hintMarkdown ? (
+                <ReactMarkdown children={field.hintMarkdown} />
+              ) : (
+                field.hint
+              )
+            }
           >
             <FormGeneratorField
               field={field}
