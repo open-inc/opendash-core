@@ -36,7 +36,7 @@
     "@opendash/ui": "nightly",
     "async-validator": "^3.5.1",
     "highcharts": "^9.0.1",
-    "immer": "^8.0.1",
+    "immer": "^9.0.6",
     "lodash.throttle": "^4.1.1",
     "mobx": "^6.1.8",
     "mobx-react-lite": "^3.2.0",
