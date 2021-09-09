@@ -165,6 +165,7 @@ export default {
     ok: "OK",
     close: "Schließen",
     cancel: "Abbrechen",
+    discard: "Verwerfen",
     save: "Speichern",
     next: "Weiter",
     back: "Zurück",
