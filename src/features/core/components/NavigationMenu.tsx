@@ -32,8 +32,12 @@ export const NavigationMenu = React.memo<Props>(function NavigationMenu(props) {
           }
         >
           {group.children.map((route) => (
-            <Menu.Item key={route.id} onClick={(e) => navigate(route.link)}>
-              {route.icon && <Icon icon={route.icon} />} {t(route.label)}
+            <Menu.Item
+              key={route.id}
+              icon={route.icon && <Icon icon={route.icon} />}
+              onClick={(e) => navigate(route.link)}
+            >
+              {t(route.label)}
             </Menu.Item>
           ))}
         </Menu.SubMenu>
