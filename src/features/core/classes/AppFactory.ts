@@ -34,7 +34,8 @@ import {
 
 import { setIconClassName } from "@opendash/icons";
 
-import enTranslation from "../translations/opendash_en";
+import enTranslation from "../translations/en";
+import deTranslation from "../translations/de";
 
 import { Locale } from "antd/lib/locale-provider";
 
@@ -92,6 +93,12 @@ export class AppFactory {
       "en",
       "opendash",
       async () => enTranslation
+    );
+
+    this.registerTranslationResolver(
+      "de",
+      "opendash",
+      async () => deTranslation
     );
   }
 
