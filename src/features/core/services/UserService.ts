@@ -55,7 +55,9 @@ export class UserService extends BaseService<StateInterface> {
   }
 
   async login(payload: AuthPayloadInterface): Promise<void> {
-    return await this.adapter.login(payload);
+    await this.adapter.login(payload);
+
+    window.location.reload();
   }
 
   async register(payload: AuthPayloadInterface): Promise<void> {
@@ -63,7 +65,9 @@ export class UserService extends BaseService<StateInterface> {
   }
 
   async logout(): Promise<void> {
-    return await this.adapter.logout();
+    await this.adapter.logout();
+
+    window.location.href = "/";
   }
 
   getConfig(key: string): string {
@@ -95,13 +99,15 @@ export class UserService extends BaseService<StateInterface> {
       throw new Error("Permission not granted");
     }
 
-    const previousIdentifier = await this.app.services.DeviceStorageService.get<string>(
-      "WebPushIdentifier"
-    );
+    const previousIdentifier =
+      await this.app.services.DeviceStorageService.get<string>(
+        "WebPushIdentifier"
+      );
 
     const registration = await navigator.serviceWorker.ready;
 
-    const existingSubscription = await registration.pushManager.getSubscription();
+    const existingSubscription =
+      await registration.pushManager.getSubscription();
 
     if (existingSubscription) {
       const nextIdentifier = await this.adapter.handleWebPushSubscription(
