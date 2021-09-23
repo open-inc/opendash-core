@@ -258,7 +258,7 @@ export class MonitoringService extends BaseService<StateInterface> {
       }
     }
 
-    this.updateDashboard({
+    await this.updateDashboard({
       ...dashboard,
       widgets: [...dashboard.widgets, ...widgets],
       layout: [...dashboard.layout, ...layout],
