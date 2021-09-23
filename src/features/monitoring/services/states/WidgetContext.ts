@@ -20,7 +20,6 @@ interface StateInterface<S, C> {
 
   key: string;
   name: string;
-  container: HTMLDivElement;
   loading: boolean;
   blocked: boolean;
   fullscreen: boolean;
@@ -47,6 +46,20 @@ export class WidgetContext<C = any, S = any> extends BaseService<
   public id: string | undefined;
   public widget: WidgetInterface | undefined;
   public type: WidgetTypeInterface | undefined;
+  private container: HTMLDivElement | undefined;
+
+  private containerHandleResize: () => void = throttle(() => {
+    const container = this.container;
+
+    if (container) {
+      this.store.update((draft) => {
+        draft.width = container.offsetWidth || 0;
+        draft.height = container.offsetHeight || 0;
+      });
+    }
+  }, 500);
+
+  private containerObserver: ResizeObserver | undefined;
 
   constructor(service: MonitoringService, id?: string) {
     super({
@@ -59,7 +72,6 @@ export class WidgetContext<C = any, S = any> extends BaseService<
 
         key: uuid(),
         name: undefined,
-        container: undefined,
         loading: true,
         blocked: true,
         fullscreen: false,
@@ -83,20 +95,40 @@ export class WidgetContext<C = any, S = any> extends BaseService<
     this.id = id;
 
     if (id) {
-      this.widget = this.service.store.select((state) =>
+      const widget = this.service.store.select((state) =>
         state.allWidgets.find((widget) => widget.id === id)
       );
 
-      if (this.widget) {
-        this.type = this.service.types.find(
-          (type) => this.widget.type === type.type
-        );
+      this.setWidget(widget);
+    }
 
+    if (typeof ResizeObserver === "function") {
+      this.containerObserver = new ResizeObserver(this.containerHandleResize);
+    } else {
+      window.addEventListener("resize", this.containerHandleResize);
+
+      // TODO:
+      // window.removeEventListener("resize", this.containerHandleResize);
+    }
+  }
+
+  public setWidget(widget: WidgetInterface) {
+    this.widget = widget;
+
+    if (this.widget) {
+      this.type = this.service.types.find(
+        (type) => this.widget.type === type.type
+      );
+
+      if (this.widget.config) {
         this.replaceDraft(this.widget.config);
+      }
 
+      if (this.widget.id) {
         // TODO: this needs to be removed, if the widget context is not used anymore or the widget gets deleted
         this.service.store.subscribeSelection(
-          (state) => state.allWidgets.find((widget) => widget.id === id),
+          (state) =>
+            state.allWidgets.find((widget) => widget.id === this.widget.id),
           (widget) => {
             if (widget?.config) {
               this.replaceDraft(widget.config);
@@ -105,28 +137,23 @@ export class WidgetContext<C = any, S = any> extends BaseService<
         );
       }
     }
-
-    this.observeContainerResize();
   }
 
   public get containerRef(): React.MutableRefObject<HTMLDivElement> {
-    const store = this.store;
+    const self = this;
+
     return {
       get current() {
-        return store.select((state) => state.container);
+        return self.container;
       },
       set current(value) {
-        store.update((state) => {
-          state.container = value;
-        });
+        self.setContainer(value);
       },
     };
   }
 
   public set containerRef(value: React.MutableRefObject<HTMLDivElement>) {
-    this.store.update((state) => {
-      state.container = value?.current;
-    });
+    this.setContainer(value.current);
   }
 
   public setName(name: string) {
@@ -194,49 +221,21 @@ export class WidgetContext<C = any, S = any> extends BaseService<
     });
   }
 
-  private observeContainerResize() {
-    let previousContainer = undefined;
+  private setContainer(container: HTMLDivElement) {
+    if (this.container === container) {
+      return;
+    }
 
-    const handleResize: () => void = throttle(() => {
-      this.store.update((draft) => {
-        draft.width = draft.container?.offsetWidth || 0;
-        draft.height = draft.container?.offsetHeight || 0;
-      });
-    }, 500);
+    if (this.container && this.containerObserver) {
+      this.containerObserver.disconnect();
+    }
 
-    this.store.subscribeSelection(
-      (state) => state.container,
-      () => {
-        const { container } = this.store.getState();
+    if (container && this.containerObserver) {
+      this.containerObserver.observe(container);
+    }
 
-        if (container) {
-          handleResize();
-        }
+    this.container = container;
 
-        // @ts-ignore // TS doesn't know about ResizeObserver yet
-        if (typeof ResizeObserver === "function") {
-          // @ts-ignore // TS doesn't know about ResizeObserver yet
-          const resizeObserver = new ResizeObserver(() => {
-            handleResize();
-          });
-
-          if (container) {
-            if (previousContainer) {
-              // @ts-ignore // TS doesn't know about ResizeObserver yet
-              resizeObserver.disconnect(previousContainer);
-            }
-
-            previousContainer = container;
-            resizeObserver.observe(container);
-          }
-        } else {
-          window.addEventListener("resize", handleResize);
-
-          return () => {
-            window.removeEventListener("resize", handleResize);
-          };
-        }
-      }
-    );
+    this.containerHandleResize();
   }
 }
