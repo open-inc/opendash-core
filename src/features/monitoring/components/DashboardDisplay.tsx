@@ -62,16 +62,6 @@ export const DashboardDisplay = createInternalComponent<Props>(
       }
     }, [dashboard?.id, dashboard?.layout]);
 
-    // Save layout to user storage, if it really changes
-    useDeepCompareEffect(() => {
-      if (dashboard?.id && !equals(layout, dashboard.layout)) {
-        MonitoringService.updateDashboard({
-          ...dashboard,
-          layout,
-        });
-      }
-    }, [layout]);
-
     if (!dashboard) {
       return (
         <ErrorMessage
@@ -157,7 +147,7 @@ export const DashboardDisplay = createInternalComponent<Props>(
           isDraggable={editMode}
           isResizable={editMode}
           onLayoutChange={(nextLayout) => {
-            setLayout(nextLayout);
+            MonitoringService.updateDashboardLayout(nextLayout);
           }}
         >
           {widgets.map((widget) => (

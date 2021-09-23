@@ -161,6 +161,17 @@ export class MonitoringService extends BaseService<StateInterface> {
     return await this.adapter.updateDashboard(dashboard);
   }
 
+  public async updateDashboardLayout(
+    layout: DashboardInterface["layout"]
+  ): Promise<void> {
+    const currentDashboard = this.getCurrentDashboard();
+
+    return await this.adapter.updateDashboard({
+      ...currentDashboard,
+      layout,
+    });
+  }
+
   public async deleteDashboard(dashboard: DashboardInterface): Promise<void> {
     if (!dashboard.id) {
       console.warn(
