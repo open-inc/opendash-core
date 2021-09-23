@@ -1,12 +1,8 @@
 import * as React from "react";
 
 import {
-  useWidgetType,
-  useObjectState,
-  WidgetComponentStateInterface,
   WidgetContext,
   WidgetConfigInterface,
-  WidgetInterface,
   useMonitoringService,
 } from "../../..";
 
@@ -20,13 +16,23 @@ export function useWidgetBaseContextDraftSetup(
   const context = React.useMemo(() => service.createWidgetDraftContext(), []);
 
   React.useEffect(() => {
-    context.widget = {
+    context.setWidget({
       id: undefined,
       name: undefined,
-      config,
+      config: undefined,
       type,
-    };
-  }, [context, type, config]);
+    });
+  }, [context, type]);
+
+  React.useEffect(() => {
+    context.replaceDraft(config);
+  }, [context, config]);
+
+  React.useEffect(() => {
+    context.store.update((state) => {
+      state.fullscreen = fullscreen;
+    });
+  }, [context, fullscreen]);
 
   return context;
 }
