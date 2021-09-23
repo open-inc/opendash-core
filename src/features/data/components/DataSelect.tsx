@@ -347,8 +347,6 @@ export const DataSelect = React.memo<Props>(function DataSelect({
                   : true,
             }),
             onChange: (selectedRowKeys, selectedRows: RowType[]) => {
-              console.log(selectedRows);
-
               selectedRows = selectedRows.filter(Boolean);
 
               if (

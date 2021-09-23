@@ -39,8 +39,6 @@ export const AlarmManagementRoute = React.memo(function AlarmManagementRoute() {
     return allAlarms.filter((alarm) => {
       const [sourceId] = alarm.item;
 
-      console.log(sourceId, source, sourceId === source?.id);
-
       return sourceId === source?.tag;
     });
   }, [allAlarms, source]);
